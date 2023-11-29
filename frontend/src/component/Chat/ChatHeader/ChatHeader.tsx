@@ -1,6 +1,7 @@
 import { ChatHeaderWrapper } from './ChatHeader.styles'
 import { IoMdArrowRoundBack } from "react-icons/io";
 import { SlOptionsVertical } from "react-icons/sl";
+import ChatSettingPopover from '../../Popover/chatSetting/ChatSettingPopover';
 
 
 const ChatHeader = () => {
@@ -23,8 +24,9 @@ const ChatHeader = () => {
       </div>
       <div className='chatAction'>
 
-
+    <ChatSettingPopover>
       <SlOptionsVertical className="optionButton"/>
+    </ChatSettingPopover>
 
     
 

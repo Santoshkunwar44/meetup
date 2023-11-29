@@ -8,6 +8,8 @@ import ChatRoom from './component/Chat/ChatRoom/ChatRoom'
 import FriendsOutlet from './component/Friends/FriendsOutlet/FriendsOutlet'
 import AllFriends from './component/Friends/AllFriends/AllFriends'
 import Followings from './component/Friends/Following/Followings'
+import Chatsetting from './component/Chat/Setting/Chatsetting'
+import SettingOutlet from './component/Chat/SettingOutlet/SettingOutlet'
 
 function App() {
   return (
@@ -21,7 +23,10 @@ function App() {
           </Route>
           <Route path='/chat' element={<ChatOutlet/>}>
           <Route path='' element={<ChatStarter/>}/>
-          <Route path=':id' element={<ChatRoom/>}/>
+          <Route path=':id' element={<SettingOutlet/>}>
+            <Route path='' element={<ChatRoom/>} />
+            <Route path='setting'  element={<Chatsetting/>}/>
+          </Route>
           </Route>
       </Routes>
     </>
