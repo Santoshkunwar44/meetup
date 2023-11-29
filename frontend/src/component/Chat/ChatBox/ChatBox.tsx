@@ -6,7 +6,10 @@ const ChatBox = () => {
     <ChatBoxWrapper>
 
         <div className="searchUser">
+          <div className="inputBox">
+
             <input type="text" name="" id=""  placeholder="search friends"/>
+          </div>
         </div>
         <div className="chatWrapper">
             <ChatUser/>

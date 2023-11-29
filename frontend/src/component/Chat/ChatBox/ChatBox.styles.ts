@@ -4,13 +4,21 @@ flex: 3;
 height: 100%;
 display: flex;
 flex-direction: column;
-gap: 2rem;
 border-right: 1px solid #34495e54;
 .searchUser{
-    width: 90%;
+    margin: 0 auto;
+    width: 92%;
+    height: 90px;
     border-radius: 5px;
-    background-color: #34495e54;
-
+    display: flex;
+    align-items: center;
+    
+    .inputBox{
+        width: 100%;
+        background-color: var(--light_dark);
+        height: 50%;
+        border-radius: 4px;
+    }
 
     input{
         height: 50px;
@@ -28,6 +36,5 @@ border-right: 1px solid #34495e54;
 .chatWrapper{
     display: flex;
     flex-direction:  column;
-    gap: 1rem;
 }
 `

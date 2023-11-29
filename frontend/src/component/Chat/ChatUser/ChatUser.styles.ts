@@ -3,10 +3,12 @@ import {styled} from "styled-components"
 export const ChatUserWrapper = styled.div`
 
     display: flex;
-    gap: 1rem;
-    border-bottom: 1px solid #34495e54;
-    padding: 1rem  0 ;
+    gap: 0.7rem;
+    padding: 1rem  1rem ;
     cursor: pointer;
+    &:hover{
+        background-color: var(--light_dark);
+    }
 img{
     width: 45px;
     height: 45px;
@@ -19,7 +21,7 @@ img{
     gap: 0.2rem;
     .username{
 
-        color: white;
+        color: #ffffff91;
 
         font-size: 14px;
         letter-spacing: 0.9px;
@@ -27,7 +29,7 @@ img{
     .message{
         font-size: 11px;
         letter-spacing: 1px;
-        color: gray;
+        color: var(--fade_text);
     }
 }
 
