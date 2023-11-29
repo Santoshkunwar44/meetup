@@ -37,18 +37,23 @@ export const ChatHeaderWrapper = styled.div`
                 .chatUsername{
                     font-size: 15px;
                     letter-spacing: 0.9px;
+                    font-weight: 400;
+                    color: #ffffff92;
 
                 }
                 .statusText{
                     font-size: 12px;
+                    font-weight: 100;
                     letter-spacing: 0.8px;
+                    color: var(--fade_text);
                 }
             }
         }
     }
     .chatAction{
         .optionButton{
-            fill: var(--primary_color);
+            fill: gray;
+            cursor: pointer;
             font-size: 1.2rem;
         }
     }

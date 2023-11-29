@@ -5,6 +5,7 @@ export const ChatInputWrapper = styled.div`
 display: flex;
 gap: 1rem;
 padding: 0 1rem;
+align-items: center;
 .leftBox{
     flex: 1;
     display: flex;
@@ -17,13 +18,13 @@ padding: 0 1rem;
         fill: var(--primary_color);
     }
     input{
-    background-color: #3e439b47;
+    background-color: var(--light_dark);
     border: none;
     
     outline: none;
     border-radius: 5px;
     padding:  0 1rem;
-    height: 50px;
+    height: 60px;
     flex: 1;
 
     &::placeholder{

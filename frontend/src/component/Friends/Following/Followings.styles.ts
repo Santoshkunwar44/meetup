@@ -1,6 +1,6 @@
-import {styled} from "styled-components";
+import {styled} from "styled-components"
 
-export const AllFriendsWrapper = styled.div`
+export const FollowingsWrapper = styled.div`
 
 
 flex: 6;
@@ -36,5 +36,4 @@ border-radius: 1rem;
     gap: 1rem;
     overflow: scroll;
 }
-
 `

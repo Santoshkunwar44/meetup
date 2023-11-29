@@ -1,10 +1,14 @@
 import MessageItem from '../../message/MessageItem'
+import StartChat from '../StartChat/StartChat'
 import { MessagePlayGroundWrapper } from './MessagePlayGround.styles'
 
 const MessagePlayGround = () => {
   return (
     <MessagePlayGroundWrapper>
-      <MessageItem own={true} />
+
+      <StartChat/>
+      
+      {/* <MessageItem own={true} />
       <MessageItem own={false}/>
       <MessageItem own={true}/>
       <MessageItem own={true}/>
@@ -16,7 +20,7 @@ const MessagePlayGround = () => {
       <MessageItem own={false}/>
       <MessageItem own={true}/>
       <MessageItem own={true}/>
-      <MessageItem own={false}/>
+      <MessageItem own={false}/> */}
     </MessagePlayGroundWrapper>
   )
 }

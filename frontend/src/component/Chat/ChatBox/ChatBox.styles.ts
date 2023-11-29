@@ -4,32 +4,46 @@ flex: 3;
 height: 100%;
 display: flex;
 flex-direction: column;
-border-right: 1px solid #34495e54;
+background-color: var(--light_dark);
+border-radius: 1rem;
+padding-top:1rem;
+gap: 1rem;
 .searchUser{
     margin: 0 auto;
     width: 92%;
-    height: 90px;
-    border-radius: 5px;
+    height: 60px;
+    border-radius: 10px;
     display: flex;
     align-items: center;
+    justify-content: center;
+
     
     .inputBox{
+
         width: 100%;
-        background-color: var(--light_dark);
-        height: 50%;
+        height: 100%;
         border-radius: 4px;
-    }
-
-    input{
-        height: 50px;
-        width: 100%;
-        background-color: transparent;
-        border: none;
-        outline: none;
+        display: flex;
+        align-items: center;
         padding: 0 1rem;
+        background-color: var(--light_dark);
+        gap: 0.4rem;
 
-        &::placeholder{
-            letter-spacing: 1px;
+        svg{
+            fill: gray;
+        }
+
+        input{
+            width: 100%;
+            height: 100%;
+            border-radius: 10px;
+            border: none;
+            background-color: transparent;
+            outline: none;
+            
+            &::placeholder{
+                letter-spacing: 1px;
+            }
         }
     }
 }

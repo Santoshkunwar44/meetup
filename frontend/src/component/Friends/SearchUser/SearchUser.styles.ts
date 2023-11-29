@@ -5,14 +5,14 @@ export const SearchUserWrapper = styled.div`
     display: flex;
     flex-direction: column;
     gap: 2rem;
-    padding: 1rem 0;
 .friendHeader{
     display: flex;
     align-items: center;
-    background-color: var(--light_dark);
+    background-color: #3e439b1a;
     gap: 0.2rem;
+    height: 80px;
+    border-radius: 1rem;
     padding: 0 1rem;
-    border-radius: 5px;
     svg{
         font-size: 1.5rem;
         fill: var(--fade_text);
@@ -23,7 +23,8 @@ export const SearchUserWrapper = styled.div`
         letter-spacing: 0.8px;
     }
     input{
-         width: 100%;
+        width: 100%;
+        outline: none;
         height: 50px;
         border: none;
         border-radius: 4px;
@@ -34,8 +35,13 @@ export const SearchUserWrapper = styled.div`
             letter-spacing: 0.8px;
             color: white;
         }
-
     }
+}
+.friendsWrapper{
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+    overflow: scroll;
 }
 
 `

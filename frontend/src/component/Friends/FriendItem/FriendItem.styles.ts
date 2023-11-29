@@ -2,19 +2,21 @@ import {styled} from "styled-components"
 
 export const FriendItemWrapper = styled.div`
 display: flex;
-width: 90%;
+width: 100%;
 justify-content: space-between;
-padding: 1rem 0;
+padding: 1.5rem ;
+align-items: center;
+border-bottom: 1px solid #4f597b24;
+/* background-color:#3e439b1a; */
 .leftItem{
     display: flex;
     gap: 0.5rem;
 
     img{
-        width: 50px;
-        height: 50px;
+        width: 55px;
+        height: 55px;
         border-radius: 50%;
         object-fit: cover;
-        border: 2px solid var(--primary_color);
         padding: 4px;
     }
     .userInfo{
@@ -23,14 +25,16 @@ padding: 1rem 0;
         gap: 0.2rem;
 
         .username{
-            font-size: 16px;
-            color: #ffffff91;
+            font-size: 15px;
+            font-weight: 300;
+            letter-spacing: 0.9px;
 
         }
 
         .followersCount{
-            color: var(--fade_text);
+            color: #ffffff91;
             font-size: 13px;
+            font-weight: 100;
         }
     }
 }
