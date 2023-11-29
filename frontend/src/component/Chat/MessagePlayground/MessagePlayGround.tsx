@@ -9,6 +9,14 @@ const MessagePlayGround = () => {
       <MessageItem own={true}/>
       <MessageItem own={true}/>
       <MessageItem own={false}/>
+      <MessageItem own={false}/>
+      <MessageItem own={true}/>
+      <MessageItem own={true}/>
+      <MessageItem own={false}/>
+      <MessageItem own={false}/>
+      <MessageItem own={true}/>
+      <MessageItem own={true}/>
+      <MessageItem own={false}/>
     </MessagePlayGroundWrapper>
   )
 }

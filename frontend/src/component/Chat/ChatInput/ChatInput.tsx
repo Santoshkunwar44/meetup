@@ -5,10 +5,11 @@ import { IoIosSend } from "react-icons/io";
 const ChatInput = () => {
   return (
     <ChatInputWrapper>
-      <div className="micBox">
-      <FaMicrophone/>
-      </div>
+      <div className="leftBox">
+
+      <FaMicrophone className="micIcon"/>
       <input type="text" placeholder='write message...' />
+      </div>
       <div className="sendBox">
           <IoIosSend/>
       </div>

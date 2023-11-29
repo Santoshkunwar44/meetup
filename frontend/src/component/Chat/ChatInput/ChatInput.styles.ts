@@ -4,21 +4,19 @@ export const ChatInputWrapper = styled.div`
 
 display: flex;
 gap: 1rem;
-.micBox{
-    width: 50px;
-    height: 50px;
-    cursor: pointer;
-    border-radius: 50%;
-    display: grid;
-    place-items: center;;
-    svg{
-        font-size: 1.5rem;
+padding: 0 1rem;
+.leftBox{
+    flex: 1;
+    display: flex;
+    align-items: center;
+    gap: 0.8rem;
+}
+  
+    .micIcon{
+        font-size: 1.3rem;
         fill: var(--primary_color);
     }
-
-}
-
-input{
+    input{
     background-color: #3e439b47;
     border: none;
     

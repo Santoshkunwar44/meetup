@@ -7,6 +7,9 @@ export const ChatHeaderWrapper = styled.div`
     display: flex;
     justify-content: space-between;
     align-items: center;
+    background-color: var(--light_dark);
+    border-radius: 0.5rem;
+    padding: 0 1rem;
     .headerLeft{
         display: flex;
         align-items: center;
