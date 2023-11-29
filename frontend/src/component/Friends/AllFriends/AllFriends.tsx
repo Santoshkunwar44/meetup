@@ -1,9 +1,23 @@
+import { FaUsers } from 'react-icons/fa'
 import { AllFriendsWrapper } from './AllFriends.styles'
+import FriendItem from '../FriendItem/FriendItem'
 
 const AllFriends = () => {
   return (
     <AllFriendsWrapper>
-        <h1>all firends</h1>
+       <div className="friendHeader">
+           <FaUsers/>
+         <h1 className='headerTitle'>Suggested People</h1>
+
+        </div> 
+        <div className="friendsWrapper">
+            <FriendItem/>
+            <FriendItem/>
+            <FriendItem/>
+            <FriendItem/>
+            <FriendItem/>
+            <FriendItem/>
+        </div>
     </AllFriendsWrapper>
   )
 }
