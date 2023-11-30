@@ -21,12 +21,12 @@ app.use(morgan("common"))
 require("./utils/db")();
 
 app.use(session({
-    name:"codewithmama.sid",
+    name:"meetup.sid",
     secret:process.env.SESSION_SECRET,
     resave:false,
     saveUninitialized:true,
     cookie:{
-        secure:true,
+        secure:false,
         httpOnly:true,
         maxAge:1000*60*60,
         sameSite:"none"
@@ -34,6 +34,8 @@ app.use(session({
 }))
 
 require('./routes/AllRoutes')(app)
+
+
 
 
 

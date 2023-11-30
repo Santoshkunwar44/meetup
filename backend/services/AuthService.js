@@ -16,12 +16,10 @@ class AuthService {
     async comparePassword(password, hash_password) {
         try {
             const isValid = await bcrypt.compare(password, hash_password)
-            console.log(isValid)
             return isValid
 
         } catch (error) {
-            // error handler
-            console.log(error.message)
+            throw Error("Invalid Credentials")
         }
     }
 
@@ -39,8 +37,7 @@ class AuthService {
                 return prevUser;
             }
         } catch (error) {
-            console.log(error);
-            return error;
+            throw Error("Something went wrong")
         }
     }
 }

@@ -1,6 +1,10 @@
 const mongoose = require("mongoose")
 
 const ChatSchema = mongoose.Schema({
+    name:{
+        type:String,
+        default:"",
+    },
     users:[{
         type:mongoose.Schema.Types.ObjectId,
         ref:"User"
