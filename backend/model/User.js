@@ -21,6 +21,9 @@ const ChatSchema = mongoose.Schema({
     isAdmin:{
         type:String,
         default:false
+    },
+    lastLoggedIn:{
+        type:Number
     }
 },{timestamps:true})
 

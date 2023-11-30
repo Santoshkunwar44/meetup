@@ -1,9 +1,12 @@
+const { hashPassword } = require("../services/AuthService");
+const UserModal = require("../model/User")
+
 class AuthController {
      async registerUser(req, res) {
         const { password: inputPassword } = req.body
         try {
             const hashed_password = await hashPassword(inputPassword)
-            req.body.password = hashed_password
+            req.body.password = hashed_password;
             req.body.lastLoggedIn = Date.now()
             const savedUser = await UserModal.create(req.body);
             const { password, ...others } = savedUser._doc;
@@ -21,10 +24,10 @@ class AuthController {
         const { password: user_password, email } = req.body
         try {
             const user = await UserModal.findOne({ email })
-            if (!user) return res.status(402).json({ message: "User not found", success: false })
+            if (!user)  throw Error("This email is not registered in Meetup")
             const { password, ...others } = user._doc;
             const isValid = await comparePassword(user_password, password)
-            if (!isValid) return res.status(403).json({ message: "Invalid credentails", success: false })
+            if (!isValid) throw Error("Invalid Credentials")
             await UserModal.findByIdAndUpdate(others._id, {
                 lastLoggedIn: Date.now()
             })
@@ -45,7 +48,7 @@ class AuthController {
             req.session.destroy((err) => {
                 //delete session data from store, using sessionID in cookie
                 if (err) throw err;
-                res.clearCookie("meetupx"); // clears cookie containing expired sessionID
+                res.clearCookie("meetup.sid"); // clears cookie containing expired sessionID
                 res.status(200).json({
                     message: "Logged out successfully", success: true
                 });
