@@ -7,7 +7,6 @@ const moment = require("moment")
 
 class EmailService{
 
-
    async sendEmail({subject,text,html,email}){
 
         let transporter = nodemailer.createTransport({

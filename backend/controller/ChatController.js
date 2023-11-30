@@ -14,7 +14,13 @@ class ChatController {
         try {
             const chat = await ChatModel.find({
                 users: { $in: [userId] }
-            }).sort({ updatedAt: -1 }).populate(["users", "latestMessage"])
+            }).sort({ updatedAt: -1 }).populate({
+                path:"users",
+                select:["_id","username","image"],
+                model:"User"
+            }).populate("latestMessage")
+
+
             res.status(200).json({ message: chat, success: true })
         } catch (error) {
             res.status(500).json({ message: error.message, success: false })
@@ -24,7 +30,12 @@ class ChatController {
         const { chatId } = req.params
 
         try {
-            const chat = await ChatModel.findById(chatId).populate(["users", "latestMessage"])
+            const chat = await ChatModel.findById(chatId).populate({
+                path:"users",
+                select:["_id","username","image"],
+                model:"User"
+            }).populate("latestMessage")
+
             return res.status(200).json({ message: chat, success: true })
         } catch (error) {
             res.status(500).json({ message: error.message, success: false })
@@ -36,7 +47,12 @@ class ChatController {
         try {
             const chat = await ChatModel.findOne({
                 users: { $all: users }
-            }).populate(["users", "latestMessage"])
+            }).populate({
+                path:"users",
+                select:["_id","username","image"],
+                model:"User"
+            }).populate("latestMessage")
+
             return res.status(200).json({ message: chat, success: true })
         } catch (error) {
             res.status(500).json({ message: error.message, success: false })

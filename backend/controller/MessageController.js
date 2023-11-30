@@ -5,7 +5,14 @@ class MessageController {
     async addMessage(req, res) {
         try {
             let message = await MessageModel.create(req.body)
-            message = await message.populate(["senderId", "chatId"])
+             message = await message.populate({
+                path:"senderId",
+                select:["_id","image","username"],
+                model:"User"
+            })
+            
+             message = await message.populate("chatId")
+
 
             // add latest message to the chat
 
@@ -28,7 +35,13 @@ class MessageController {
             return res.status(500).json({ message: "Invalid", success: false })
         }
         try {
-            const messages = await MessageModel.find({ chatId }).populate(["senderId", "chatId"])
+            const messages = await MessageModel.find({ chatId }).populate({
+                path:"senderId",
+                select:["_id","image","username"],
+                model:"User"
+            })
+            .populate("chatId")
+            
             res.status(200).json({ message: messages, success: true })
         } catch (error) {
             res.status(500).json({ message: error.message, success: false })

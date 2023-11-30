@@ -1,10 +1,10 @@
-const { createChat, getChatOfUser, getChatById, getChatByBothUsers,deleteChat } = require("../controller/ChatController")
+const { createChatForFirstMessage } = require("../controller/ChatController");
+const { addMessage, getMessageOfAChat } = require("../controller/MessageController");
+
 const router = require("express").Router()
 
-router.post("/create", createChat)
-router.get("/byUsersId/:senderId/:receiverId", getChatByBothUsers)
-router.get("/:userId", getChatOfUser)
-router.get("/byChatId/:chatId", getChatById);
-router.delete("/:chatId", deleteChat)
+router.post('/create', addMessage)
+router.post('/new_message', createChatForFirstMessage, addMessage)
+router.get('/', getMessageOfAChat)
 
-module.exports = router
+module.exports = router; 

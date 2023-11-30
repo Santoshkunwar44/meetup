@@ -1,5 +1,6 @@
 const bcrypt = require("bcrypt")
 const UserModel = require("../model/User")
+const jwt = require("jsonwebtoken")
 
 class AuthService {
     async hashPassword(password) {
@@ -39,6 +40,13 @@ class AuthService {
         } catch (error) {
             throw Error("Something went wrong")
         }
+    }
+
+    getEmailConfirmationHash(email){
+
+        const token =  jwt.sign({ email }, process.env.EMAIL_CONFIRMATOIN_HASH, { expiresIn: 60 * 10 })
+        return token;
+
     }
 }
 
