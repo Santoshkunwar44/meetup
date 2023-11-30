@@ -59,10 +59,30 @@ export const AuthWrapper = styled.div`
             display: flex;
             flex-direction: column;
             gap: 1rem;
+            .singleRow{
+                display: flex ;
+                gap: 1rem !important;
+                flex-direction:  row  !important;
+            }
             .formInputItem{
+                flex: 1;
+                .inputBox{
+                    display: flex;
+                    width: 100%;
+                    flex-direction: column;
+                    gap: 5px;
+                }
                 flex: 1;
                 gap: 1rem;
                 display: flex;
+                flex-direction: column;
+                gap: 8px;
+
+                .invalidMessage{
+                    font-size: 11px;
+                    color: #3742fa;
+                    letter-spacing: 1px;
+                }
                 input{
                     height: 60px;
                     width: 100%;
