@@ -1,17 +1,21 @@
-import { useEffect, useState } from "react";
+import { ChangeEvent, useEffect, useState } from "react";
 import ChatUser from "../ChatUser/ChatUser"
 import { ChatBoxWrapper } from "./ChatBox.styles"
 import { HiSearch } from "react-icons/hi";
 import { fetchChatsOfUserApi } from "../../../utils/Api";
 import { useSelector } from "react-redux";
 import { State } from "../../../redux/reducers";
-import { ChatType } from "../../../utils/Types";
+import { ChatType, UserType } from "../../../utils/Types";
 
 
 const ChatBox = () => {
 
   const [chats,setChats] =useState<ChatType[]>([])
-  const {user} = useSelector((state:State)=>state.user)
+  const {user} = useSelector((state:State)=>state.user);
+  const [filteredChats,setFilteredChats]  = useState<ChatType[]>([]);
+  const [searchInput,setSearchInput] =useState("")
+  const [searchedFriends , setSearchedFriends] = useState<UserType[]>([])
+
 
 
 
@@ -34,13 +38,17 @@ const ChatBox = () => {
 
   }
 
+  const handleSearchInputChange=(e:ChangeEvent<HTMLInputElement>)=>{
+    
+  }
+
   return (
     <ChatBoxWrapper>
 
         <div className="searchUser">
           <div className="inputBox">
             <HiSearch/>
-            <input type="text"   placeholder="search chats"/>
+            <input type="text"   placeholder="search chats or friends"/>
           </div>
         </div>
         <div className="chatWrapper">

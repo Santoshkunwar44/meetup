@@ -5,7 +5,7 @@ import ChatInput from '../ChatInput/ChatInput'
 import MessagePlayGround from '../MessagePlayground/MessagePlayGround'
 import { ChatRoomWrapper } from './ChatRoom.styles'
 import { fetchChatsOfBothUsersApi, fetchMessagesFromChatApi, fetchUserByIdApi } from '../../../utils/Api'
-import { useEffect, useId, useState } from 'react'
+import { useEffect, useState } from 'react'
 import { ChatType, MessageType, UserType } from '../../../utils/Types'
 import { useSelector } from 'react-redux'
 import { State } from '../../../redux/reducers'
@@ -67,7 +67,7 @@ const ChatRoom = () => {
     <ChatRoomWrapper>
         <ChatHeader nextUser={nextuser}/>
         <MessagePlayGround messages={messages}/>
-        <ChatInput/>
+        <ChatInput setMessage={setMessages} chat={chat} nextUser={nextuser}/>
     </ChatRoomWrapper>
   )
 }

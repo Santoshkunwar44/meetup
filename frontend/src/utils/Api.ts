@@ -5,7 +5,16 @@ export const AxiosInstance=axios.create({
     withCredentials:true
 })
 
-
+type MessagePayloadType={
+    senderId:string,
+    text:string,
+    chatId:string
+}
+type NewMessagePayloadType={
+    text:string,
+    users:string[],
+    senderId:string
+}
 // user endpoints
 
 export const fetchUserByIdApi=(userId:string)=>AxiosInstance.get(`/user/search?userId=${userId}`)
@@ -30,4 +39,7 @@ export const registerApi=(payload:{email:string,firstName:string,lastName:string
 // message endpoint 
 
 export const fetchMessagesFromChatApi=(chatId:string)=>AxiosInstance.get(`/message?chatId=${chatId}`)
+
+export const createMessageApi=(payload:MessagePayloadType)=>AxiosInstance.post(`/message/create`,payload)
+export const createNewMessageApi=(payload:NewMessagePayloadType)=>AxiosInstance.post(`/message/new_message`,payload)
 
