@@ -13,12 +13,7 @@ const SearchUser = () => {
 
         </div> 
         <div className="friendsWrapper">
-            <FriendItem/>
-            <FriendItem/>
-            <FriendItem/>
-            <FriendItem/>
-            <FriendItem/>
-            <FriendItem/>
+           
         </div>
     </SearchUserWrapper>
   )

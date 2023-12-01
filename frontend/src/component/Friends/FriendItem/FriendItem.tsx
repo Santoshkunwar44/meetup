@@ -10,17 +10,17 @@ const FriendItem:React.FC<FriendItemPropsType> = ({user,chat}) => {
   const navigate = useNavigate()
   const handleClick=()=>{
     if(chat){
-      navigate(`${user._id}`)
+      navigate(`${user?._id}`)
     }
   }
   return (
     <FriendItemWrapper onClick={handleClick}>
         <div className="leftItem">
 
-        <img src={user.image} alt="userProfile" />
+        <img src={user?.image} alt="userProfile" />
         <div className="userInfo">
-            <h3 className='username'>{`${user.firstName} ${user.lastName}`}</h3>
-            <p className='followersCount'>274 Followers</p>
+            <h3 className='username'>{`${user?.firstName} ${user?.lastName}`}</h3>
+            <p className='followersCount'>{user?.followers?.length}</p>
         </div>
         </div>
        { !chat && <button>Follow </button>}

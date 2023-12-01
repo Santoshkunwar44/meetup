@@ -18,6 +18,7 @@ import DisplayInfo from './pages/Auth/DisplayInfo/DisplayInfo'
 import InfoOutlet from './component/Outlets/InfoOutlet/InfoOutlet'
 import { useSelector } from 'react-redux'
 import { State } from './redux/reducers'
+import Followers from './component/Friends/Followers/Followers'
 
 function App() {
   return (
@@ -30,6 +31,7 @@ function App() {
             <Route path='/users' element={<FriendsOutlet/>}>
                 <Route path='' element={<AllFriends/>}/>
                 <Route path='followings' element={<Followings/>}/>
+                <Route path='followers' element={<Followers/>}/>
           </Route>
           <Route path='/chat' element={<ChatOutlet/>}>
             <Route path='' element={<ChatStarter/>}/>
