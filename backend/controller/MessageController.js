@@ -7,7 +7,7 @@ class MessageController {
             let message = await MessageModel.create(req.body)
              message = await message.populate({
                 path:"senderId",
-                select:["_id","image","username"],
+                select:["_id","image","firstName","lastName"],
                 model:"User"
             })
             
@@ -37,7 +37,7 @@ class MessageController {
         try {
             const messages = await MessageModel.find({ chatId }).populate({
                 path:"senderId",
-                select:["_id","image","username"],
+                select:["_id","image","lastName","firstName"],
                 model:"User"
             })
             .populate("chatId")

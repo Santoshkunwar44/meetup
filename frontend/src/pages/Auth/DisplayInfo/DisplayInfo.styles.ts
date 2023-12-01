@@ -21,8 +21,11 @@ align-items: center;
 }
 
 button{
-    background-color: var(--main_color);
+    background-color: var(--primary_color);
+    height: 45px;
     padding: 0 1rem;
+    border-radius: 5px;
+
 }
 
 .infoText{

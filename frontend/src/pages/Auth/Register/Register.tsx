@@ -1,13 +1,14 @@
-import { Link } from "react-router-dom"
+import { Link, useNavigate } from "react-router-dom"
 import { AuthWrapper } from "../Auth.styles"
 import { FormikProps, withFormik } from "formik"
 import { useState } from "react"
 import * as  Yup from "yup"
+import { registerApi } from "../../../utils/Api"
 const Register = () => {
 
 
     const [loading,setLoading]= useState(false)
-    
+    const navigate = useNavigate()
 
 
 interface formValues{
@@ -132,8 +133,19 @@ mapPropsToValues: (props: myFormProps) => ({
 
    })(InnerForm as React.ComponentType<otherProps & FormikProps<formValues>>);
 
-   const handleRegister=(registerValue :formValues)=>{
-    console.log("registering",registerValue)
+   const handleRegister=async(registerValue :formValues)=>{
+    setLoading(true)
+    try {
+      const {status} =   await registerApi(registerValue)
+
+      if(status===200){
+        navigate("/info/verify_email_sent?info=email_sent")
+      }
+      setLoading(false)
+    } catch (error) {
+        console.log(error)
+        setLoading(false)
+    }
    }
   
 
@@ -156,8 +168,7 @@ mapPropsToValues: (props: myFormProps) => ({
                      <h1>Account and  enjoy it !</h1>
                     </div>
             </div>
-                    <RegisterForm/>
-           
+            <RegisterForm/>
         </div>
     </AuthWrapper>
   )

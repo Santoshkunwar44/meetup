@@ -1,4 +1,4 @@
-const { registerUser, loginUser, UserLogout } = require("../controller/AuthController")
+const { registerUser, loginUser, UserLogout, handleConfirmation, sendEmailToVerifyAccount, sentLinkToResetPassword, resetPassword } = require("../controller/AuthController")
 
 
 

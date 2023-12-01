@@ -1,9 +1,15 @@
 const mongoose = require("mongoose")
 
 const ChatSchema = mongoose.Schema({
-    username:{
+    firstName:{
         type:String,
         required:true,
+        min:[3,"FirstName should be more than 3 characters"]
+    },
+    lastName:{
+        type:String,
+        required:true,
+        min:[3,"lastName should be more than 3 characters"]
     },
     email:{
         type:String,

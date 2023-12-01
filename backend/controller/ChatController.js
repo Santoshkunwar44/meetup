@@ -16,7 +16,7 @@ class ChatController {
                 users: { $in: [userId] }
             }).sort({ updatedAt: -1 }).populate({
                 path:"users",
-                select:["_id","username","image"],
+                select:["_id","firstName","lastName","image"],
                 model:"User"
             }).populate("latestMessage")
 
@@ -30,9 +30,9 @@ class ChatController {
         const { chatId } = req.params
 
         try {
-            const chat = await ChatModel.findById(chatId).populate({
+            const chat = await ChatModel.findById(chatId).sort({ updatedAt: -1 }).populate({
                 path:"users",
-                select:["_id","username","image"],
+                select:["_id","firstName","lastName","image"],
                 model:"User"
             }).populate("latestMessage")
 
@@ -49,7 +49,7 @@ class ChatController {
                 users: { $all: users }
             }).populate({
                 path:"users",
-                select:["_id","username","image"],
+                select:["_id","firstName","lastName","image"],
                 model:"User"
             }).populate("latestMessage")
 
