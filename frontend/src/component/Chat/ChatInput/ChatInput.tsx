@@ -29,9 +29,12 @@ const ChatInput:React.FC<ChatInputPropsType> = ({chat,nextUser,setMessage}) => {
     }
     try {
 
+
+      
+
       let  messagePayload = {
         senderId:user?._id,
-        chatId:chat._id,
+        chatId:chat?._id,
         text:messageInput,
         users:[]
       }

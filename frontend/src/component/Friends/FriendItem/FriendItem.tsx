@@ -1,17 +1,29 @@
+import React from 'react'
+import { UserType } from '../../../utils/Types'
 import { FriendItemWrapper } from './FriendItem.styles'
-
-const FriendItem = () => {
+import { useNavigate } from 'react-router-dom'
+type FriendItemPropsType={
+  user:UserType,
+  chat:boolean
+}
+const FriendItem:React.FC<FriendItemPropsType> = ({user,chat}) => {
+  const navigate = useNavigate()
+  const handleClick=()=>{
+    if(chat){
+      navigate(`${user._id}`)
+    }
+  }
   return (
-    <FriendItemWrapper>
+    <FriendItemWrapper onClick={handleClick}>
         <div className="leftItem">
 
-        <img src="https://images.pexels.com/photos/16835612/pexels-photo-16835612/free-photo-of-branches-of-a-dead-tree.jpeg?auto=compress&cs=tinysrgb&w=800&lazy=load" alt="" />
+        <img src={user.image} alt="userProfile" />
         <div className="userInfo">
-            <h3 className='username'>Heroistic john</h3>
+            <h3 className='username'>{`${user.firstName} ${user.lastName}`}</h3>
             <p className='followersCount'>274 Followers</p>
         </div>
         </div>
-        <button>Follow </button>
+       { !chat && <button>Follow </button>}
     </FriendItemWrapper>
   )
 }

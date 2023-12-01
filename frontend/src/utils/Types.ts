@@ -7,6 +7,8 @@ export type UserType={
     image:string,
     createdAt:string,
     updatedAt:string,
+    followers:UserType[],
+    followings:UserType[],
 }
 export type ChatType={
     _id:string,

@@ -16,6 +16,15 @@ const ChatRoom = () => {
   const [chat,setChat] = useState<ChatType|null>(null)
   const [messages,setMessages] = useState<MessageType[] | null>(null)
   const {user} =useSelector((state:State)=>state.user)
+
+  useEffect(()=>{
+    
+    return ()=>{
+      setChat(null)
+    }
+  })
+  
+
   useEffect(()=>{
     getUserById()
     getChatsOfBothusers()
@@ -41,7 +50,12 @@ const ChatRoom = () => {
     try {
      const {data,status} =  await fetchChatsOfBothUsersApi(id,user._id)
      if(status===200){
-      setChat(data.message)
+      if(data.message){
+        setChat(data.message)
+      }else{
+        setChat(null);
+        setMessages([])
+      }
      }
 
     } catch (error) {

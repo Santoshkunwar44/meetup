@@ -1,11 +1,13 @@
-import { ChangeEvent, useEffect, useState } from "react";
+import {  useEffect, useState } from "react";
 import ChatUser from "../ChatUser/ChatUser"
 import { ChatBoxWrapper } from "./ChatBox.styles"
 import { HiSearch } from "react-icons/hi";
-import { fetchChatsOfUserApi } from "../../../utils/Api";
+import { fetchChatsOfUserApi, searchUserByUsernameApi } from "../../../utils/Api";
 import { useSelector } from "react-redux";
 import { State } from "../../../redux/reducers";
 import { ChatType, UserType } from "../../../utils/Types";
+import { getAnotherUserMethod } from "../../../utils/methods";
+import FriendItem from "../../Friends/FriendItem/FriendItem";
 
 
 const ChatBox = () => {
@@ -23,10 +25,14 @@ const ChatBox = () => {
     getAllMyChats()
   },[])
 
+  useEffect(()=>{
+    handleSearchInputChange()
+    handleSearchUser()
+  },[searchInput])
+
+
   const getAllMyChats=async()=>{
-
     if(!user?._id)return;
-
     try {
      const {status,data} =  await fetchChatsOfUserApi(user?._id)
      if(status===200){
@@ -38,9 +44,35 @@ const ChatBox = () => {
 
   }
 
-  const handleSearchInputChange=(e:ChangeEvent<HTMLInputElement>)=>{
+  const handleSearchInputChange=()=>{
+    if(!user?._id)return;
     
+     const regex = new RegExp(searchInput, 'i');
+     const searched =  chats.filter(chat=>{
+     let username = `${getAnotherUserMethod(chat.users,user?._id)?.firstName } ${getAnotherUserMethod(chat.users,user?._id)?.lastName }`
+      console.log(regex.test(username))
+      return regex.test(username);
+    })
+    setFilteredChats(searched);
   }
+
+  const handleSearchUser=async()=>{
+    if(!user?._id)return;
+    try {
+      const {data,status} = await  searchUserByUsernameApi(searchInput)
+      if(status===200){
+        let users:UserType[] = data.message;
+       const filteredUsers =   users.filter(u=>chats.find(chat=>{
+          let nextUser= getAnotherUserMethod(chat.users,user?._id);
+          return (nextUser?._id !== u._id && u._id !== user?._id)
+        }))
+        setSearchedFriends(filteredUsers)
+      }
+    } catch (error) {
+      console.log(error)
+    }
+  }
+
 
   return (
     <ChatBoxWrapper>
@@ -48,13 +80,20 @@ const ChatBox = () => {
         <div className="searchUser">
           <div className="inputBox">
             <HiSearch/>
-            <input type="text"   placeholder="search chats or friends"/>
+            <input type="text" placeholder="search chats or friends" onChange={e=>setSearchInput(e.target.value)}/>
           </div>
         </div>
         <div className="chatWrapper">
            {
-            chats.map(chat=><ChatUser  chat={chat} key={chat._id}/>)
+           searchInput.length > 0 ? 
+           filteredChats.map(chat=><ChatUser chat={chat} key={chat._id}/>) 
+           :   chats.map(chat=><ChatUser  chat={chat} key={chat._id}/>)
            }
+        </div>
+        <div className="friendsWrapper">
+          {
+           searchInput.length  > 0 &&  searchedFriends.map(friend=><FriendItem chat={true} user={friend} key={friend._id}/>)
+          }
         </div>
 
         

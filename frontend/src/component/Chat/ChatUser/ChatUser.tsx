@@ -19,6 +19,7 @@ const ChatUser:React.FC<ChatUserPropsType> = ({chat}) => {
   useEffect(()=>{
     if(!user?._id)return;
     let next = getAnotherUserMethod(chat.users,user._id)
+    if(!next)return;
     setNextuser(next)
   },[chat,user])
 
@@ -34,7 +35,7 @@ const ChatUser:React.FC<ChatUserPropsType> = ({chat}) => {
     <ChatUserWrapper onClick={handleGotoChat}>
         <img src={nextuser?.image} alt="" />
             <div className="chatUser">
-                <h3 className="username">{nextuser?.firstName}</h3>
+                <h3 className="username">{`${nextuser?.firstName} ${nextuser?.lastName}`}</h3>
                 <p className="message"> {chat.latestMessage?.text}</p>
         </div>
     </ChatUserWrapper>

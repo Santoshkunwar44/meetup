@@ -4,7 +4,7 @@ export const FriendItemWrapper = styled.div`
 display: flex;
 width: 100%;
 justify-content: space-between;
-padding: 1.5rem ;
+padding: 1rem;
 align-items: center;
 border-bottom: 1px solid #4f597b24;
 /* background-color:#3e439b1a; */
@@ -13,8 +13,8 @@ border-bottom: 1px solid #4f597b24;
     gap: 0.5rem;
 
     img{
-        width: 55px;
-        height: 55px;
+        width: 45px;
+        height: 45px;
         border-radius: 50%;
         object-fit: cover;
         padding: 4px;

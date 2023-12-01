@@ -18,7 +18,7 @@ type NewMessagePayloadType={
 // user endpoints
 
 export const fetchUserByIdApi=(userId:string)=>AxiosInstance.get(`/user/search?userId=${userId}`)
-
+export const searchUserByUsernameApi=(username:string)=>AxiosInstance.get(`/user/search?search_query=${username}`)
 
 // chats endpoints 
 

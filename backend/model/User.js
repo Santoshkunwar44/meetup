@@ -28,6 +28,18 @@ const ChatSchema = mongoose.Schema({
         type:String,
         default:false
     },
+    followers:[
+        {
+            type:mongoose.Schema.Types.ObjectId,
+            ref:"User"
+        }
+    ],
+    follwings:[
+        {
+            type:mongoose.Schema.Types.ObjectId,
+            ref:"User"
+        }
+    ],
     lastLoggedIn:{
         type:Number
     }
