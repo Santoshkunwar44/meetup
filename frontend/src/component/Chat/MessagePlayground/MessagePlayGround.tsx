@@ -2,25 +2,14 @@ import MessageItem from '../../message/MessageItem'
 import StartChat from '../StartChat/StartChat'
 import { MessagePlayGroundWrapper } from './MessagePlayGround.styles'
 
-const MessagePlayGround = () => {
+const MessagePlayGround = ({messages}) => {
   return (
     <MessagePlayGroundWrapper>
-
-      <StartChat/>
+      {
+       messages &&  messages?.length >0 ? messages?.map(msg=><MessageItem data={msg} key={msg?._id}/>):<StartChat/>
+      }
       
-      {/* <MessageItem own={true} />
-      <MessageItem own={false}/>
-      <MessageItem own={true}/>
-      <MessageItem own={true}/>
-      <MessageItem own={false}/>
-      <MessageItem own={false}/>
-      <MessageItem own={true}/>
-      <MessageItem own={true}/>
-      <MessageItem own={false}/>
-      <MessageItem own={false}/>
-      <MessageItem own={true}/>
-      <MessageItem own={true}/>
-      <MessageItem own={false}/> */}
+     
     </MessagePlayGroundWrapper>
   )
 }

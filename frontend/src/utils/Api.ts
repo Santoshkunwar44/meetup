@@ -6,6 +6,15 @@ export const AxiosInstance=axios.create({
 })
 
 
+// user endpoints
+
+export const fetchUserByIdApi=(userId:string)=>AxiosInstance.get(`/user/search?userId=${userId}`)
+
+
+// chats endpoints 
+
+export const fetchChatsOfUserApi =(userId:string)=>AxiosInstance.get(`/chat/${userId}`)
+export const fetchChatsOfBothUsersApi =(user1:string,user2:string)=>AxiosInstance.get(`/chat/byUsersId/${user1}/${user2}`)
 
 // auth endpoints 
 
@@ -17,4 +26,8 @@ export const  resetPasswordApi=(password:string,token:string)=>AxiosInstance.pos
 export const registerApi=(payload:{email:string,firstName:string,lastName:string,password:string})=>AxiosInstance.post(`/auth/register`,payload)
 
 
+
+// message endpoint 
+
+export const fetchMessagesFromChatApi=(chatId:string)=>AxiosInstance.get(`/message?chatId=${chatId}`)
 

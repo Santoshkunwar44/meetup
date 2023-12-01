@@ -4,7 +4,7 @@ import { SlOptionsVertical } from "react-icons/sl";
 import ChatSettingPopover from '../../Popover/chatSetting/ChatSettingPopover';
 
 
-const ChatHeader = () => {
+const ChatHeader = ({nextUser}) => {
   return (
     <ChatHeaderWrapper>
       <div className="headerLeft">
@@ -17,7 +17,7 @@ const ChatHeader = () => {
         <img src="https://images.pexels.com/photos/18500499/pexels-photo-18500499/free-photo-of-first-upload-for-you-all-pexels-family.jpeg?auto=compress&cs=tinysrgb&w=800" alt="" />
         <div className="userInfo">
 
-        <h3 className='chatUsername'>Facebook sathyy</h3>
+        <h3 className='chatUsername'>{nextUser?.firstName}</h3>
         <p className='statusText'>Typing...</p>
         </div>
       </div>

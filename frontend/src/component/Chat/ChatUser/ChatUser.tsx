@@ -1,19 +1,34 @@
 import { useNavigate } from "react-router-dom"
 import { ChatUserWrapper } from "./ChatUser.styles"
+import { getAnotherUserMethod } from "../../../utils/methods";
+import { useEffect, useState } from "react";
 
-const ChatUser = () => {
+const ChatUser = ({chat}) => {
   const navigate =useNavigate()
+  const [nextuser,setNextuser] = useState(null)
+
+  let userId = "65688497ac49674e01874450";
+
+  useEffect(()=>{
+    let next = getAnotherUserMethod(chat.users,userId)
+    setNextuser(next)
+
+  },[chat,userId])
+
+
+
+
 
 
   const handleGotoChat=()=>{
-    navigate("2342423")
+    navigate(`${nextuser?._id}`)
   }
   return (
     <ChatUserWrapper onClick={handleGotoChat}>
-        <img src="https://images.pexels.com/photos/14192319/pexels-photo-14192319.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2" alt="" />
+        <img src={nextuser?.image} alt="" />
             <div className="chatUser">
-                <h3 className="username">Kyle Stack</h3>
-                <p className="message">Hello santosh !</p>
+                <h3 className="username">{nextuser?.firstName}</h3>
+                <p className="message"> {chat.latestMessage?.text}</p>
         </div>
     </ChatUserWrapper>
   )
