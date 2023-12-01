@@ -1,19 +1,21 @@
 import { useEffect, useState } from 'react'
 import { MessageItemWrapper } from './MessageItem.styles'
 import { MessageType } from '../../utils/Types'
+import { useSelector } from 'react-redux'
+import { State } from '../../redux/reducers'
 type MessagteItemType={
   data:MessageType
 }
 const MessageItem:React.FC<MessagteItemType> = ({data}) => {
 
   const [own,setOwn] = useState<boolean|null>(null)
-  const userId = "65688497ac49674e01874450";
+  const {user} = useSelector((state:State)=>state.user)
 
 
   useEffect(()=>{
 
-    if(data?.senderId && userId){
-      if(data?.senderId?._id ===userId){
+    if(data?.senderId && user?._id){
+      if(data?.senderId?._id ===user._id){
         setOwn(true)
       }else{
         setOwn(false)
@@ -21,7 +23,7 @@ const MessageItem:React.FC<MessagteItemType> = ({data}) => {
       }
     }
 
-  },[userId,data])
+  },[user,data])
 
 
   return (

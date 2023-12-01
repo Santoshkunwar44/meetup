@@ -3,7 +3,9 @@ const morgan = require("morgan")
 const cors = require("cors")
 const app = express()
 const session = require("express-session");
-const cookieParser = require("cookie-parser")
+const cookieParser = require("cookie-parser");
+const { hashPassword } = require("./services/AuthService");
+
 
 
 require("dotenv").config();
@@ -33,10 +35,14 @@ app.use(session({
     }
 }))
 
+
+
 require('./routes/AllRoutes')(app)
 
 
 
 
 
+
 app.listen(8000,()=>console.log(`server started...`))
+

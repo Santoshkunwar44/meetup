@@ -7,18 +7,19 @@ import { ChatRoomWrapper } from './ChatRoom.styles'
 import { fetchChatsOfBothUsersApi, fetchMessagesFromChatApi, fetchUserByIdApi } from '../../../utils/Api'
 import { useEffect, useId, useState } from 'react'
 import { ChatType, MessageType, UserType } from '../../../utils/Types'
+import { useSelector } from 'react-redux'
+import { State } from '../../../redux/reducers'
 
 const ChatRoom = () => {
   const {id}  = useParams()
   const [nextuser,setNextuser] = useState<UserType|null>(null);
   const [chat,setChat] = useState<ChatType|null>(null)
   const [messages,setMessages] = useState<MessageType[] | null>(null)
-  const userId = "65688497ac49674e01874450"
-
+  const {user} =useSelector((state:State)=>state.user)
   useEffect(()=>{
     getUserById()
     getChatsOfBothusers()
-  },[id,userId])
+  },[id,user])
 
   useEffect(()=>{
     if(!chat?._id)return;
@@ -26,7 +27,6 @@ const ChatRoom = () => {
      
   },[chat])
 
-console.log(chat)
 
    const getUserById=async()=>{
     if(!id)return;
@@ -36,10 +36,10 @@ console.log(chat)
     }
    }
    const getChatsOfBothusers=async()=>{
-    if(!id)return;
+    if(!id || !user?._id)return;
 
     try {
-     const {data,status} =  await fetchChatsOfBothUsersApi(id,userId)
+     const {data,status} =  await fetchChatsOfBothUsersApi(id,user._id)
      if(status===200){
       setChat(data.message)
      }

@@ -5,6 +5,10 @@ import * as Yup from "yup"
 import { useState } from "react";
 import { loginApi } from "../../../utils/Api";
 import useAlert from "../../../hooks/useAlert";
+import { useDispatch, useSelector } from "react-redux";
+import { State } from "../../../redux/reducers";
+import { bindActionCreators } from "redux";
+import { actionCreators } from "../../../redux";
 
 
 
@@ -13,8 +17,8 @@ const Login = () => {
     const [loading,setLoading] =useState(false)
     const navigate  = useNavigate()
     const {notify} = useAlert()
-
-
+    const dispatch =useDispatch()
+    const {AddUserAction} = bindActionCreators(actionCreators,dispatch)
 
 interface formValues{
    
@@ -102,8 +106,9 @@ const InnerForm=(props:otherProps & FormikProps<formValues>)=>{
    const handleLogin=async(loginValue :formValues)=>{
     setLoading(true)
     try {
-      const {status} =   await loginApi(loginValue)
+      const {status,data} =   await loginApi(loginValue)
       if(status===200){
+        AddUserAction(data.message)
         notify("Login successfull","success")
         navigate("/")
       }

@@ -3,6 +3,8 @@ import { ChatUserWrapper } from "./ChatUser.styles"
 import { getAnotherUserMethod } from "../../../utils/methods";
 import { useEffect, useState } from "react";
 import { ChatType, UserType } from "../../../utils/Types";
+import { useSelector } from "react-redux";
+import { State } from "../../../redux/reducers";
 
 type ChatUserPropsType={
   chat:ChatType
@@ -12,12 +14,13 @@ const ChatUser:React.FC<ChatUserPropsType> = ({chat}) => {
 
   const navigate =useNavigate()
   const [nextuser,setNextuser] = useState<UserType|null>(null)
-  let userId = "65688497ac49674e01874450";
+  const {user} =useSelector((state:State)=>state.user)
 
   useEffect(()=>{
-    let next = getAnotherUserMethod(chat.users,userId)
+    if(!user?._id)return;
+    let next = getAnotherUserMethod(chat.users,user._id)
     setNextuser(next)
-  },[chat,userId])
+  },[chat,user])
 
 
 

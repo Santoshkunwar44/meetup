@@ -3,12 +3,16 @@ import ChatUser from "../ChatUser/ChatUser"
 import { ChatBoxWrapper } from "./ChatBox.styles"
 import { HiSearch } from "react-icons/hi";
 import { fetchChatsOfUserApi } from "../../../utils/Api";
+import { useSelector } from "react-redux";
+import { State } from "../../../redux/reducers";
+import { ChatType } from "../../../utils/Types";
 
 
 const ChatBox = () => {
 
-  const [chats,setChats] =useState([])
-  let userId = '65688497ac49674e01874450'
+  const [chats,setChats] =useState<ChatType[]>([])
+  const {user} = useSelector((state:State)=>state.user)
+
 
 
   useEffect(()=>{
@@ -17,10 +21,10 @@ const ChatBox = () => {
 
   const getAllMyChats=async()=>{
 
-    if(!userId)return;
+    if(!user?._id)return;
 
     try {
-     const {status,data} =  await fetchChatsOfUserApi(userId)
+     const {status,data} =  await fetchChatsOfUserApi(user?._id)
      if(status===200){
       setChats(data.message)
      }
@@ -36,7 +40,7 @@ const ChatBox = () => {
         <div className="searchUser">
           <div className="inputBox">
             <HiSearch/>
-            <input type="text" name="" id=""  placeholder="search chats"/>
+            <input type="text"   placeholder="search chats"/>
           </div>
         </div>
         <div className="chatWrapper">
