@@ -2,17 +2,21 @@ import { useNavigate } from "react-router-dom"
 import { ChatUserWrapper } from "./ChatUser.styles"
 import { getAnotherUserMethod } from "../../../utils/methods";
 import { useEffect, useState } from "react";
+import { ChatType, UserType } from "../../../utils/Types";
 
-const ChatUser = ({chat}) => {
+type ChatUserPropsType={
+  chat:ChatType
+}
+const ChatUser:React.FC<ChatUserPropsType> = ({chat}) => {
+
+
   const navigate =useNavigate()
-  const [nextuser,setNextuser] = useState(null)
-
+  const [nextuser,setNextuser] = useState<UserType|null>(null)
   let userId = "65688497ac49674e01874450";
 
   useEffect(()=>{
     let next = getAnotherUserMethod(chat.users,userId)
     setNextuser(next)
-
   },[chat,userId])
 
 

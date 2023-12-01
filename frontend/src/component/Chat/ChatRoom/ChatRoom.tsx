@@ -6,12 +6,13 @@ import MessagePlayGround from '../MessagePlayground/MessagePlayGround'
 import { ChatRoomWrapper } from './ChatRoom.styles'
 import { fetchChatsOfBothUsersApi, fetchMessagesFromChatApi, fetchUserByIdApi } from '../../../utils/Api'
 import { useEffect, useId, useState } from 'react'
+import { ChatType, MessageType, UserType } from '../../../utils/Types'
 
 const ChatRoom = () => {
   const {id}  = useParams()
-  const [nextuser,setNextuser] = useState(null);
-  const [chat,setChat] = useState(null)
-  const [messages,setMessages] = useState(null)
+  const [nextuser,setNextuser] = useState<UserType|null>(null);
+  const [chat,setChat] = useState<ChatType|null>(null)
+  const [messages,setMessages] = useState<MessageType[] | null>(null)
   const userId = "65688497ac49674e01874450"
 
   useEffect(()=>{

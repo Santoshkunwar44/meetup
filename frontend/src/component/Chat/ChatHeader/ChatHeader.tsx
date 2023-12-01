@@ -2,13 +2,20 @@ import { ChatHeaderWrapper } from './ChatHeader.styles'
 import { IoMdArrowRoundBack } from "react-icons/io";
 import { SlOptionsVertical } from "react-icons/sl";
 import ChatSettingPopover from '../../Popover/chatSetting/ChatSettingPopover';
+import { useNavigate } from 'react-router-dom';
+import React from 'react';
+import { UserType } from '../../../utils/Types';
 
 
-const ChatHeader = ({nextUser}) => {
+type ChatHeaderPropsType={
+  nextUser:UserType |null,
+}
+const ChatHeader:React.FC<ChatHeaderPropsType> = ({nextUser}) => {
+  const navigate  = useNavigate()
   return (
     <ChatHeaderWrapper>
       <div className="headerLeft">
-      <div className="backButton">
+      <div className="backButton" onClick={()=>navigate(-1)}>
 
       <IoMdArrowRoundBack className="goBackButton"/>
       </div>

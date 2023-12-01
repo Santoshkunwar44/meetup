@@ -16,6 +16,8 @@ import ResetPassword from './pages/Auth/ResetPassword/ResetPassword'
 import {Toaster} from "react-hot-toast"
 import DisplayInfo from './pages/Auth/DisplayInfo/DisplayInfo'
 import InfoOutlet from './component/Outlets/InfoOutlet/InfoOutlet'
+import { useSelector } from 'react-redux'
+import { State } from './redux/reducers'
 
 function App() {
   return (
@@ -57,8 +59,9 @@ export default App;
 
 const ProtectedRoutes =()=>{
 
-  let user = true;
+  const {user} = useSelector((state:State)=>state.user)
 
   return user ? <Outlet/> :<Navigate to={"/auth/login"}/>
 
 }
+
