@@ -1,7 +1,8 @@
 import {styled} from "styled-components"
 
-export const SidebarWrapper = styled.div`
+export const ProfileSectionWrapper = styled.div`
 
 flex: 3;
+
 
 `

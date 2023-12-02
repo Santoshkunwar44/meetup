@@ -19,8 +19,18 @@ import InfoOutlet from './component/Outlets/InfoOutlet/InfoOutlet'
 import { useSelector } from 'react-redux'
 import { State } from './redux/reducers'
 import Followers from './component/Friends/Followers/Followers'
+import useUpdateApp from './hooks/useUpdateApp'
+import { useEffect } from 'react'
+import Profile from './pages/Profile/Profile'
 
 function App() {
+  const {fetchUser} = useUpdateApp()
+  const {refresh} = useSelector((state:State)=>state.other)
+  useEffect(()=>{
+    fetchUser()
+  },[refresh])
+
+
   return (
     <>
     <Toaster/>
@@ -29,6 +39,7 @@ function App() {
 
             <Route path='/' element={<Navigate to={"/chat"}/>}/>
             <Route path='/users' element={<FriendsOutlet/>}>
+                <Route path=':id' element={<Profile/>}/>
                 <Route path='' element={<AllFriends/>}/>
                 <Route path='followings' element={<Followings/>}/>
                 <Route path='followers' element={<Followers/>}/>
@@ -49,8 +60,7 @@ function App() {
           </Route>
             <Route path='/info' element={<InfoOutlet/>}>
             <Route path='verify_email_sent' element={<DisplayInfo/>}/>
-
-            
+            <Route path='verifyEmail' element={<DisplayInfo/>}/>
           </Route>
       </Routes>
     </>

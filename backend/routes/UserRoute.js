@@ -6,8 +6,8 @@ const router = require("express").Router()
 router.get("/loggedInUser", getLoggedInUser)
 router.put("/:userId", updateUser)
 router.get("/search", searchUser)
-router.get("/follow", followerUser)
-router.get("/unfollow", unfollowUser)
+router.post("/follow", followerUser)
+router.post("/unfollow", unfollowUser)
 router.get("/suggestion/:userId",suggestionUser)
 
 

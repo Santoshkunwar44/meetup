@@ -3,7 +3,10 @@ import { UserType } from '../../../utils/Types'
 import { FriendItemWrapper } from './FriendItem.styles'
 import { useNavigate } from 'react-router-dom'
 import { State } from '../../../redux/reducers'
-import { useSelector } from 'react-redux'
+import { useDispatch, useSelector } from 'react-redux'
+import { followUserApi } from '../../../utils/Api'
+import { bindActionCreators } from 'redux'
+import { actionCreators } from '../../../redux'
 type FriendItemPropsType={
   user:UserType,
   chat?:boolean
@@ -14,8 +17,14 @@ const FriendItem:React.FC<FriendItemPropsType> = ({user,chat}) => {
   const { user:loggedInUser } = useSelector((state: State) => state.user);
   const [hasIFollowed, setHasIFollowed] = useState<boolean | null>(null);
   const [hasTheyFollowed, setHasTheyFollowed] = useState<boolean | null>(null);
+  const dispatch =useDispatch()
+  const {refreshAction} = bindActionCreators(actionCreators,dispatch)
 
-  console.log("logggedin in user",loggedInUser)
+
+  console.log(user,hasIFollowed,hasTheyFollowed,loggedInUser)
+
+
+  
   useEffect(() => {
     if(!loggedInUser || !user._id)return;
     // Check if the logged-in user follows the displayed user
@@ -25,12 +34,23 @@ const FriendItem:React.FC<FriendItemPropsType> = ({user,chat}) => {
   }, [loggedInUser, user]);
 
     const handleFollow = async () => {
-    // Implement your follow logic here
+      if(!loggedInUser?._id)return;
+      try {
+       const {status,data}  = await followUserApi(loggedInUser?._id,user._id)
+       if(status===200){
+        setHasIFollowed(true)
+        refreshAction()
+       }
+      } catch (error) {
+        console.log(error)
+      }
   };
 
   const handleClick = () => {
     // Handle click logic, e.g., navigate to user profile
-    navigate(`${user?._id}`);
+    if(chat){
+      navigate(`${user?._id}`);
+    }
   };
 
 
@@ -44,6 +64,7 @@ const FriendItem:React.FC<FriendItemPropsType> = ({user,chat}) => {
       // Neither follows each other
       return <button onClick={handleFollow}>Follow</button>;
     } else if (hasIFollowed && !hasTheyFollowed) {
+      
       // Logged-in user follows, but displayed user doesn't follow back
       return <button disabled>Following</button>; // You can handle an unfollow logic here
     } else if (!hasIFollowed && hasTheyFollowed) {

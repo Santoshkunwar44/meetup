@@ -125,7 +125,7 @@ const InnerForm=(props:otherProps & FormikProps<formValues>)=>{
   return (
    <AuthWrapper>
         <div className="topBar">
-           <Link to={"/auth/login"}>
+           <Link to={"/auth/register"}>
            
             <button className="topbarButton">
                 Sign up

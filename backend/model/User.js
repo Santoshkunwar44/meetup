@@ -28,6 +28,9 @@ const ChatSchema = mongoose.Schema({
         type:String,
         default:false
     },
+    bio:{
+        type:String,
+    },
     followers:[
         {
             type:mongoose.Schema.Types.ObjectId,

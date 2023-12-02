@@ -27,8 +27,8 @@ class UserController {
 
                 keyword = req.query.search_query ? {
                     $or: [
-                        { username: { $regex: req.query.search_query, $options: "i" } },
-                        { email: { $regex: req.query.search_query, $options: "i" } },
+                        { firstName: { $regex: req.query.search_query, $options: "i" } },
+                        { lastName: { $regex: req.query.search_query, $options: "i" } },
                     ]
                 } : {}
 
@@ -130,7 +130,7 @@ class UserController {
                 _id:{
                     $ne:userId
                 }
-            })
+            }).populate(["followings","followers"])
 
             res.status(200).send({message:suggestionUser,success:true});
             
