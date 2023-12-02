@@ -17,8 +17,7 @@ const ChatInput =() => {
   const {chat,nextUser} = useSelector((state:State)=>state.app)
   const {notify} = useAlert()
   const dispatch  = useDispatch()
-  const {refreshAction ,AddNewMessageAction} = bindActionCreators(actionCreators,dispatch)
-
+  const {refreshAction ,AddNewMessageAction,AddChatAction} = bindActionCreators(actionCreators,dispatch)
 
 
   const handleSentMessage=async()=>{
@@ -49,16 +48,17 @@ const ChatInput =() => {
       const {data,status } = await createNewMessageApi(newMessagePayload)
 
       if(status===200){
+        let chat = data.message.chatId;
+        AddChatAction(chat)
         AddNewMessageAction(data.message)
         setMessageInput("")
       }
-
       }else{
         
         const {data,status} = await createMessageApi(messagePayload)
         if(status===200){
-        AddNewMessageAction(data.message)
-        setMessageInput("")
+        AddNewMessageAction(data.message);
+        setMessageInput("");
       }
       }
       refreshAction()

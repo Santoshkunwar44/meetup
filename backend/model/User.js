@@ -34,7 +34,7 @@ const ChatSchema = mongoose.Schema({
             ref:"User"
         }
     ],
-    follwings:[
+    followings:[
         {
             type:mongoose.Schema.Types.ObjectId,
             ref:"User"

@@ -13,6 +13,7 @@ const ChatHeader = () => {
   const {nextUser} = useSelector((state:State)=>state.app)
   const navigate  = useNavigate()
 
+
   return (
     <ChatHeaderWrapper>
       <div className="headerLeft">
@@ -25,7 +26,7 @@ const ChatHeader = () => {
         <img src="https://images.pexels.com/photos/18500499/pexels-photo-18500499/free-photo-of-first-upload-for-you-all-pexels-family.jpeg?auto=compress&cs=tinysrgb&w=800" alt="" />
         <div className="userInfo">
 
-        <h3 className='chatUsername'>{nextUser?.firstName}</h3>
+        <h3 className='chatUsername'>{`${nextUser?.firstName} ${nextUser?.lastName}`}</h3>
         <p className='statusText'>Typing...</p>
         </div>
       </div>

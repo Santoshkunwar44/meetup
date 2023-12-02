@@ -1,18 +1,61 @@
-import React from 'react'
+import React, { useEffect, useState } from 'react'
 import { UserType } from '../../../utils/Types'
 import { FriendItemWrapper } from './FriendItem.styles'
 import { useNavigate } from 'react-router-dom'
+import { State } from '../../../redux/reducers'
+import { useSelector } from 'react-redux'
 type FriendItemPropsType={
   user:UserType,
-  chat:boolean
+  chat?:boolean
 }
 const FriendItem:React.FC<FriendItemPropsType> = ({user,chat}) => {
-  const navigate = useNavigate()
-  const handleClick=()=>{
-    if(chat){
-      navigate(`${user?._id}`)
+  const navigate = useNavigate();
+
+  const { user:loggedInUser } = useSelector((state: State) => state.user);
+  const [hasIFollowed, setHasIFollowed] = useState<boolean | null>(null);
+  const [hasTheyFollowed, setHasTheyFollowed] = useState<boolean | null>(null);
+
+  console.log("logggedin in user",loggedInUser)
+  useEffect(() => {
+    if(!loggedInUser || !user._id)return;
+    // Check if the logged-in user follows the displayed user
+    setHasIFollowed(loggedInUser.followings?.some(u=>u._id===user._id));
+    // Check if the displayed user follows the logged-in user
+    setHasTheyFollowed(user.followings?.some(u=>u._id===loggedInUser._id))
+  }, [loggedInUser, user]);
+
+    const handleFollow = async () => {
+    // Implement your follow logic here
+  };
+
+  const handleClick = () => {
+    // Handle click logic, e.g., navigate to user profile
+    navigate(`${user?._id}`);
+  };
+
+
+  const renderButton = () => {
+    if (hasIFollowed === null || hasTheyFollowed === null) {
+      // Loading state or error state
+      return <button disabled>Loading...</button>;
     }
-  }
+
+    if (!hasIFollowed && !hasTheyFollowed) {
+      // Neither follows each other
+      return <button onClick={handleFollow}>Follow</button>;
+    } else if (hasIFollowed && !hasTheyFollowed) {
+      // Logged-in user follows, but displayed user doesn't follow back
+      return <button disabled>Following</button>; // You can handle an unfollow logic here
+    } else if (!hasIFollowed && hasTheyFollowed) {
+      // Displayed user follows, but logged-in user doesn't follow back
+      return <button onClick={handleFollow}>Follow Back</button>;
+    } else {
+      // Both follow each other
+      return <button disabled>Friends</button>;
+    }
+  };
+
+
   return (
     <FriendItemWrapper onClick={handleClick}>
         <div className="leftItem">
@@ -20,10 +63,10 @@ const FriendItem:React.FC<FriendItemPropsType> = ({user,chat}) => {
         <img src={user?.image} alt="userProfile" />
         <div className="userInfo">
             <h3 className='username'>{`${user?.firstName} ${user?.lastName}`}</h3>
-            <p className='followersCount'>{user?.followers?.length}</p>
+            <p className='followersCount'>{user?.followers?.length ?? 0 } Followers</p>
         </div>
         </div>
-       { !chat && <button>Follow </button>}
+       { !chat && renderButton()}
     </FriendItemWrapper>
   )
 }

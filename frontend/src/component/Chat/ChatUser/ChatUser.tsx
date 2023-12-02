@@ -16,13 +16,14 @@ const ChatUser:React.FC<ChatUserPropsType> = ({chat}) => {
   const [nextuser,setNextuser] = useState<UserType|null>(null)
   const {user} =useSelector((state:State)=>state.user)
 
+
+
   useEffect(()=>{
     if(!user?._id)return;
     let next = getAnotherUserMethod(chat.users,user._id)
     if(!next)return;
     setNextuser(next)
   },[chat,user])
-
 
 
 

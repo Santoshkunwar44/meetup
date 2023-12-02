@@ -9,6 +9,9 @@ border-radius: 1rem;
 padding-top:1rem;
 gap: 1rem;
 overflow: scroll;
+.title{
+    text-align: center;
+}
 .searchUser{
     margin: 0 auto;
     width: 92%;

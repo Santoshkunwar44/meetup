@@ -36,7 +36,7 @@ export const AddChatAction = (payload:ChatType|null) => (dispatch: Dispatch) => 
 }
 export const AddMessageAction = (payload:MessageType[]) => (dispatch: Dispatch) => {
     return dispatch({
-        type: ActionTypes.REFRESH,
+        type: ActionTypes.ADD_MESSAGE,
         payload
     })
 }

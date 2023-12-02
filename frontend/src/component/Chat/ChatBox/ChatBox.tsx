@@ -67,10 +67,9 @@ const ChatBox = () => {
       const {data,status} = await  searchUserByUsernameApi(searchInput)
       if(status===200){
         let users:UserType[] = data.message;
-       const filteredUsers =   users.filter(u=>chats.find(chat=>{
-          let nextUser= getAnotherUserMethod(chat.users,user?._id);
-          return (nextUser?._id !== u._id && u._id !== user?._id)
-        }))
+      const filteredUsers = users.filter(u => u._id !== user._id && !chats.some(chat => chat._id === user._id)
+)
+
         setSearchedFriends(filteredUsers)
       }
     } catch (error) {
@@ -95,11 +94,18 @@ const ChatBox = () => {
            :   chats.map(chat=><ChatUser  chat={chat} key={chat._id}/>)
            }
         </div>
-        <div className="friendsWrapper">
+           
+      {  searchInput.length >0 && <>
+      
+      
+         <h3 className="title">Friends</h3>
+         <div className="friendsWrapper">
           {
-           searchInput.length  > 0 &&  searchedFriends.map(friend=><FriendItem chat={true} user={friend} key={friend._id}/>)
+            searchedFriends.map(friend=><FriendItem chat={true} user={friend} key={friend._id}/>)
           }
         </div>
+          </>
+        }
 
         
 

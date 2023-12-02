@@ -31,16 +31,14 @@ const ChatRoom = () => {
 
   useEffect(()=>{
     if(!chat?._id)return;
-    // getMessagesOfusers()
-     
+    getMessagesOfusers()
   },[chat])
-
 
    const getUserById=async()=>{
     if(!id)return;
     const {data,status} =await fetchUserByIdApi(id)
     if(status===200){
-      AddNextUserAction(data.message)
+      AddNextUserAction(data.message[0])
     }
    }
    const getChatsOfBothusers=async()=>{

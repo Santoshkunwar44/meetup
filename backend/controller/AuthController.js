@@ -26,7 +26,7 @@ class AuthController {
         const { password: user_password, email } = req.body
         console.log("logggin")
         try {
-            const user = await UserModal.findOne({ email })
+            const user = await UserModal.findOne({ email }).populate(["followings","followers"])
             if (!user)  throw Error("This email is not registered in Meetup")
             const { password, ...others } = user._doc;
             const isValid = await comparePassword(user_password, password)
@@ -174,6 +174,7 @@ class AuthController {
         next(error)
     }
   }
+
 
 }
 module.exports = new AuthController()
