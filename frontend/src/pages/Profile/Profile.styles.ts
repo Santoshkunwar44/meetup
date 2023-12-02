@@ -7,5 +7,6 @@ export const ProfileWrapper = styled.div`
     width: 100%;
     background-color:var(--dark_color) ;
     padding: 1rem;
+    
 
 `

@@ -10,12 +10,15 @@ import { MdBlock } from "react-icons/md";
 import { MdOutlineDelete } from "react-icons/md";
 import { FaRegUser } from "react-icons/fa";
 import ConfirmModal from '../../Modal/confirm/ConfirmModal';
+import { Link } from 'react-router-dom';
+import { UserType } from '../../../utils/Types';
 
 type ChatSettingPopoverType={
-    children:React.ReactNode 
+    children:React.ReactNode ,
+    user:UserType|null
 }
 
-const ChatSettingPopover:React.FC<ChatSettingPopoverType>=({children}) => {
+const ChatSettingPopover:React.FC<ChatSettingPopoverType>=({children ,user}) => {
 
  
     const handleDeleteChat=async()=>{
@@ -30,11 +33,11 @@ const ChatSettingPopover:React.FC<ChatSettingPopoverType>=({children}) => {
   </PopoverTrigger>
   <PopoverContent>
         <ChatSettingPopoverWrapper className="chatSettingList">
-            <div className="settingItem">
+            <Link to={`/profile/${user?._id}`} className="settingItem">
                 <FaRegUser/>
                 <p>Visit profile</p>
                 
-            </div>
+            </Link>
             <div className="settingItem">
                 <MdBlock/>
                 <p>Block user</p>

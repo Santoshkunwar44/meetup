@@ -11,12 +11,11 @@ border-radius: 1rem;
     display: flex;
     flex-direction: column;
     .sidebarItem{
-        height: 65px;
+        height: 70px;
         display: flex;
-        gap: 0.5rem;
+        gap: 1rem;
         cursor: pointer;
         padding: 1rem 2rem;
-
         align-items: center;
 
         span{

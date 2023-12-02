@@ -5,6 +5,7 @@ import { useSelector } from 'react-redux';
 import { State } from '../../redux/reducers';
 import { TbLogout2 } from "react-icons/tb";
 import { LuUsers2 } from "react-icons/lu";
+import { Link } from 'react-router-dom';
 
 
 
@@ -13,23 +14,23 @@ const Sidebar = () => {
   return (
     <SidebarWrapper>
         <div className="sidebarList">
-          <div className="sidebarItem">
+          <Link className="sidebarItem" to={"/chat"}>
             <TbBrandMessenger className="sidebarIcon"/>
             <span>Messenger</span>
-          </div>
-          <div className="sidebarItem">
+          </Link>
+          <Link to={"/users"} className="sidebarItem">
             <LuUsers2 className="sidebarIcon"/>
             <span>Friends</span>
-          </div>
-          <div className="sidebarItem">
+          </Link>
+          <Link className="sidebarItem" to={"/users"}>
             <IoSearch className="sidebarIcon"/>
             <span>Search</span>
-          </div>
+          </Link>
       
-          <div className="sidebarItem">
+          <Link className="sidebarItem" to={`/profile/${user?._id}`}>
             <img className='profileImage' src={user?.image} alt="" />
             <span>Profile</span>
-          </div>
+          </Link>
         </div>
         <div className="logoutBtn">
             <TbLogout2/>

@@ -23,7 +23,7 @@ const ChatHeader = () => {
       </div>
         
       <div className="chatUser">
-        <img src="https://images.pexels.com/photos/18500499/pexels-photo-18500499/free-photo-of-first-upload-for-you-all-pexels-family.jpeg?auto=compress&cs=tinysrgb&w=800" alt="" />
+        <img src={nextUser?.image} alt="" />
         <div className="userInfo">
 
         <h3 className='chatUsername'>{`${nextUser?.firstName} ${nextUser?.lastName}`}</h3>
@@ -33,7 +33,7 @@ const ChatHeader = () => {
       </div>
       <div className='chatAction'>
 
-    <ChatSettingPopover>
+    <ChatSettingPopover user={nextUser}>
       <SlOptionsVertical className="optionButton"/>
     </ChatSettingPopover>
 

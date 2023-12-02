@@ -4,6 +4,7 @@ import { useEffect, useState } from 'react';
 import { UserType } from '../../../utils/Types';
 import { useParams } from 'react-router-dom';
 import { fetchUserByIdApi } from '../../../utils/Api';
+import SuggestedBox from '../SuggestedPeople/SuggestedBox';
 
 const ProfileSection = () => {
     const {id} = useParams();
@@ -29,6 +30,7 @@ const ProfileSection = () => {
   return (
     <ProfileSectionWrapper>
             <ProfileCard user={userData}/>
+            <SuggestedBox/>
     </ProfileSectionWrapper>
   )
 }
