@@ -38,8 +38,8 @@ function App() {
         <Route  element={<ProtectedRoutes/>}>
 
             <Route path='/' element={<Navigate to={"/chat"}/>}/>
+            <Route path='/profile/:id' element={<Profile/>}/>
             <Route path='/users' element={<FriendsOutlet/>}>
-                <Route path=':id' element={<Profile/>}/>
                 <Route path='' element={<AllFriends/>}/>
                 <Route path='followings' element={<Followings/>}/>
                 <Route path='followers' element={<Followers/>}/>

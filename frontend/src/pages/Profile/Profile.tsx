@@ -7,26 +7,7 @@ import Sidebar from '../../component/sidebar/Sidebar';
 import ProfileSection from '../../component/Profile/ProfileSection/ProfileSection';
 
 const Profile = () => {
-    const {id} = useParams();
-    const [userData,setUserData] = useState<UserType|null>(null)
-
-
-    useEffect(()=>{
-        getUserProfileData()
-    },[])
-
-
-    const getUserProfileData=async()=>{
-        if(!id)return 
-        try {
-          const  {status,data} = await  fetchUserByIdApi(id);
-          if(status===200){
-            setUserData(data.message[0]);
-          }
-        } catch (error) {
-            console.log(error)
-        }
-    }
+  
   return (
     <ProfileWrapper>
 

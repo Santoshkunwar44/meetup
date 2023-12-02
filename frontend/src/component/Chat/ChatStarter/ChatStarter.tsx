@@ -10,7 +10,7 @@ const ChatStarter = () => {
        <div className="content">
         <img src="/starter.png" />
         <h1 className="starterText">Start Chatting with your loved ones !</h1>
-       <Link to={`/users/${user?._id}`}>
+       <Link to={`/profile/${user?._id}`}>
         <button className="findButton">Find more friends .</button>
        </Link>
        </div>
