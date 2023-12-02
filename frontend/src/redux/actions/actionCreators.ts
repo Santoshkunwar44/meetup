@@ -1,7 +1,7 @@
 import { Dispatch } from "redux";
 import { ActionTypes } from "./actionTypes"
 import { Action } from "./index";
-import { UserType } from "../../utils/Types";
+import { ChatType, MessageType, UserType } from "../../utils/Types";
 
 export const AddUserAction = (payload: UserType) => (dispatch: Dispatch<Action>) => {
 
@@ -20,5 +20,29 @@ export const RemoveUserAction = () => (dispatch: Dispatch) => {
 export const refreshAction = () => (dispatch: Dispatch) => {
     return dispatch({
         type: ActionTypes.REFRESH
+    })
+}
+export const AddNextUserAction = (payload:UserType) => (dispatch: Dispatch) => {
+    return dispatch({
+        type: ActionTypes.ADD_NEXT_USER,
+        payload,
+    })
+}
+export const AddChatAction = (payload:ChatType|null) => (dispatch: Dispatch) => {
+    return dispatch({
+        type: ActionTypes.ADD_CHAT,
+        payload
+    })
+}
+export const AddMessageAction = (payload:MessageType[]) => (dispatch: Dispatch) => {
+    return dispatch({
+        type: ActionTypes.REFRESH,
+        payload
+    })
+}
+export const AddNewMessageAction=(payload:MessageType) => (dispatch: Dispatch) => {
+    return dispatch({
+        type: ActionTypes.ADD_NEW_MESSAGE,
+        payload
     })
 }

@@ -5,24 +5,23 @@ import ChatInput from '../ChatInput/ChatInput'
 import MessagePlayGround from '../MessagePlayground/MessagePlayGround'
 import { ChatRoomWrapper } from './ChatRoom.styles'
 import { fetchChatsOfBothUsersApi, fetchMessagesFromChatApi, fetchUserByIdApi } from '../../../utils/Api'
-import { useEffect, useState } from 'react'
-import { ChatType, MessageType, UserType } from '../../../utils/Types'
-import { useSelector } from 'react-redux'
+import { useEffect } from 'react'
+import { useDispatch, useSelector } from 'react-redux'
 import { State } from '../../../redux/reducers'
+import { bindActionCreators } from 'redux'
+import { actionCreators } from '../../../redux'
 
 const ChatRoom = () => {
   const {id}  = useParams()
-  const [nextuser,setNextuser] = useState<UserType|null>(null);
-  const [chat,setChat] = useState<ChatType|null>(null)
-  const [messages,setMessages] = useState<MessageType[] | null>(null)
-  const {user} =useSelector((state:State)=>state.user)
+  const {user} =useSelector((state:State)=>state.user);
+  const {chat} = useSelector((state:State)=>state.app)
+  const dispatch = useDispatch()
+  const {AddMessageAction,AddNextUserAction,AddChatAction} = bindActionCreators(actionCreators,dispatch)
 
-  useEffect(()=>{
-    
-    return ()=>{
-      setChat(null)
-    }
-  })
+
+
+
+
   
 
   useEffect(()=>{
@@ -32,7 +31,7 @@ const ChatRoom = () => {
 
   useEffect(()=>{
     if(!chat?._id)return;
-    getMessagesOfusers()
+    // getMessagesOfusers()
      
   },[chat])
 
@@ -41,7 +40,7 @@ const ChatRoom = () => {
     if(!id)return;
     const {data,status} =await fetchUserByIdApi(id)
     if(status===200){
-      setNextuser(data.message[0])
+      AddNextUserAction(data.message)
     }
    }
    const getChatsOfBothusers=async()=>{
@@ -51,10 +50,10 @@ const ChatRoom = () => {
      const {data,status} =  await fetchChatsOfBothUsersApi(id,user._id)
      if(status===200){
       if(data.message){
-        setChat(data.message)
+        AddChatAction(data.message)
       }else{
-        setChat(null);
-        setMessages([])
+        AddChatAction(null)
+        AddMessageAction([])
       }
      }
 
@@ -69,19 +68,17 @@ const ChatRoom = () => {
 
      const {data,status} = await  fetchMessagesFromChatApi(chat._id)
      if(status===200){
-      setMessages(data.message)
+      AddMessageAction(data.message)
      }
-
-      
     } catch (error) {
       console.log(error)
     }
    }
   return (
     <ChatRoomWrapper>
-        <ChatHeader nextUser={nextuser}/>
-        <MessagePlayGround messages={messages}/>
-        <ChatInput setMessage={setMessages} chat={chat} nextUser={nextuser}/>
+        <ChatHeader />
+        <MessagePlayGround />
+        <ChatInput />
     </ChatRoomWrapper>
   )
 }

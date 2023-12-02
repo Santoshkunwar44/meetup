@@ -8,6 +8,7 @@ background-color: var(--light_dark);
 border-radius: 1rem;
 padding-top:1rem;
 gap: 1rem;
+overflow: scroll;
 .searchUser{
     margin: 0 auto;
     width: 92%;

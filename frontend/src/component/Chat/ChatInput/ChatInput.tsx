@@ -1,24 +1,23 @@
-import React, { useState } from 'react';
+import  { useState } from 'react';
 import { ChatInputWrapper } from './ChatInput.styles'
 import { FaMicrophone } from "react-icons/fa";
 import { IoIosSend } from "react-icons/io";
 import useAlert from '../../../hooks/useAlert';
-import { useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { State } from '../../../redux/reducers';
-import { ChatType, MessageType, UserType } from '../../../utils/Types';
 import { createMessageApi, createNewMessageApi } from '../../../utils/Api';
+import { bindActionCreators } from 'redux';
+import { actionCreators } from '../../../redux';
 
-type ChatInputPropsType={
-  chat:ChatType |null,
-  nextUser:UserType |null,
-  setMessage:React.Dispatch<React.SetStateAction<MessageType[]|null>>
-}
 
-const ChatInput:React.FC<ChatInputPropsType> = ({chat,nextUser,setMessage}) => {
+
+const ChatInput =() => {
   const [messageInput,setMessageInput] = useState("");
   const {user} = useSelector((state:State)=>state.user)
+  const {chat,nextUser} = useSelector((state:State)=>state.app)
   const {notify} = useAlert()
-
+  const dispatch  = useDispatch()
+  const {refreshAction ,AddNewMessageAction} = bindActionCreators(actionCreators,dispatch)
 
 
 
@@ -28,9 +27,6 @@ const ChatInput:React.FC<ChatInputPropsType> = ({chat,nextUser,setMessage}) => {
       notify("Cannot sent empty message","error")
     }
     try {
-
-
-      
 
       let  messagePayload = {
         senderId:user?._id,
@@ -53,25 +49,19 @@ const ChatInput:React.FC<ChatInputPropsType> = ({chat,nextUser,setMessage}) => {
       const {data,status } = await createNewMessageApi(newMessagePayload)
 
       if(status===200){
-        setMessage((prev)=>([...prev,data.message]))
+        AddNewMessageAction(data.message)
         setMessageInput("")
       }
 
       }else{
-
+        
         const {data,status} = await createMessageApi(messagePayload)
-
         if(status===200){
-
-        setMessage((prev)=>([...prev,data.message]))
+        AddNewMessageAction(data.message)
         setMessageInput("")
-
       }
       }
-
-
-
-
+      refreshAction()
       
     } catch (error) {
 

@@ -3,15 +3,16 @@ import { IoMdArrowRoundBack } from "react-icons/io";
 import { SlOptionsVertical } from "react-icons/sl";
 import ChatSettingPopover from '../../Popover/chatSetting/ChatSettingPopover';
 import { useNavigate } from 'react-router-dom';
-import React from 'react';
-import { UserType } from '../../../utils/Types';
+
+import { useSelector } from 'react-redux';
+import { State } from '../../../redux/reducers';
 
 
-type ChatHeaderPropsType={
-  nextUser:UserType |null,
-}
-const ChatHeader:React.FC<ChatHeaderPropsType> = ({nextUser}) => {
+const ChatHeader = () => {
+
+  const {nextUser} = useSelector((state:State)=>state.app)
   const navigate  = useNavigate()
+
   return (
     <ChatHeaderWrapper>
       <div className="headerLeft">

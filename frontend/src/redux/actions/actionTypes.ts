@@ -4,6 +4,8 @@ export enum ActionTypes {
     REMOVE_USER = "REMOVE_USER",
     LOGOUT = "LOGOUT",
     REFRESH = "REFRESH",
-
-
+    ADD_NEXT_USER = "ADD_NEXT_USER",
+    ADD_MESSAGE = "ADD_MESSAGE",
+    ADD_CHAT = "ADD_CHAT",
+    ADD_NEW_MESSAGE = "ADD_NEW_MESSAGE",
 }

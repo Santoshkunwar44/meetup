@@ -17,13 +17,18 @@ const ChatBox = () => {
   const [filteredChats,setFilteredChats]  = useState<ChatType[]>([]);
   const [searchInput,setSearchInput] =useState("")
   const [searchedFriends , setSearchedFriends] = useState<UserType[]>([])
+  const {refresh} =useSelector((state:State)=>state.other)
+
+
 
 
 
 
   useEffect(()=>{
     getAllMyChats()
-  },[])
+  },[refresh])
+
+  
 
   useEffect(()=>{
     handleSearchInputChange()
