@@ -13,7 +13,7 @@ const ProfileSection = () => {
 
     useEffect(()=>{
         getUserProfileData()
-    },[])
+    },[id])
 
 
     const getUserProfileData=async()=>{

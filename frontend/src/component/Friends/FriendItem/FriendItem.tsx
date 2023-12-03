@@ -21,7 +21,6 @@ const FriendItem:React.FC<FriendItemPropsType> = ({user,chat}) => {
   const {refreshAction} = bindActionCreators(actionCreators,dispatch)
 
 
-  console.log(user,hasIFollowed,hasTheyFollowed,loggedInUser)
 
 
   
@@ -50,6 +49,8 @@ const FriendItem:React.FC<FriendItemPropsType> = ({user,chat}) => {
     // Handle click logic, e.g., navigate to user profile
     if(chat){
       navigate(`${user?._id}`);
+    }else{
+      navigate(`/profile/${user?._id}`);
     }
   };
 

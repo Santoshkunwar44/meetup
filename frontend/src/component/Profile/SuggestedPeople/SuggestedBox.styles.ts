@@ -13,6 +13,7 @@ gap: 1rem;
 .suggestedPeopleWrapper{
     display: flex;
     width: 100%;
+    gap: 1rem;
     overflow: scroll;
 
 }

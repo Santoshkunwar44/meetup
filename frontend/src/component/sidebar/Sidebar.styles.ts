@@ -19,7 +19,7 @@ border-radius: 1rem;
         align-items: center;
 
         span{
-            font-size: 15px;
+            font-size: 16px;
             letter-spacing: 0.9px;
         }
         svg{
@@ -38,7 +38,8 @@ border-radius: 1rem;
         padding: 1rem 2rem;
         position: absolute;
         bottom: 2rem;
-
+        cursor: pointer;
+        letter-spacing: 1px;
 
         svg{
             font-size: 1.5rem;

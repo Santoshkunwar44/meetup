@@ -5,12 +5,19 @@ import { useSelector } from 'react-redux';
 import { State } from '../../redux/reducers';
 import { TbLogout2 } from "react-icons/tb";
 import { LuUsers2 } from "react-icons/lu";
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 
 
 
 const Sidebar = () => {
   const {user} = useSelector((state:State)=>state.user)
+  const navigate =useNavigate()
+
+  const handleLogout=()=>{
+
+    navigate("/auth/login")
+
+  }
   return (
     <SidebarWrapper>
         <div className="sidebarList">
@@ -32,7 +39,7 @@ const Sidebar = () => {
             <span>Profile</span>
           </Link>
         </div>
-        <div className="logoutBtn">
+        <div className="logoutBtn" onClick={handleLogout}>
             <TbLogout2/>
             <span>Logout</span>
         </div>

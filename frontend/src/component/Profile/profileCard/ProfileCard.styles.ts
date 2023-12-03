@@ -50,10 +50,12 @@ export const ProfileCardWrapper = styled.div`
 
                 }
                 .followingButton{
+                    
+                    
+                }
+                .MessageButton{
+                    color: white;
                     background-color: var(--primary_color);
-                    color: white
-
-
                 }
               
                 .userName{

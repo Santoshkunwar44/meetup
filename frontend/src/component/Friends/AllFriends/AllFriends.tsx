@@ -32,11 +32,7 @@ const AllFriends = () => {
 
   return (
     <AllFriendsWrapper>
-       <div className="friendHeader">
-           <FaUsers/>
-         <h1 className='headerTitle'>Suggested People</h1>
-
-        </div> 
+   
         <div className="friendsWrapper">
           {
             people?.map((person:UserType)=>{
