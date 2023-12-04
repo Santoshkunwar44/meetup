@@ -1,11 +1,15 @@
 import {styled} from "styled-components"
-
-export const ChatUserWrapper = styled.div`
+type ChatUserPropsType={
+    currentChat:boolean
+}
+export const ChatUserWrapper = styled.div<ChatUserPropsType>`
 
     display: flex;
     gap: 0.7rem;
     padding: 1rem  1rem ;
     cursor: pointer;
+    background-color: ${props=>props.currentChat ?"var(--primary_color)":""};
+    border-radius: 10px;
     &:hover{
         background-color: var(--light_dark);
     }
@@ -21,15 +25,15 @@ img{
     gap: 0.2rem;
     .username{
 
-        color: #ffffff91;
-
+        color: ${props=>props.currentChat ?"white":"#ffffff91;"};
         font-size: 14px;
         letter-spacing: 0.9px;
     }
     .message{
         font-size: 11px;
         letter-spacing: 1px;
-        color: var(--fade_text);
+        color: 
+        ${props=>props.currentChat ?"white":"var(--fade_text);"};
     }
 }
 

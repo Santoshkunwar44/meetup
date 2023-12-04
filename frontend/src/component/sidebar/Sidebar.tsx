@@ -5,16 +5,38 @@ import { useSelector } from 'react-redux';
 import { State } from '../../redux/reducers';
 import { TbLogout2 } from "react-icons/tb";
 import { LuUsers2 } from "react-icons/lu";
-import { Link, useNavigate } from 'react-router-dom';
+import { Link, useLocation, useNavigate } from 'react-router-dom';
+import { useEffect, useState } from 'react';
 
 
 type SidebarPropsType={
   small:boolean|undefined
 }
+type pagePathType="chat"|"profile"|"users"|"search"
 
 const Sidebar:React.FC<SidebarPropsType> = ({small}) => {
   const {user} = useSelector((state:State)=>state.user)
   const navigate =useNavigate()
+  const location = useLocation()
+
+  const [currentpath,setCurrentPath] = useState<pagePathType>("profile");
+
+
+  useEffect(()=>{
+    const path = location.pathname.split("/")[1]
+    const secondPatch = location.pathname.split("/")[2]
+    if(path==="users"&& secondPatch==="search"){
+      setCurrentPath("search")
+    }else{
+      if(path){
+        setCurrentPath(path)
+      }
+
+    }
+    
+
+  },[location])
+
 
   const handleLogout=()=>{
     navigate("/auth/login")
@@ -23,20 +45,20 @@ const Sidebar:React.FC<SidebarPropsType> = ({small}) => {
   return (
     <SidebarWrapper small={small}>
         <div className="sidebarList">
-          <Link className="sidebarItem" to={"/chat"}>
+          <Link className={`${currentpath ==="chat" ? "activeSidebar":""} sidebarItem`} to={"/chat"}>
             <TbBrandMessenger className="sidebarIcon"/>
             <span>Messenger</span>
           </Link>
-          <Link to={"/users"} className="sidebarItem">
+          <Link className={`${currentpath==="users" ?"activeSidebar":""} sidebarItem`} to={"/users"}>
             <LuUsers2 className="sidebarIcon"/>
             <span>Friends</span>
           </Link>
-          <Link className="sidebarItem" to={"/users"}>
+          <Link className={`${currentpath==="search"? "activeSidebar":""} sidebarItem`} to={"/users/search"}>
             <IoSearch className="sidebarIcon"/>
             <span>Search</span>
           </Link>
       
-          <Link className="sidebarItem" to={`/profile/${user?._id}`}>
+          <Link className={`${currentpath ==="profile" ?"activeSidebar":""} sidebarItem`} to={`/profile/${user?._id}`}>
             <img className='profileImage' src={user?.image} alt="" />
             <span>Profile</span>
           </Link>

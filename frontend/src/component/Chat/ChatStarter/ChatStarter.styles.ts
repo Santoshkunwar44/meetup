@@ -2,7 +2,7 @@ import {styled} from "styled-components"
 
 export const ChatStarterWrapper =styled.div`
 
-flex: 9;
+flex: 8;
 height: 100%;
 display: flex;
 align-items: center;

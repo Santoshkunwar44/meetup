@@ -3,8 +3,11 @@ import { FriendsOutletWrapper } from './FriendsOutlet.styles'
 import Sidebar from '../../sidebar/Sidebar'
 import { FaUsers } from 'react-icons/fa'
 import { useState } from 'react'
+import { FaSearch } from "react-icons/fa";
+import { RiUserHeartLine, RiUserVoiceLine } from 'react-icons/ri'
 
-type friendsTabTypes="suggestion"|"followers"|"followings"
+
+type friendsTabTypes="suggestion"|"followers"|"followings"|"search"
 const FriendsOutlet = () => {
   const [activeTab,setActiveTab]  = useState<friendsTabTypes>("suggestion")
 
@@ -21,12 +24,16 @@ const FriendsOutlet = () => {
                   <h1 className='headerTitle'>Suggested People</h1>
               </Link>
             <Link className={`friendsTabItem ${activeTab==="followings"?"activeTab":""}`} onClick={()=>handleTabChange("followings")} to={'followings'}>
-              < FaUsers/>
+               <RiUserHeartLine/>
                 <h1 className='headerTitle'>Followings</h1>
             </Link>
             <Link className={`friendsTabItem ${activeTab==="followers"?"activeTab":""}` }onClick={()=>handleTabChange("followers")} to={'followers'}>
-               <FaUsers/>
+               <RiUserVoiceLine/>
                 <h1 className='headerTitle'>Followers</h1>
+            </Link>
+            <Link className={`friendsTabItem ${activeTab==="search"?"activeTab":""}` }onClick={()=>handleTabChange("followers")} to={'search'}>
+               <FaSearch/>
+                <h1 className='headerTitle'>Search</h1>
             </Link>
         </div> 
         <Outlet/>

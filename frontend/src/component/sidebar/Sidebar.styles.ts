@@ -6,22 +6,24 @@ type SidebarWrapperPropsType={
 }
 
 export const SidebarWrapper = styled.div<SidebarWrapperPropsType>`
-flex: ${props=>props.small ? 1:3};
+flex: ${props=>props.small ? 0.8:3};
 background-color: var(--light_dark);
 position: relative;
 border-radius: 1rem;
+padding-top: 1rem;
 
 .sidebarList{
-
     display: flex;
     flex-direction: column;
     .sidebarItem{
-        height: 70px;
+        height: 80px;
         display: flex;
         gap: 1rem;
+        padding:  ${props=>props.small ? "0":"0 2rem"};
+        justify-content: ${props=>props.small ? "center":"flex-start"};
         cursor: pointer;
-        padding: 1rem 2rem;
         align-items: center;
+        border-radius: 10px;
 
         span{
             display: ${props=>props.small ? "none":"block"};
@@ -32,9 +34,18 @@ border-radius: 1rem;
             font-size: 1.5rem;
         }
         .profileImage{
-            width: 25px;
-            height: 25px;
+            width: 30px;
+            height: 30px;
+            border-radius: 50%;
         }
+
+        &:hover{
+            background-color: var(--light_dark);
+        }
+    }
+    .activeSidebar{
+        background-color: var(--primary_color);
+        color: white
     }
 }
     .logoutBtn{

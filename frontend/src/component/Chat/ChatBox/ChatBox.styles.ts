@@ -1,6 +1,6 @@
 import {styled} from "styled-components"
 export const ChatBoxWrapper = styled.div`
-flex: 3;
+flex: 3.2;
 height: 100%;
 display: flex;
 flex-direction: column;

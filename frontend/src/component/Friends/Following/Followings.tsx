@@ -1,4 +1,3 @@
-import { RiUserHeartLine } from "react-icons/ri"
 import { FollowingsWrapper } from "./Followings.styles"
 import FriendItem from "../FriendItem/FriendItem"
 import { useSelector } from "react-redux"
@@ -9,10 +8,10 @@ const Followings = () => {
      
   return (
     <FollowingsWrapper>
-         <div className="friendHeader">
+         {/* <div className="friendHeader">
            <RiUserHeartLine/>
          <h1 className='headerTitle'> Followings</h1>
-        </div> 
+        </div>  */}
         <div className="friendsWrapper">
 
           {

@@ -25,6 +25,7 @@ import Profile from './pages/Profile/Profile'
 import { getSessionUserApi } from './utils/Api'
 import { bindActionCreators } from 'redux'
 import { actionCreators } from './redux'
+import SearchUser from './component/Friends/SearchUser/SearchUser'
 
 function App() {
   const {fetchUser} = useUpdateApp()
@@ -32,6 +33,7 @@ function App() {
   useEffect(()=>{
     fetchUser()
   },[refresh])
+
   return (
     <>
     <Toaster/>
@@ -44,6 +46,7 @@ function App() {
                 <Route path='' element={<AllFriends/>}/>
                 <Route path='followings' element={<Followings/>}/>
                 <Route path='followers' element={<Followers/>}/>
+                <Route path='search' element={<SearchUser/>}/>
           </Route>
           <Route path='/chat' element={<ChatOutlet/>}>
             <Route path='' element={<ChatStarter/>}/>

@@ -9,11 +9,11 @@ const Followers = () => {
 
   return (
     <FollowersWrapper>
-       <div className="friendHeader">
+       {/* <div className="friendHeader">
                <RiUserVoiceLine/>
          <h1 className='headerTitle'>Followers </h1>
 
-        </div> 
+        </div>  */}
         <div className="friendsWrapper">
           {
             user?.followers?.map((person)=>{
