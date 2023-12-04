@@ -1,37 +1,53 @@
+const Enums = require("../utils/Enums");
 
-let onlineUsers = []
 
-function addOnlineUser(newUser) {
-    let theUser = onlineUsers.find(user => user.userId === newUser.userId)
-    console.log("find -->", theUser)
-    if (!theUser) {
-        console.log("before ", onlineUsers)
-        onlineUsers.push(newUser)
-        console.log("after ", onlineUsers)
-        return onlineUsers
+class OnlineUsers{
+    static usersList=[];
+
+   static addUser(user){
+    
+    this.usersList.push(user)        
+
     }
-    return onlineUsers
-}
 
-function removeOnlineUser(socketId) {
-    let theUser = onlineUsers.filter(user => user.socketId !== socketId)
-    onlineUsers = theUser;
-    return onlineUsers
-}
-function removeOnlineUserWithUserId(userId) {
-    let theUser = onlineUsers.filter(user => user.userId !== userId)
-    onlineUsers = theUser;
-    return onlineUsers
-}
+    static getUser(userId){
 
+      return  this.usersList.find(user=>user.userId === userId)
 
-function getSocketIdOfAnUser(userId) {
-    const theUser = onlineUsers.find(user => user?.userId === userId)
-    let socketId = null;
-    if (theUser) {
-        socketId = theUser.socketId
     }
-    return socketId
+
+    static removeUser(userId){
+
+        this.usersList =  this.usersList.filter(user=>user.userId !== userId)
+
+    }
+    static removeUserBySocketId(socketId){
+         this.usersList =  this.usersList.filter(user=>user.socketId !== socketId)
+    }
+    static  sendOnlineUsers(io){
+        io.emit(Enums.SEND_ONLINE_USERS,this.usersList);
+    }
+}
+
+class AppUser{
+
+
+    constructor(socketId,userId){
+        this.socketId = socketId;
+        this.userId = userId;
+    }
+
+
+     sendMessage(io,message){
+       io.to(this.socketId).emit(Enums.SEND_MESSAGE,message);
+    }
+    
+     sendNotification(io,message){
+        io.to(this.socketId).emit(Enums.SEND_NOTIFICATION,message);
+    }
+
+   
 
 }
-module.exports = { removeOnlineUser, addOnlineUser, removeOnlineUserWithUserId, getSocketIdOfAnUser, onlineUsers }
+
+module.exports = {AppUser,OnlineUsers}

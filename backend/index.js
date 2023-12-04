@@ -4,11 +4,20 @@ const cors = require("cors")
 const app = express()
 const session = require("express-session");
 const cookieParser = require("cookie-parser");
-const { hashPassword } = require("./services/AuthService");
+
 
 
 
 require("dotenv").config();
+
+const server = require("http").createServer(app)
+const io = require("socket.io")(server, {
+    cors: {
+        origin: [process.env.APP_URL, "http://localhost:3000"],
+        methods: ['GET', 'POST'],
+        credentials: true,
+    }
+});
 
 app.use(cors({
     origin:["http://localhost:5173",process.env.FRONTEND_URL],
@@ -39,10 +48,10 @@ app.use(session({
 
 require('./routes/AllRoutes')(app)
 
+app.set("io",io)
 
 
 
 
-
-app.listen(8000,()=>console.log(`server started...`))
+server.listen(8000,()=>console.log(`server started...`))
 
