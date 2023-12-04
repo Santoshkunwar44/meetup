@@ -3,6 +3,7 @@ import { MessageItemWrapper } from './MessageItem.styles'
 import { MessageType } from '../../utils/Types'
 import { useSelector } from 'react-redux'
 import { State } from '../../redux/reducers'
+import {format} from 'timeago.js'
 type MessagteItemType={
   data:MessageType
 }
@@ -29,10 +30,9 @@ const MessageItem:React.FC<MessagteItemType> = ({data}) => {
   return (
     <MessageItemWrapper own={own}>
         <div className="messageContent">
-
         <p className='messageText'>{data?.text} </p>
         </div>
-        <p className='time'>5 min ago</p>
+        <p className='time'>{format(data.createdAt)}</p>
     </MessageItemWrapper>
   )
 }

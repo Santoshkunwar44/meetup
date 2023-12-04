@@ -8,10 +8,12 @@ import { useSelector } from 'react-redux';
 import { State } from '../../../redux/reducers';
 
 
+
 const ChatHeader = () => {
 
   const {nextUser} = useSelector((state:State)=>state.app)
   const navigate  = useNavigate()
+
 
 
   return (
@@ -33,7 +35,7 @@ const ChatHeader = () => {
       </div>
       <div className='chatAction'>
 
-    <ChatSettingPopover user={nextUser}>
+    <ChatSettingPopover  user={nextUser}>
       <SlOptionsVertical className="optionButton"/>
     </ChatSettingPopover>
 

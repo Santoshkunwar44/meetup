@@ -1,5 +1,8 @@
 const ChatModel = require("../model/Chat");
 const { generateImage } = require("../utils/setup");
+const messageModel = require("../model/Message")
+
+
 
 class ChatController {
     async createChat(req, res) {
@@ -76,8 +79,12 @@ class ChatController {
 
         try {
             await ChatModel.findByIdAndDelete(req.params.chatId)
+            await messageModel.deleteMany({
+                chatId:req.params.chatId
+            })
             res.status(200).json({ message: "successfully Deleted", success: true })
         } catch (error) {
+            res.status(500).json({ message: error, success: false })
             console.log(error)
         }
     }

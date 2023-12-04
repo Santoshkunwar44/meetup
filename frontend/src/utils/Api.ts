@@ -28,6 +28,7 @@ export const getSessionUserApi=()=>AxiosInstance.get('/user/loggedInUser')
 
 export const fetchChatsOfUserApi =(userId:string)=>AxiosInstance.get(`/chat/${userId}`)
 export const fetchChatsOfBothUsersApi =(user1:string,user2:string)=>AxiosInstance.get(`/chat/byUsersId/${user1}/${user2}`)
+export const deleteChatApi=(chatId:string)=>AxiosInstance.delete(`/chat/${chatId}`);
 
 // auth endpoints 
 
