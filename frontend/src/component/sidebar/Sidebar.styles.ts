@@ -1,11 +1,16 @@
 import {styled} from "styled-components"
 
-export const SidebarWrapper = styled.div`
 
-flex: 3;
+type SidebarWrapperPropsType={
+    small:boolean|undefined
+}
+
+export const SidebarWrapper = styled.div<SidebarWrapperPropsType>`
+flex: ${props=>props.small ? 1:3};
 background-color: var(--light_dark);
 position: relative;
 border-radius: 1rem;
+
 .sidebarList{
 
     display: flex;
@@ -19,6 +24,7 @@ border-radius: 1rem;
         align-items: center;
 
         span{
+            display: ${props=>props.small ? "none":"block"};
             font-size: 16px;
             letter-spacing: 0.9px;
         }
@@ -43,6 +49,11 @@ border-radius: 1rem;
 
         svg{
             font-size: 1.5rem;
+        }
+        span{
+            display: ${props=>props.small ? "none":"block"};
+            font-size: 16px;
+            letter-spacing: 0.9px;
         }
 }
 

@@ -1,4 +1,5 @@
 const ChatModel = require("../model/Chat");
+const { generateImage } = require("../utils/setup");
 
 class ChatController {
     async createChat(req, res) {
@@ -81,8 +82,25 @@ class ChatController {
         }
     }
 
+    async getAiImage(req,res){
+
+    try {
+        
+        const {prompt,no , size}= req.body;
+        const response =   await   generateImage(prompt,no,size)
+        
+        res.status(200).json({ message:response.data[0].url,success:true })
+    } catch (error) {
+        res.status(500).json({message:error.message,success:false})
+    }    
+
+
+
+        
+    }
 
 }
+
 
 module.exports = new ChatController()
 

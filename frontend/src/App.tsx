@@ -1,5 +1,5 @@
 import './App.css'
-import {Routes,Route, Outlet, Navigate} from "react-router-dom"
+import {Routes,Route, Outlet, Navigate, useNavigate} from "react-router-dom"
 import Login from './pages/Auth/Login/Login'
 import Register from './pages/Auth/Register/Register'
 import ChatOutlet from './component/Chat/ChatOutlet/ChatOutlet'
@@ -16,12 +16,15 @@ import ResetPassword from './pages/Auth/ResetPassword/ResetPassword'
 import {Toaster} from "react-hot-toast"
 import DisplayInfo from './pages/Auth/DisplayInfo/DisplayInfo'
 import InfoOutlet from './component/Outlets/InfoOutlet/InfoOutlet'
-import { useSelector } from 'react-redux'
+import { useDispatch, useSelector } from 'react-redux'
 import { State } from './redux/reducers'
 import Followers from './component/Friends/Followers/Followers'
 import useUpdateApp from './hooks/useUpdateApp'
-import { useEffect } from 'react'
+import { useEffect, useState } from 'react'
 import Profile from './pages/Profile/Profile'
+import { getSessionUserApi } from './utils/Api'
+import { bindActionCreators } from 'redux'
+import { actionCreators } from './redux'
 
 function App() {
   const {fetchUser} = useUpdateApp()
@@ -29,8 +32,6 @@ function App() {
   useEffect(()=>{
     fetchUser()
   },[refresh])
-
-
   return (
     <>
     <Toaster/>
@@ -70,8 +71,32 @@ function App() {
 export default App;
 
 const ProtectedRoutes =()=>{
-
+  const [ loaded,setLoaded] = useState(false)
   const {user} = useSelector((state:State)=>state.user)
+  const dispatch =useDispatch()
+  const {AddUserAction} = bindActionCreators(actionCreators,dispatch)
+
+  useEffect(()=>{
+    getLoggedInUser()
+  },[])
+
+  const getLoggedInUser=async()=>{
+    try {
+      const {data,status} = await getSessionUserApi()
+      if(status===200){
+        await  AddUserAction(data.message)
+      }
+
+    } catch (error) {
+      console.log(error)
+    }
+    console.log("loading 2 ")
+    setLoaded(true)
+  }
+
+
+  if(!loaded)return <>loading</>
+
 
   return user ? <Outlet/> :<Navigate to={"/auth/login"}/>
 

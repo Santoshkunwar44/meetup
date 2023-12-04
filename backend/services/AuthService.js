@@ -32,7 +32,7 @@ class AuthService {
             let newUpdatedTimeInMS = new Date(newUserUpdatedTime).getTime()
             let prevUpdatedTimeInMS = new Date(prevUserUpdatedTime).getTime()
             if (newUpdatedTimeInMS > prevUpdatedTimeInMS) {
-                const { password, ...others } = user._doc
+                const { password, ...others } = user._doc;
                 return others
             } else {
                 return prevUser;

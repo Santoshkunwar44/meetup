@@ -9,9 +9,7 @@ class UserController {
     async getLoggedInUser(req, res) {
 
         const sessionUser = req.session?.user;
-        console.log(req.session)
         if (sessionUser) {
-
             let updatedUser = await isUserUpdated(sessionUser)
             return res.status(200).json({ message: updatedUser, success: true })
         } else {

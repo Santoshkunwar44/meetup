@@ -23,7 +23,7 @@ export const followUserApi=(userId:string,nextUserId:string)=>AxiosInstance.post
 export const unFollowUserApi=(userId:string,nextUserId:string)=>AxiosInstance.post(`/user/unfollow?userId=${userId}&nextUserId=${nextUserId}`)
 
 export const getSuggestedPeopleApi=(userId:string)=>AxiosInstance.get(`/user/suggestion/${userId}`);
-
+export const getSessionUserApi=()=>AxiosInstance.get('/user/loggedInUser')
 // chats endpoints 
 
 export const fetchChatsOfUserApi =(userId:string)=>AxiosInstance.get(`/chat/${userId}`)

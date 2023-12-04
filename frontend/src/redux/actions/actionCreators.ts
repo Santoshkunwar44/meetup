@@ -3,7 +3,7 @@ import { ActionTypes } from "./actionTypes"
 import { Action } from "./index";
 import { ChatType, MessageType, UserType } from "../../utils/Types";
 
-export const AddUserAction = (payload: UserType) => (dispatch: Dispatch<Action>) => {
+export const AddUserAction =   (payload: UserType) =>async (dispatch: Dispatch<Action>) => {
 
     return dispatch({
         type: ActionTypes.ADD_USER,

@@ -8,18 +8,20 @@ import { LuUsers2 } from "react-icons/lu";
 import { Link, useNavigate } from 'react-router-dom';
 
 
+type SidebarPropsType={
+  small:boolean|undefined
+}
 
-const Sidebar = () => {
+const Sidebar:React.FC<SidebarPropsType> = ({small}) => {
   const {user} = useSelector((state:State)=>state.user)
   const navigate =useNavigate()
 
   const handleLogout=()=>{
-
     navigate("/auth/login")
-
   }
+
   return (
-    <SidebarWrapper>
+    <SidebarWrapper small={small}>
         <div className="sidebarList">
           <Link className="sidebarItem" to={"/chat"}>
             <TbBrandMessenger className="sidebarIcon"/>

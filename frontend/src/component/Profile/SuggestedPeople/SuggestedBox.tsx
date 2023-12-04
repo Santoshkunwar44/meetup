@@ -31,7 +31,7 @@ const SuggestedBox = () => {
   return (
     <SuggestedWrapper> 
         <div className="headerBox">
-            <h4 className='headerTitle'>Suggested for you </h4>
+            <h4 className='headerTitle'>People you may know  </h4>
         </div>
         <div className="suggestedPeopleWrapper">
                 {
