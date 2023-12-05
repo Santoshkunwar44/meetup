@@ -22,6 +22,8 @@ gap: 2rem;
         align-items: center;
         border-radius: 1rem;
         background-color: #3e439b1a;
+        border: 1px solid var(--primary_color);
+        padding: 5px;
 
         .friendsTabItem{
             flex: 1;
@@ -35,10 +37,12 @@ gap: 2rem;
             border-radius: 5px;
             svg{
                 font-size: 1.3rem;
+                fill: var(--primary_color);
             }
             .headerTitle{
                 font-size: 1.1rem;
                 letter-spacing: 0.8px;
+                color: var(--primary_color);
             }
             &:hover{
                 background-color: var(--light_dark);
@@ -46,8 +50,13 @@ gap: 2rem;
         }
         .activeTab{
             background-color: var(--primary_color);
+            border-radius:8px;
             svg{
-                color: #fff;
+                fill: #fff;
+
+            }
+            .headerTitle{
+                color: white;
             }
         }
         /* background-color: var(--light_dark); */

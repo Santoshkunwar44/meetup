@@ -1,4 +1,4 @@
-import axios from "axios";
+import axios, { Axios } from "axios";
 
 export const AxiosInstance=axios.create({
     baseURL:"http://localhost:8000/api",
@@ -47,4 +47,8 @@ export const fetchMessagesFromChatApi=(chatId:string)=>AxiosInstance.get(`/messa
 
 export const createMessageApi=(payload:MessagePayloadType)=>AxiosInstance.post(`/message/create`,payload)
 export const createNewMessageApi=(payload:NewMessagePayloadType)=>AxiosInstance.post(`/message/new_message`,payload)
+
+//notifications endpoint
+
+export const getNotificationOfUserApi=(userId:string)=>AxiosInstance.get(`/notification/${userId}`)
 

@@ -7,12 +7,15 @@ import { TbLogout2 } from "react-icons/tb";
 import { LuUsers2 } from "react-icons/lu";
 import { Link, useLocation, useNavigate } from 'react-router-dom';
 import { useEffect, useState } from 'react';
+import { FaRegHeart } from "react-icons/fa";
+
 
 
 type SidebarPropsType={
-  small:boolean|undefined
+  small?:boolean|undefined
 }
-type pagePathType="chat"|"profile"|"users"|"search"
+type pagePathType="chat"|"profile"|"users"|"search"|"notification"
+
 
 const Sidebar:React.FC<SidebarPropsType> = ({small}) => {
   const {user} = useSelector((state:State)=>state.user)
@@ -58,6 +61,10 @@ const Sidebar:React.FC<SidebarPropsType> = ({small}) => {
             <span>Search</span>
           </Link>
       
+          <Link className={`${currentpath ==="notification" ?"activeSidebar":""} sidebarItem`} to={`/notification`}>
+            <FaRegHeart className="sidebarIcon"/>
+            <span>Notification</span>
+          </Link>
           <Link className={`${currentpath ==="profile" ?"activeSidebar":""} sidebarItem`} to={`/profile/${user?._id}`}>
             <img className='profileImage' src={user?.image} alt="" />
             <span>Profile</span>

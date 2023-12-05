@@ -1,4 +1,4 @@
-
+import {Enums} from "../utils/Enums"
 
 export type UserType={
     _id:string,
@@ -30,4 +30,23 @@ export type MessageType={
 export type onlineUsersType={
     socketId:string,
     userId:string
+}
+
+export type PostType={
+    _id:string,
+    text:string,
+    image:string,
+    user:UserType,
+    createdAt:string,
+    updatedAt:string,
+}
+export  type NotificationType={
+
+    text:string;
+    createdAt:string,
+    updatedAt:string,
+    to:string,
+    from:UserType,
+    type:"FOLLOW"|"COMMENT"|"LIKE";
+    post:PostType
 }

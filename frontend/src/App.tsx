@@ -27,6 +27,7 @@ import { bindActionCreators } from 'redux'
 import { actionCreators } from './redux'
 import SearchUser from './component/Friends/SearchUser/SearchUser'
 import useSocket from './hooks/useSocket'
+import Notifications from './component/Notification/Notifications'
 
 function App() {
   const {fetchUser} = useUpdateApp()
@@ -45,6 +46,7 @@ function App() {
 
             <Route path='/' element={<Navigate to={"/chat"}/>}/>
             <Route path='/profile/:id' element={<Profile/>}/>
+            <Route path='/notification' element={<Notifications/>}/>
             <Route path='/users' element={<FriendsOutlet/>}>
                 <Route path='' element={<AllFriends/>}/>
                 <Route path='followings' element={<Followings/>}/>
