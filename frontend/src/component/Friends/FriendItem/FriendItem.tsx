@@ -41,6 +41,9 @@ const FriendItem:React.FC<FriendItemPropsType> = ({user,chat}) => {
       try {
        const {status,data}  = await followUserApi(loggedInUser?._id,user._id)
        if(status===200){
+
+        
+
         setHasIFollowed(true)
         refreshAction()
        }

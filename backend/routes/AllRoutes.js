@@ -3,4 +3,5 @@ module.exports = (app)=>{
     app.use("/api/user",require("../routes/UserRoute"))
     app.use("/api/message",require("../routes/Message"))
     app.use("/api/chat",require("../routes/ChatRoute"))
+    app.use("/api/notification",require("../routes/Notification"))
 }

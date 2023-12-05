@@ -10,7 +10,7 @@ class NotificationService{
 
         switch (type) {
             case Enums.FOLLOW_TYPE:
-                text = `${fromUser.firstName} ${fromUser.lastName} started folllowing you . `
+                text = `${fromUser.firstName} ${fromUser.lastName} started following you . `
                 break;
         
             case Enums.COMMENT_TYPE:
