@@ -5,16 +5,17 @@ const { OnlineUsers, AppUser } = require("../services/SocketService");
 
 
 
-function socket(io ,EventEmiter){
+ module.exports = (io )=>{
 
 
 
 io.on("connection", (socket) => {
 
-
+    console.log("incoming signal")
 
     socket.on(Enums.JOIN,(userId)=>{
         if(OnlineUsers.getUser(userId))return;
+        console.log("someone joined")
         socket.join(socket.id)
         const newUser =  new AppUser(socket.id,userId)
         OnlineUsers.addUser(newUser)
@@ -23,7 +24,9 @@ io.on("connection", (socket) => {
 
     socket.on(Enums.MESSAGE,(message)=>{
         const {nextUser} = message; 
+        console.log("incoming message",nextUser)
         const user = OnlineUsers.getUser(nextUser)
+        if(!user)return;
         user.sendMessage(io,message)
     })
 
@@ -50,4 +53,3 @@ io.on("connection", (socket) => {
 
 
 }
-module.exports =  {socket};

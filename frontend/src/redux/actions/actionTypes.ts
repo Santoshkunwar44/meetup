@@ -8,4 +8,6 @@ export enum ActionTypes {
     ADD_MESSAGE = "ADD_MESSAGE",
     ADD_CHAT = "ADD_CHAT",
     ADD_NEW_MESSAGE = "ADD_NEW_MESSAGE",
+    ADD_SOCKET = "ADD_SOCKET",
+    ADD_ONLINE_USERS = "ADD_ONLINE_USERS",
 }

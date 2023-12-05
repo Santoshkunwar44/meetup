@@ -7,6 +7,7 @@ import { useDispatch, useSelector } from 'react-redux'
 import { followUserApi } from '../../../utils/Api'
 import { bindActionCreators } from 'redux'
 import { actionCreators } from '../../../redux'
+
 type FriendItemPropsType={
   user:UserType,
   chat?:boolean
@@ -15,10 +16,12 @@ const FriendItem:React.FC<FriendItemPropsType> = ({user,chat}) => {
   const navigate = useNavigate();
 
   const { user:loggedInUser } = useSelector((state: State) => state.user);
+  const {  socket } = useSelector((state: State) => state.app);
   const [hasIFollowed, setHasIFollowed] = useState<boolean | null>(null);
   const [hasTheyFollowed, setHasTheyFollowed] = useState<boolean | null>(null);
   const dispatch =useDispatch()
   const {refreshAction} = bindActionCreators(actionCreators,dispatch)
+
 
 
 
@@ -32,6 +35,7 @@ const FriendItem:React.FC<FriendItemPropsType> = ({user,chat}) => {
     setHasTheyFollowed(user.followings?.some(u=>u._id===loggedInUser._id))
   }, [loggedInUser, user]);
 
+ 
     const handleFollow = async () => {
       if(!loggedInUser?._id)return;
       try {

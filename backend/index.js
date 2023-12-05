@@ -13,7 +13,7 @@ require("dotenv").config();
 const server = require("http").createServer(app)
 const io = require("socket.io")(server, {
     cors: {
-        origin: [process.env.APP_URL, "http://localhost:3000"],
+        origin: [process.env.FRONTEND_URL, "http://localhost:5173"],
         methods: ['GET', 'POST'],
         credentials: true,
     }
@@ -46,11 +46,9 @@ app.use(session({
 
 
 
-require('./routes/AllRoutes')(app)
-
 app.set("io",io)
-
-
+require('./routes/AllRoutes')(app)
+require("./utils/socket")(io)
 
 
 server.listen(8000,()=>console.log(`server started...`))

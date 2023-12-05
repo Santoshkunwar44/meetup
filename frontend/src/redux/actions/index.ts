@@ -1,4 +1,5 @@
-import { ChatType, MessageType, UserType } from "../../utils/Types";
+import { Socket } from "socket.io-client";
+import { ChatType, MessageType, UserType, onlineUsersType } from "../../utils/Types";
 import { ActionTypes } from "./actionTypes";
 
 
@@ -30,5 +31,13 @@ interface AddNewMessage{
     type:ActionTypes.ADD_NEW_MESSAGE,
     payload:MessageType
 }
+interface AddSocketAction{
+    type:ActionTypes.ADD_SOCKET,
+    payload:Socket
+}
+interface AddOnlineUsersAction {
+    type:ActionTypes.ADD_ONLINE_USERS,
+    payload:onlineUsersType[]
+}
 
-export type Action = AddUserAction | RemoveUserAction | RefreshAction | AddChatAction | AddMessageAction| AddNextUser |AddNewMessage;
+export type Action = AddUserAction | AddOnlineUsersAction | RemoveUserAction | RefreshAction | AddSocketAction | AddChatAction | AddMessageAction| AddNextUser |AddNewMessage;

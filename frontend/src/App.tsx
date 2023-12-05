@@ -26,13 +26,16 @@ import { getSessionUserApi } from './utils/Api'
 import { bindActionCreators } from 'redux'
 import { actionCreators } from './redux'
 import SearchUser from './component/Friends/SearchUser/SearchUser'
+import useSocket from './hooks/useSocket'
 
 function App() {
   const {fetchUser} = useUpdateApp()
   const {refresh} = useSelector((state:State)=>state.other)
+  useSocket()
   useEffect(()=>{
     fetchUser()
   },[refresh])
+ 
 
   return (
     <>

@@ -27,3 +27,7 @@ export type MessageType={
     createdAt:string,
     updatedAt:string,
 }
+export type onlineUsersType={
+    socketId:string,
+    userId:string
+}

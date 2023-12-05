@@ -6,6 +6,7 @@ import { useNavigate } from 'react-router-dom';
 
 import { useSelector } from 'react-redux';
 import { State } from '../../../redux/reducers';
+import { useEffect, useState } from 'react';
 
 
 
@@ -13,6 +14,14 @@ const ChatHeader = () => {
 
   const {nextUser} = useSelector((state:State)=>state.app)
   const navigate  = useNavigate()
+  const [ isOnline,setIsOnline] = useState<boolean>(false);
+  const { onlineUsers } = useSelector((state: State) => state.app);
+  // const [isTyping,setIsTyping] = useState<boolean>(false)
+
+   useEffect(()=>{
+    if( !nextUser?._id)return;
+    setIsOnline(onlineUsers.some(u=>u.userId===nextUser?._id))
+  },[onlineUsers , nextUser])
 
 
 
@@ -25,11 +34,14 @@ const ChatHeader = () => {
       </div>
         
       <div className="chatUser">
+        <div className="imageWrapper">
+{      isOnline &&   <div className="activeDot"></div>}
         <img src={nextUser?.image} alt="" />
+        </div>
         <div className="userInfo">
 
         <h3 className='chatUsername'>{`${nextUser?.firstName} ${nextUser?.lastName}`}</h3>
-        <p className='statusText'>Typing...</p>
+        <p className='statusText'>{isOnline? "active":""}</p>
         </div>
       </div>
       </div>

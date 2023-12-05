@@ -16,6 +16,8 @@ const ChatUser:React.FC<ChatUserPropsType> = ({chat}) => {
   const [nextuser,setNextuser] = useState<UserType|null>(null)
   const {user} =useSelector((state:State)=>state.user)
   const [currentChat,setCurrentChat] = useState(false)
+    const [ isOnline,setIsOnline] = useState<boolean>(false);
+  const { onlineUsers } = useSelector((state: State) => state.app);
   const {id} = useParams()
 
   useEffect(()=>{
@@ -24,7 +26,12 @@ const ChatUser:React.FC<ChatUserPropsType> = ({chat}) => {
     }
   },[nextuser ,id])
 
+   useEffect(()=>{
 
+    if( !nextuser?._id)return;
+    setIsOnline(onlineUsers.some(u=>u.userId===nextuser?._id))
+    
+  },[onlineUsers , nextuser])
 
 
 
@@ -44,7 +51,10 @@ const ChatUser:React.FC<ChatUserPropsType> = ({chat}) => {
   }
   return (
     <ChatUserWrapper onClick={handleGotoChat} currentChat={currentChat}>
-        <img src={nextuser?.image} alt="" />
+      <div className="imageWrapper">
+        <img src={nextuser?.image} alt="chatUserImage" />
+       { isOnline && <div className="activeDot"></div>}
+      </div>
             <div className="chatUser">
                 <h3 className="username">{`${nextuser?.firstName} ${nextuser?.lastName}`}</h3>
                 <p className="message"> {chat.latestMessage?.text}</p>

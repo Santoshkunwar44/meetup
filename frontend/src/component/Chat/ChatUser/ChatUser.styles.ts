@@ -13,12 +13,28 @@ export const ChatUserWrapper = styled.div<ChatUserPropsType>`
     &:hover{
         background-color: var(--light_dark);
     }
-img{
-    width: 45px;
-    height: 45px;
-    border-radius: 50%;
-    object-fit: cover;
-}
+    .imageWrapper{
+        width: 45px;
+        height: 45px;
+        border-radius: 50%;
+        position: relative;
+
+        img{
+            width: 100%;
+            height: 100%;
+            border-radius: 50%;
+            object-fit: cover;
+        }
+        .activeDot{
+            width: 8px;
+            height: 8px;
+            border-radius: 50%;
+            background-color: #13ff13;
+            right: 0;
+            bottom: 5px;
+            position: absolute;
+        }
+    }
 .chatUser{
     display: flex;
     flex-direction: column;

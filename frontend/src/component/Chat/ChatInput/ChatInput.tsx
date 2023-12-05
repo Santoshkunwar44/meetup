@@ -8,13 +8,14 @@ import { State } from '../../../redux/reducers';
 import { createMessageApi, createNewMessageApi } from '../../../utils/Api';
 import { bindActionCreators } from 'redux';
 import { actionCreators } from '../../../redux';
+import { Enums } from '../../../utils/Enums';
 
 
 
 const ChatInput =() => {
   const [messageInput,setMessageInput] = useState("");
   const {user} = useSelector((state:State)=>state.user)
-  const {chat,nextUser} = useSelector((state:State)=>state.app)
+  const {chat,nextUser,socket} = useSelector((state:State)=>state.app)
   const {notify} = useAlert()
   const dispatch  = useDispatch()
   const {refreshAction ,AddNewMessageAction,AddChatAction} = bindActionCreators(actionCreators,dispatch)
@@ -48,15 +49,18 @@ const ChatInput =() => {
       const {data,status } = await createNewMessageApi(newMessagePayload)
 
       if(status===200){
+        socket?.emit(Enums.MESSAGE,{...data.message,nextUser:nextUser?._id})
         let chat = data.message.chatId;
         AddChatAction(chat)
         AddNewMessageAction(data.message)
         setMessageInput("")
+
       }
       }else{
         
         const {data,status} = await createMessageApi(messagePayload)
         if(status===200){
+        socket?.emit(Enums.MESSAGE,{...data.message,nextUser:nextUser?._id})
         AddNewMessageAction(data.message);
         setMessageInput("");
       }

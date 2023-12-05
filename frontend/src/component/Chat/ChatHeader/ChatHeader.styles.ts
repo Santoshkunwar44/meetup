@@ -27,11 +27,27 @@ export const ChatHeaderWrapper = styled.div`
         .chatUser{
             display: flex;
             gap: 0.8rem;
-            img{
+            .imageWrapper{
                 width: 40px;
                 height: 40px;
                 border-radius: 50%;
-                object-fit: cover;
+                position: relative;
+
+                img{
+                    object-fit: cover;
+                    border-radius: 50%;
+                    width: 100%;
+                    height: 100%;
+                }
+                .activeDot{
+                     width: 8px;
+            height: 8px;
+            border-radius: 50%;
+            background-color: #13ff13;
+            right: 5px;
+            bottom: 1px;
+            position: absolute;
+                }
             }
             .userInfo{
                 .chatUsername{
