@@ -9,23 +9,25 @@ import { State } from "../../../redux/reducers";
 type ChatUserPropsType={
   chat:ChatType
 }
+
 const ChatUser:React.FC<ChatUserPropsType> = ({chat}) => {
 
 
   const navigate =useNavigate()
   const [nextuser,setNextuser] = useState<UserType|null>(null)
+  const {onlineUsers} = useSelector((state:State)=>state.app)
   const {user} =useSelector((state:State)=>state.user)
   const [currentChat,setCurrentChat] = useState(false)
-    const [ isOnline,setIsOnline] = useState<boolean>(false);
-  const { onlineUsers } = useSelector((state: State) => state.app);
+  const [ isOnline,setIsOnline] = useState<boolean>(false);
   const {id} = useParams()
+
 
   useEffect(()=>{
     if(nextuser?._id&&id){
       setCurrentChat(nextuser?._id===id)
     }
-  },[nextuser ,id])
-
+  },[ nextuser , id])
+  
    useEffect(()=>{
 
     if( !nextuser?._id)return;
@@ -43,12 +45,11 @@ const ChatUser:React.FC<ChatUserPropsType> = ({chat}) => {
   },[chat,user])
 
 
-
-
-
   const handleGotoChat=()=>{
     navigate(`${nextuser?._id}`)
   }
+
+
   return (
     <ChatUserWrapper onClick={handleGotoChat} currentChat={currentChat}>
       <div className="imageWrapper">

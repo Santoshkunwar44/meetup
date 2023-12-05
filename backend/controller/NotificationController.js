@@ -3,12 +3,11 @@ const { createNotificationText } = require("../services/NotificationService")
 
 class NotificationController{
     async createNotification(req,res){
+
         try {  
-                req.body.text = await createNotificationText(req.body)
-
-                let  notification = await Notification.create(req.body)
-
-               notification = await Notification.populate(notification, {
+            req.body.text = await createNotificationText(req.body)
+            let  notification = await Notification.create(req.body)
+            notification = await Notification.populate(notification, {
             path: "from",
             select: ["firstName", "lastName", "image"],
             model: "User",
@@ -21,7 +20,7 @@ class NotificationController{
         });
 
 
-                res.status(201).json({message:notification,success:true})
+                res.status(200).json({message:notification,success:true})
         } catch (error) {
                 console.log(error)
                 res.status(500).json({message:error.message,success:false})

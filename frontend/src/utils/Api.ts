@@ -15,11 +15,16 @@ type NewMessagePayloadType={
     users:string[],
     senderId:string
 }
+type followNotificationPayloadType={
+    to:string,
+    from:string,
+    type:string
+}
 // user endpoints
 
 export const fetchUserByIdApi=(userId:string)=>AxiosInstance.get(`/user/search?userId=${userId}`)
 export const searchUserByUsernameApi=(username:string)=>AxiosInstance.get(`/user/search?search_query=${username}`)
-export const followUserApi=(userId:string,nextUserId:string)=>AxiosInstance.post(`/user/follow?userId=${userId}&nextUserId=${nextUserId}`)
+export const followUserApi=(userId:string,nextUserId:string,payload:followNotificationPayloadType)=>AxiosInstance.post(`/user/follow?userId=${userId}&nextUserId=${nextUserId}`,payload)
 export const unFollowUserApi=(userId:string,nextUserId:string)=>AxiosInstance.post(`/user/unfollow?userId=${userId}&nextUserId=${nextUserId}`)
 
 export const getSuggestedPeopleApi=(userId:string)=>AxiosInstance.get(`/user/suggestion/${userId}`);

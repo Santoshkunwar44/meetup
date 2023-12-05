@@ -21,6 +21,9 @@ class NotificationService{
                 text = `${fromUser.firstName} ${fromUser.lastName} liked your post . `
                 break;
         
+            case Enums.FOLLOW_BACK:
+                text = `${fromUser.firstName} ${fromUser.lastName} followed  you back . `
+                break;
             default:
                 text="Unknown "
                 break;

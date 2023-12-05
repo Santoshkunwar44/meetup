@@ -9,13 +9,20 @@ import { State } from "../../redux/reducers";
 import { getNotificationOfUserApi } from "../../utils/Api";
 
 const Notifications = () => {
-    const [notification,setNotification] =useState<NotificationType[]|null>(null)
+    const [notification,setNotification] =useState<NotificationType[]>([])
     const {user} = useSelector((state:State)=>state.user)
+    const {newNotification} = useSelector((state:State)=>state.app)
     useEffect(()=>{ 
         if(!user?._id)return;
         getNotificationOfUser()
     },[user])
 
+    useEffect(()=>{
+        if(newNotification){
+           setNotification((prev)=>[...prev,newNotification])
+        }
+    },[newNotification])
+    
     const getNotificationOfUser=async()=>{
         if(!user?._id)return;
         try {

@@ -10,4 +10,6 @@ export const Enums={
     FOLLOW_TYPE:"FOLLOW",
     COMMENT_TYPE:"COMMENT",
     LIKE_TYPE:"LIKE",
+    FOLLOW_BACK:"FOLLOW_BACK",
+
 }

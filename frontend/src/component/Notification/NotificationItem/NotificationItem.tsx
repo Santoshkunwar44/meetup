@@ -30,6 +30,7 @@ const NotificationItem:FC<NotificationItemPropsType> = ({notification}) => {
             {format(notification.createdAt)}
         </div>
         
+        
 
     </NotificationItemWrapper>
   )

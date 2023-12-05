@@ -1,4 +1,3 @@
-import {Enums} from "../utils/Enums"
 
 export type UserType={
     _id:string,

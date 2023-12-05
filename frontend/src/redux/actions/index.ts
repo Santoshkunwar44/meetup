@@ -39,5 +39,9 @@ interface AddOnlineUsersAction {
     type:ActionTypes.ADD_ONLINE_USERS,
     payload:onlineUsersType[]
 }
+interface AddNotificationsAction {
+    type:ActionTypes.ADD_NOTIFICATIONS,
+    payload:onlineUsersType[]
+}
 
-export type Action = AddUserAction | AddOnlineUsersAction | RemoveUserAction | RefreshAction | AddSocketAction | AddChatAction | AddMessageAction| AddNextUser |AddNewMessage;
+export type Action = AddUserAction  | AddNotificationsAction| AddOnlineUsersAction | RemoveUserAction | RefreshAction | AddSocketAction | AddChatAction | AddMessageAction| AddNextUser |AddNewMessage;

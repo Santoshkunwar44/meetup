@@ -31,6 +31,7 @@ io.on("connection", (socket) => {
     })
 
     socket.on(Enums.NOTIFICATION,(info)=>{
+        console.log("incoming notification",info)
         const {nextUser} = info; 
         const user = OnlineUsers.getUser(nextUser)
         if(!user)return;

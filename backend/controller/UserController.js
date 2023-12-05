@@ -63,7 +63,7 @@ class UserController {
             res.status(500).json({ message: error.message, success: false })
         }
     }
-     async followerUser(req, res) {
+     async followerUser(req, res,next) {
   //check is the current user and the next user is not same | the user cannot follow thyself
     const {userId,nextUserId} = req.query;
         if (userId !==nextUserId) {
@@ -78,9 +78,9 @@ class UserController {
         await user.updateOne({ $push: { followers: currUser._id } });
         // push the user's id in the followings  array of the current user's document
         await currUser.updateOne({ $push: { followings: user._id } });
-        return res
-          .status(200)
-          .send({ success: true, message: "Successfully followed" });
+
+        next()
+        
       } else {
         res.status(401).send("You have already followed this user");
       }

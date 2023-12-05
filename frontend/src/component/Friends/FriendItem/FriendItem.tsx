@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react'
+import React, { MouseEvent, useEffect, useState } from 'react'
 import { UserType } from '../../../utils/Types'
 import { FriendItemWrapper } from './FriendItem.styles'
 import { useNavigate } from 'react-router-dom'
@@ -7,6 +7,7 @@ import { useDispatch, useSelector } from 'react-redux'
 import { followUserApi } from '../../../utils/Api'
 import { bindActionCreators } from 'redux'
 import { actionCreators } from '../../../redux'
+import { Enums } from '../../../utils/Enums'
 
 type FriendItemPropsType={
   user:UserType,
@@ -36,14 +37,22 @@ const FriendItem:React.FC<FriendItemPropsType> = ({user,chat}) => {
   }, [loggedInUser, user]);
 
  
-    const handleFollow = async () => {
+  const handleFollow = async (e:MouseEvent<HTMLButtonElement>) => {
+      e.stopPropagation()
+
+
+
       if(!loggedInUser?._id)return;
+      let payload = {
+        type:Enums.FOLLOW_TYPE,
+        from:loggedInUser?._id,
+        to:user._id
+      }
       try {
-       const {status,data}  = await followUserApi(loggedInUser?._id,user._id)
+
+       const {status,data}  = await followUserApi(loggedInUser?._id,user._id,payload)
        if(status===200){
-
-        
-
+        socket.emit(Enums.NOTIFICATION,{...data,nextUser:user._id})
         setHasIFollowed(true)
         refreshAction()
        }
@@ -63,11 +72,12 @@ const FriendItem:React.FC<FriendItemPropsType> = ({user,chat}) => {
 
 
   const renderButton = () => {
+
+
     if (hasIFollowed === null || hasTheyFollowed === null) {
       // Loading state or error state
       return <button disabled>Loading...</button>;
     }
-
     if (!hasIFollowed && !hasTheyFollowed) {
       // Neither follows each other
       return <button onClick={handleFollow}>Follow</button>;
@@ -82,13 +92,15 @@ const FriendItem:React.FC<FriendItemPropsType> = ({user,chat}) => {
       // Both follow each other
       return <button disabled>Friends</button>;
     }
+
+
   };
+
 
 
   return (
     <FriendItemWrapper onClick={handleClick}>
         <div className="leftItem">
-
         <img src={user?.image} alt="userProfile" />
         <div className="userInfo">
             <h3 className='username'>{`${user?.firstName} ${user?.lastName}`}</h3>

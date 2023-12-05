@@ -1,7 +1,7 @@
 import { Dispatch } from "redux";
 import { ActionTypes } from "./actionTypes"
 import { Action } from "./index";
-import { ChatType, MessageType, UserType, onlineUsersType } from "../../utils/Types";
+import { ChatType, MessageType, NotificationType, UserType, onlineUsersType } from "../../utils/Types";
 import { Socket } from "socket.io-client";
 
 export const AddUserAction =   (payload: UserType) =>async (dispatch: Dispatch<Action>) => {
@@ -56,6 +56,12 @@ export const AddSocketAction=(payload:Socket) => (dispatch: Dispatch) => {
 export const AddOnlineUsersAction=(payload:onlineUsersType[]) => (dispatch: Dispatch) => {
     return dispatch({
         type: ActionTypes.ADD_ONLINE_USERS,
+        payload
+    })
+}
+export const AddNotificationsAction=(payload:NotificationType) => (dispatch: Dispatch) => {
+    return dispatch({
+        type: ActionTypes.ADD_NOTIFICATIONS,
         payload
     })
 }

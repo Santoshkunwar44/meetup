@@ -5,13 +5,17 @@ import { actionCreators } from "../redux";
 import { useDispatch, useSelector } from "react-redux";
 import { State } from "../redux/reducers";
 import { Enums } from "../utils/Enums";
-import { MessageType, UserType, onlineUsersType } from "../utils/Types";
+import { MessageType, NotificationType, onlineUsersType } from "../utils/Types";
+
 
 const useSocket = () => {
+
+
+
  const dispatch = useDispatch()
- const {AddSocketAction,AddOnlineUsersAction ,AddNewMessageAction} = bindActionCreators(actionCreators,dispatch );
+ const {AddSocketAction,AddOnlineUsersAction ,AddNewMessageAction , AddNotificationsAction } = bindActionCreators(actionCreators,dispatch );
+ const {user} = useSelector((state:State)=>state.user)
  const {chat} = useSelector((state:State)=>state.app)
- const {user } = useSelector((state:State)=>state.user)
  const socketRef= useRef<Socket|null>(null)
 
 
@@ -44,9 +48,12 @@ const useSocket = () => {
          })
          socketRef.current.on(Enums.SEND_MESSAGE,(message:MessageType)=>{
             if(chat?._id  === message.chat?._id ){
-                console.log("socket message",message)
                 AddNewMessageAction(message)
             }
+         })
+         socketRef.current.on(Enums.SEND_NOTIFICATION,(notification:NotificationType)=>{
+            console.log("socket notification",notification)
+            AddNotificationsAction(notification);
          })
     },[])
 

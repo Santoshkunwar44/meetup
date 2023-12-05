@@ -7,7 +7,7 @@ import AppReducer from "./appReducer";
 const reducers = combineReducers({
     user: UserReducer,
     other: OtherReducer,
-    app: AppReducer,
+    app:AppReducer ,
 
 })
 
