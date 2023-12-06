@@ -37,14 +37,14 @@ const FriendItem:React.FC<FriendItemPropsType> = ({user,chat}) => {
   }, [loggedInUser, user]);
 
  
-  const handleFollow = async (e:MouseEvent<HTMLButtonElement>) => {
+  const handleFollow = async (e:MouseEvent<HTMLButtonElement>,type:"FOLLOW_BACK"|"FOLLOW") => {
       e.stopPropagation()
 
 
 
       if(!loggedInUser?._id)return;
       let payload = {
-        type:Enums.FOLLOW_TYPE,
+        type,
         from:loggedInUser?._id,
         to:user._id
       }
@@ -52,7 +52,7 @@ const FriendItem:React.FC<FriendItemPropsType> = ({user,chat}) => {
 
        const {status,data}  = await followUserApi(loggedInUser?._id,user._id,payload)
        if(status===200){
-        socket.emit(Enums.NOTIFICATION,{...data,nextUser:user._id})
+        socket.emit(Enums.NOTIFICATION,{...data.message,nextUser:user._id})
         setHasIFollowed(true)
         refreshAction()
        }
@@ -61,6 +61,7 @@ const FriendItem:React.FC<FriendItemPropsType> = ({user,chat}) => {
       }
   };
 
+  
   const handleClick = () => {
     // Handle click logic, e.g., navigate to user profile
     if(chat){
@@ -80,14 +81,14 @@ const FriendItem:React.FC<FriendItemPropsType> = ({user,chat}) => {
     }
     if (!hasIFollowed && !hasTheyFollowed) {
       // Neither follows each other
-      return <button onClick={handleFollow}>Follow</button>;
+      return <button onClick={(e)=>handleFollow(e,"FOLLOW")}>Follow</button>;
     } else if (hasIFollowed && !hasTheyFollowed) {
       
       // Logged-in user follows, but displayed user doesn't follow back
       return <button disabled>Following</button>; // You can handle an unfollow logic here
     } else if (!hasIFollowed && hasTheyFollowed) {
       // Displayed user follows, but logged-in user doesn't follow back
-      return <button onClick={handleFollow}>Follow Back</button>;
+      return <button onClick={(e)=>handleFollow(e,"FOLLOW_BACK")}>Follow Back</button>;
     } else {
       // Both follow each other
       return <button disabled>Friends</button>;

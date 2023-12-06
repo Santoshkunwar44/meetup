@@ -16,6 +16,7 @@ padding-top: 1rem;
     display: flex;
     flex-direction: column;
     .sidebarItem{
+        position: relative;
         height: 80px;
         display: flex;
         gap: 1rem;
@@ -39,6 +40,18 @@ padding-top: 1rem;
             border-radius: 50%;
         }
 
+        .badge{
+            width: 25px;
+            height: 25px;
+            background-color: red;
+            display: grid;
+            place-items:center;
+            border-radius: 50%;
+            top: 0;
+            right: -5px;
+            position: absolute;
+                font-size: 12px;
+        }
         &:hover{
             background-color: var(--light_dark);
         }

@@ -19,7 +19,7 @@ const Notifications = () => {
 
     useEffect(()=>{
         if(newNotification){
-           setNotification((prev)=>[...prev,newNotification])
+           setNotification((prev)=>[newNotification,...prev])
         }
     },[newNotification])
     
@@ -51,7 +51,7 @@ const Notifications = () => {
 
                     {
 
-                        notification && notification?.map(notification=> <NotificationItem notification={notification} />  )
+                        notification && notification?.map(notification=> <NotificationItem  key={notification?._id} notification={notification} />  )
                     }
                     
                 </div>

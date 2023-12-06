@@ -30,7 +30,7 @@ class NotificationController{
     async getNotificationOfUser(req,res){
         const {userId} = req.params;
         try {
-            let  notifications = await Notification.find({to:userId}).populate({
+            let  notifications = await Notification.find({to:userId}).sort({createdAt:-1}).populate({
                 path:"from",
                 select:["firstName","lastName","image","_id"],
                 model:"User"

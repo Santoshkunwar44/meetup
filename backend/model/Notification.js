@@ -1,5 +1,5 @@
 const mongoose = require('mongoose');
-const { FOLLOW_TYPE, LIKE_TYPE, COMMENT_TYPE } = require('../utils/Enums');
+const { FOLLOW_TYPE, LIKE_TYPE, COMMENT_TYPE ,FOLLOW_BACK} = require('../utils/Enums');
 
 const NotificationSchema = mongoose.Schema({
     text:{
@@ -8,7 +8,7 @@ const NotificationSchema = mongoose.Schema({
     },
     type:{
         type:String,
-        enums:[FOLLOW_TYPE,LIKE_TYPE,COMMENT_TYPE]
+        enums:[FOLLOW_TYPE,LIKE_TYPE,COMMENT_TYPE,FOLLOW_BACK]
     },
     post:{
         type:mongoose.Schema.Types.ObjectId,

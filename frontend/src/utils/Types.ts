@@ -40,7 +40,7 @@ export type PostType={
     updatedAt:string,
 }
 export  type NotificationType={
-
+    _id:string,
     text:string;
     createdAt:string,
     updatedAt:string,

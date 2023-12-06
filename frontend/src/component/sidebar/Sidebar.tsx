@@ -8,6 +8,8 @@ import { LuUsers2 } from "react-icons/lu";
 import { Link, useLocation, useNavigate } from 'react-router-dom';
 import { useEffect, useState } from 'react';
 import { FaRegHeart } from "react-icons/fa";
+import { Badge } from '@mui/material';
+import EmailIcon from '@mui/icons-material/Email';
 
 
 
@@ -48,9 +50,13 @@ const Sidebar:React.FC<SidebarPropsType> = ({small}) => {
   return (
     <SidebarWrapper small={small}>
         <div className="sidebarList">
+        
+    
+
           <Link className={`${currentpath ==="chat" ? "activeSidebar":""} sidebarItem`} to={"/chat"}>
             <TbBrandMessenger className="sidebarIcon"/>
             <span>Messenger</span>
+            <div className='badge'>2</div>
           </Link>
           <Link className={`${currentpath==="users" ?"activeSidebar":""} sidebarItem`} to={"/users"}>
             <LuUsers2 className="sidebarIcon"/>
@@ -64,6 +70,7 @@ const Sidebar:React.FC<SidebarPropsType> = ({small}) => {
           <Link className={`${currentpath ==="notification" ?"activeSidebar":""} sidebarItem`} to={`/notification`}>
             <FaRegHeart className="sidebarIcon"/>
             <span>Notification</span>
+                   <div className='badge'>5</div>
           </Link>
           <Link className={`${currentpath ==="profile" ?"activeSidebar":""} sidebarItem`} to={`/profile/${user?._id}`}>
             <img className='profileImage' src={user?.image} alt="" />
