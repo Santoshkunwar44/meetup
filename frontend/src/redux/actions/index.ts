@@ -43,5 +43,12 @@ interface AddNotificationsAction {
     type:ActionTypes.ADD_NOTIFICATIONS,
     payload:onlineUsersType[]
 }
+interface AddBasicsAction {
+    type:ActionTypes.ADD_USER_STATS,
+    payload:{
+        unseenChatCount:number,
+        unseenNotificationCount:number
+    }
+}
 
-export type Action = AddUserAction  | AddNotificationsAction| AddOnlineUsersAction | RemoveUserAction | RefreshAction | AddSocketAction | AddChatAction | AddMessageAction| AddNextUser |AddNewMessage;
+export type Action = AddUserAction | AddBasicsAction  | AddNotificationsAction| AddOnlineUsersAction | RemoveUserAction | RefreshAction | AddSocketAction | AddChatAction | AddMessageAction| AddNextUser |AddNewMessage;

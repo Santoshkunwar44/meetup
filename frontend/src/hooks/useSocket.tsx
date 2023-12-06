@@ -13,9 +13,10 @@ const useSocket = () => {
 
 
  const dispatch = useDispatch()
- const {AddSocketAction,AddOnlineUsersAction ,AddNewMessageAction , AddNotificationsAction } = bindActionCreators(actionCreators,dispatch );
+ const {AddSocketAction,AddOnlineUsersAction ,AddNewMessageAction , AddNotificationsAction ,AddUserStatsAction} = bindActionCreators(actionCreators,dispatch );
+
  const {user} = useSelector((state:State)=>state.user)
- const {chat} = useSelector((state:State)=>state.app)
+ const {chat,unseenChatCount,unseenNotificationCount} = useSelector((state:State)=>state.app)
  const socketRef= useRef<Socket|null>(null)
 
 
@@ -52,8 +53,11 @@ const useSocket = () => {
             }
          })
          socketRef.current.on(Enums.SEND_NOTIFICATION,(notification:NotificationType)=>{
-            console.log("socket notification",notification)
-            AddNotificationsAction(notification);
+         if(notification.type==="FOLLOW" || notification.type==="FOLLOW_BACK"){
+            console.log(unseenChatCount,unseenNotificationCount)
+             AddUserStatsAction({unseenChatCount , unseenNotificationCount: unseenNotificationCount ? unseenNotificationCount+1 :1})
+             AddNotificationsAction(notification);
+            }
          })
     },[])
 

@@ -46,6 +46,6 @@ export  type NotificationType={
     updatedAt:string,
     to:string,
     from:UserType,
-    type:"FOLLOW"|"COMMENT"|"LIKE";
+    type:"FOLLOW"|"COMMENT"|"LIKE"|"FOLLOW_BACK"
     post:PostType
 }

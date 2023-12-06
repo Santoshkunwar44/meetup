@@ -1,5 +1,5 @@
 import './App.css'
-import {Routes,Route, Outlet, Navigate, useNavigate} from "react-router-dom"
+import {Routes,Route, Outlet, Navigate} from "react-router-dom"
 import Login from './pages/Auth/Login/Login'
 import Register from './pages/Auth/Register/Register'
 import ChatOutlet from './component/Chat/ChatOutlet/ChatOutlet'
@@ -30,12 +30,16 @@ import useSocket from './hooks/useSocket'
 import Notifications from './component/Notification/Notifications'
 
 function App() {
-  const {fetchUser} = useUpdateApp()
+  const {fetchUser ,fetchUnseenChatsAndNotifications} = useUpdateApp()
   const {refresh} = useSelector((state:State)=>state.other)
+  const {user} = useSelector((state:State)=>state.user)
   useSocket()
   useEffect(()=>{
     fetchUser()
   },[refresh])
+  useEffect(()=>{
+    fetchUnseenChatsAndNotifications()
+  },[user])
  
 
   return (

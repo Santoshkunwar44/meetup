@@ -4,12 +4,13 @@ import { NotificationWrapper } from "./Notification.styles"
 import NotificationItem from "./NotificationItem/NotificationItem"
 import { FaRegHeart } from "react-icons/fa";
 import { NotificationType } from "../../utils/Types";
-import { useSelector } from "react-redux";
+import {  useSelector } from "react-redux";
 import { State } from "../../redux/reducers";
 import { getNotificationOfUserApi } from "../../utils/Api";
 
+
 const Notifications = () => {
-    const [notification,setNotification] =useState<NotificationType[]>([])
+    const [notification,setNotification] =useState<NotificationType[]>([]);
     const {user} = useSelector((state:State)=>state.user)
     const {newNotification} = useSelector((state:State)=>state.app)
     useEffect(()=>{ 
@@ -22,6 +23,7 @@ const Notifications = () => {
            setNotification((prev)=>[newNotification,...prev])
         }
     },[newNotification])
+
     
     const getNotificationOfUser=async()=>{
         if(!user?._id)return;

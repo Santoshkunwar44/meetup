@@ -9,7 +9,9 @@ interface InitialStateInterface {
     messages:MessageType[] ,
     socket:Socket |null ,
     onlineUsers:onlineUsersType[],
-    newNotification:  NotificationType |null
+    newNotification:  NotificationType |null,
+    unseenNotificationCount:number|null ,
+    unseenChatCount:number |null,
 }
 
 
@@ -19,7 +21,9 @@ const InitialState:InitialStateInterface={
     messages:[],
     socket:null,
     onlineUsers:[],
-    newNotification:null
+    newNotification:null,
+    unseenMessageCount:null,
+    unseenNotificationCount:null
 }
 
 const AppReducer = (state: InitialStateInterface = InitialState, action: Action) => {
@@ -44,6 +48,10 @@ const AppReducer = (state: InitialStateInterface = InitialState, action: Action)
         
         case ActionTypes.ADD_NOTIFICATIONS :
             return { ...state, newNotification: action.payload };
+
+        case ActionTypes.ADD_USER_STATS:
+            const {unseenNotificationCount,unseenChatCount}= action.payload
+            return {...state,unseenNotificationCount,unseenChatCount}
         
         default:
             return state;

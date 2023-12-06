@@ -6,7 +6,7 @@ export const ProfileCardWrapper = styled.div`
     justify-content: center;
     .cardContent{
         display: flex;
-        width: 80%;
+        width: 100%;
         padding: 1rem;
         .leftBox{
             display: flex;

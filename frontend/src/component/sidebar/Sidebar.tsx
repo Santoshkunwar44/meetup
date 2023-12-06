@@ -21,7 +21,7 @@ const Sidebar:React.FC<SidebarPropsType> = ({small}) => {
   const {user} = useSelector((state:State)=>state.user)
   const navigate =useNavigate()
   const location = useLocation()
-
+  const {unseenChatCount,unseenNotificationCount} = useSelector((state:State)=>state.app)
   const [currentpath,setCurrentPath] = useState<pagePathType>("profile");
 
 
@@ -54,7 +54,7 @@ const Sidebar:React.FC<SidebarPropsType> = ({small}) => {
           <Link className={`${currentpath ==="chat" ? "activeSidebar":""} sidebarItem`} to={"/chat"}>
             <TbBrandMessenger className="sidebarIcon"/>
             <span>Messenger</span>
-            <div className='badge'>2</div>
+            <div className='badge'>{unseenChatCount}</div>
           </Link>
           <Link className={`${currentpath==="users" ?"activeSidebar":""} sidebarItem`} to={"/users"}>
             <LuUsers2 className="sidebarIcon"/>
@@ -64,10 +64,10 @@ const Sidebar:React.FC<SidebarPropsType> = ({small}) => {
             <IoSearch className="sidebarIcon"/>
             <span>Search</span>
           </Link>
-          <Link className={`${currentpath ==="notification" ?"activeSidebar":""} sidebarItem`} to={`/notification`}>
+           <Link className={`${currentpath ==="notification" ?"activeSidebar":""} sidebarItem`} to={`/notification`}>
             <FaRegHeart className="sidebarIcon"/>
             <span>Notification</span>
-                   <div className='badge'>5</div>
+                   <div className='badge'>{unseenNotificationCount}</div>
           </Link>
           <Link className={`${currentpath ==="profile" ?"activeSidebar":""} sidebarItem`} to={`/profile/${user?._id}`}>
             <img className='profileImage' src={user?.image} alt="" />
