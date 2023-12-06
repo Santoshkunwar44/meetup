@@ -8,8 +8,6 @@ import { LuUsers2 } from "react-icons/lu";
 import { Link, useLocation, useNavigate } from 'react-router-dom';
 import { useEffect, useState } from 'react';
 import { FaRegHeart } from "react-icons/fa";
-import { Badge } from '@mui/material';
-import EmailIcon from '@mui/icons-material/Email';
 
 
 
@@ -66,7 +64,6 @@ const Sidebar:React.FC<SidebarPropsType> = ({small}) => {
             <IoSearch className="sidebarIcon"/>
             <span>Search</span>
           </Link>
-      
           <Link className={`${currentpath ==="notification" ?"activeSidebar":""} sidebarItem`} to={`/notification`}>
             <FaRegHeart className="sidebarIcon"/>
             <span>Notification</span>
