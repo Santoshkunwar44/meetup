@@ -29,15 +29,12 @@ const useUpdateApp = () => {
             if(status===200){
                 const {unseenNotificationCount,unseenChatCount}  = data.message;
                 console.log(unseenChatCount,unseenNotificationCount)
-
                 AddUserStatsAction({unseenChatCount,unseenNotificationCount})
             }
         } catch (error) {
-
             console.log(error)
         }
     }
-
     return {fetchUser ,fetchUnseenChatsAndNotifications}
 }
 

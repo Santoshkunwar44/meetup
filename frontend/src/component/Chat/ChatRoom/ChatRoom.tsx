@@ -4,7 +4,7 @@ import ChatHeader from '../ChatHeader/ChatHeader'
 import ChatInput from '../ChatInput/ChatInput'
 import MessagePlayGround from '../MessagePlayground/MessagePlayGround'
 import { ChatRoomWrapper } from './ChatRoom.styles'
-import { fetchChatsOfBothUsersApi, fetchMessagesFromChatApi, fetchUserByIdApi } from '../../../utils/Api'
+import { fetchChatsOfBothUsersApi, fetchMessagesFromChatApi, fetchUserByIdApi, markChatAsSeenApi } from '../../../utils/Api'
 import { useEffect } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import { State } from '../../../redux/reducers'
@@ -16,7 +16,7 @@ const ChatRoom = () => {
   const {user} =useSelector((state:State)=>state.user);
   const {chat} = useSelector((state:State)=>state.app)
   const dispatch = useDispatch()
-  const {AddMessageAction,AddNextUserAction,AddChatAction} = bindActionCreators(actionCreators,dispatch)
+  const {AddMessageAction,AddNextUserAction,AddChatAction,refreshAction} = bindActionCreators(actionCreators,dispatch)
 
 
 
@@ -27,12 +27,29 @@ const ChatRoom = () => {
   useEffect(()=>{
     getUserById()
     getChatsOfBothusers()
+    markChatAsSeen()
   },[id,user])
 
   useEffect(()=>{
     if(!chat?._id)return;
     getMessagesOfusers()
   },[chat])
+
+  const markChatAsSeen =async()=>{
+    if(!chat?._id || !user?._id)return;
+
+    try {
+
+    const {status}  =  await markChatAsSeenApi(chat?._id,user?._id);
+    
+
+    if(status===200){
+      refreshAction()
+    }
+    } catch (error) {
+      console.log(error)
+    }
+  }
 
    const getUserById=async()=>{
     if(!id)return;

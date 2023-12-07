@@ -102,6 +102,19 @@ class ChatController {
     }    
     }
 
+    async markChatAsSeen(req,res){
+        const {userId,chatId}  = req.body;
+        try {
+            await ChatModel.findByIdAndUpdate(chatId,{
+                $push:{
+                    seen:userId
+                }
+            })
+            res.status(200).json({ message: "successfully Updated", success: true });
+        } catch (error) {
+            res.status(500).json({ message: error.message, success: false });
+        }
+    }
 }
 
 

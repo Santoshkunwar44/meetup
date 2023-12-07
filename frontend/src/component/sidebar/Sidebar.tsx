@@ -48,13 +48,10 @@ const Sidebar:React.FC<SidebarPropsType> = ({small}) => {
   return (
     <SidebarWrapper small={small}>
         <div className="sidebarList">
-        
-    
-
           <Link className={`${currentpath ==="chat" ? "activeSidebar":""} sidebarItem`} to={"/chat"}>
             <TbBrandMessenger className="sidebarIcon"/>
             <span>Messenger</span>
-            <div className='badge'>{unseenChatCount}</div>
+         { unseenChatCount ?  <div className='badge'>{unseenChatCount}</div>:""}
           </Link>
           <Link className={`${currentpath==="users" ?"activeSidebar":""} sidebarItem`} to={"/users"}>
             <LuUsers2 className="sidebarIcon"/>
@@ -67,7 +64,7 @@ const Sidebar:React.FC<SidebarPropsType> = ({small}) => {
            <Link className={`${currentpath ==="notification" ?"activeSidebar":""} sidebarItem`} to={`/notification`}>
             <FaRegHeart className="sidebarIcon"/>
             <span>Notification</span>
-                   <div className='badge'>{unseenNotificationCount}</div>
+                 {  unseenNotificationCount ?  <div className='badge'>{unseenNotificationCount}</div> :""}
           </Link>
           <Link className={`${currentpath ==="profile" ?"activeSidebar":""} sidebarItem`} to={`/profile/${user?._id}`}>
             <img className='profileImage' src={user?.image} alt="" />

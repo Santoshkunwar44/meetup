@@ -39,7 +39,7 @@ function App() {
   },[refresh])
   useEffect(()=>{
     fetchUnseenChatsAndNotifications()
-  },[user])
+  },[user,refresh])
  
 
   return (

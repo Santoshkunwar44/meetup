@@ -28,6 +28,8 @@ border-bottom: 1px solid #4f597b24;
 }
 .content{
     font-size: 15px;
+    letter-spacing: 0.9px;
+    
     color: #ffffffb4;
 }
 .time{

@@ -50,6 +50,24 @@ class NotificationController{
             
         }
     }
+
+    async markAsSeen(req,res){
+        try {
+
+            await Notification.updateMany(
+            {
+                seen:false,
+            },{
+                $set:{
+                    seen:true
+                }
+            }
+            )
+            res.status(200).json({success:true ,message:"sucessfully updated"})
+        } catch (error) {
+            res.status(500).json({message:error.message,success:false})
+        }
+    }
 }
 module.exports = new NotificationController();
 

@@ -1,4 +1,4 @@
-import axios, { Axios } from "axios";
+import axios from "axios";
 
 export const AxiosInstance=axios.create({
     baseURL:"http://localhost:8000/api",
@@ -10,16 +10,20 @@ type MessagePayloadType={
     text:string,
     chatId:string
 }
+
 type NewMessagePayloadType={
     text:string,
     users:string[],
     senderId:string
 }
+
 type followNotificationPayloadType={
     to:string,
     from:string,
     type:string
 }
+
+
 // user endpoints
 export const fetchUserByIdApi=(userId:string)=>AxiosInstance.get(`/user/search?userId=${userId}`)
 export const searchUserByUsernameApi=(username:string)=>AxiosInstance.get(`/user/search?search_query=${username}`)
@@ -42,13 +46,13 @@ export const  resetPasswordApi=(password:string,token:string)=>AxiosInstance.pos
 export const registerApi=(payload:{email:string,firstName:string,lastName:string,password:string})=>AxiosInstance.post(`/auth/register`,payload)
 
 
-
 // message endpoint 
 export const fetchMessagesFromChatApi=(chatId:string)=>AxiosInstance.get(`/message?chatId=${chatId}`)
 export const createMessageApi=(payload:MessagePayloadType)=>AxiosInstance.post(`/message/create`,payload)
 export const createNewMessageApi=(payload:NewMessagePayloadType)=>AxiosInstance.post(`/message/new_message`,payload)
+export const markChatAsSeenApi=(chatId:string,userId:string)=>AxiosInstance.post(`/chat/mark_as_seen`,{chatId,userId})
 
 //notifications endpoint
-export const getNotificationOfUserApi=(userId:string)=>AxiosInstance.get(`/notification/${userId}`)
 export const getUserStatsApi=(userId:string)=>AxiosInstance.get(`/other/userStats/${userId}`)
-
+export const getNotificationOfUserApi=(userId:string)=>AxiosInstance.get(`/notification/${userId}`)
+export const markAllNotificationsAsSeenApi=(userId:string)=>AxiosInstance.post(`/notification/mark_as_seen/${userId}`);
