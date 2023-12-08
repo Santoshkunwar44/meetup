@@ -8,6 +8,7 @@ import { State } from "../../../redux/reducers";
 import { ChatType, UserType } from "../../../utils/Types";
 import { getAnotherUserMethod } from "../../../utils/methods";
 import FriendItem from "../../Friends/FriendItem/FriendItem";
+import UserSkeleton from "../../skeleton/UserSkeleton/UserSkeleton";
 
 
 const ChatBox = () => {
@@ -17,7 +18,9 @@ const ChatBox = () => {
   const [filteredChats,setFilteredChats]  = useState<ChatType[]>([]);
   const [searchInput,setSearchInput] =useState("")
   const [searchedFriends , setSearchedFriends] = useState<UserType[]>([])
-  const {refresh} =useSelector((state:State)=>state.other)
+  const {refresh} =useSelector((state:State)=>state.other);
+  const [loading,setLoading] = useState(false)
+  
 
 
 
@@ -38,20 +41,23 @@ const ChatBox = () => {
 
   const getAllMyChats=async()=>{
     if(!user?._id)return;
+    setLoading(true)
     try {
      const {status,data} =  await fetchChatsOfUserApi(user?._id)
      if(status===200){
       setChats(data.message)
+      setLoading(false)
      }
     } catch (error) {
       console.log(error)
+      setLoading(false)
     }
+
 
   }
 
   const handleSearchInputChange=()=>{
     if(!user?._id)return;
-    
      const regex = new RegExp(searchInput, 'i');
      const searched =  chats.filter(chat=>{
      let username = `${getAnotherUserMethod(chat.users,user?._id)?.firstName } ${getAnotherUserMethod(chat.users,user?._id)?.lastName }`
@@ -63,17 +69,19 @@ const ChatBox = () => {
 
   const handleSearchUser=async()=>{
     if(!user?._id)return;
+    setLoading(true)
     try {
       const {data,status} = await  searchUserByUsernameApi(searchInput)
       if(status===200){
         let users:UserType[] = data.message;
-      const filteredUsers = users.filter(u => u._id !== user._id && !chats.some(chat => chat._id === user._id)
-)
-
+       const filteredUsers = users.filter(u => u._id !== user._id && !chats.some(chat => chat._id === user._id)
+)       
         setSearchedFriends(filteredUsers)
+        setLoading(false)
       }
     } catch (error) {
       console.log(error)
+      setLoading(false)
     }
   }
 
@@ -87,17 +95,18 @@ const ChatBox = () => {
             <input type="text" placeholder="search chats or friends" onChange={e=>setSearchInput(e.target.value)}/>
           </div>
         </div>
+        {
+          loading ? <UserSkeleton/>: 
+          <>
         <div className="chatWrapper">
-           {
+           { 
+           
            searchInput.length > 0 ? 
            filteredChats.map(chat=><ChatUser chat={chat} key={chat._id}/>) 
            :   chats.map(chat=><ChatUser  chat={chat} key={chat._id}/>)
            }
         </div>
-           
-      {  searchInput.length >0 && <>
-      
-      
+         {  searchInput.length >0 && <>
          <h3 className="title">Friends</h3>
          <div className="friendsWrapper">
           {
@@ -106,6 +115,12 @@ const ChatBox = () => {
         </div>
           </>
         }
+           </> 
+
+
+        }
+      
+     
 
         
 

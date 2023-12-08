@@ -9,6 +9,7 @@ import { State } from "../../redux/reducers";
 import { getNotificationOfUserApi, markAllNotificationsAsSeenApi } from "../../utils/Api";
 import { bindActionCreators } from "redux";
 import { actionCreators } from "../../redux";
+import UserSkeleton from "../skeleton/UserSkeleton/UserSkeleton";
 
 
 const Notifications = () => {
@@ -18,6 +19,7 @@ const Notifications = () => {
     const {refresh} = useSelector((state:State)=>state.other);
     const dispatch = useDispatch();
     const {refreshAction} = bindActionCreators(actionCreators,dispatch)
+    const [loading,setLoading] = useState(false)
 
 
 
@@ -52,14 +54,17 @@ const Notifications = () => {
     
     const getNotificationOfUser=async()=>{
         if(!user?._id)return;
+        setLoading(true)
         try {
             const {status,data} = await getNotificationOfUserApi(user._id)
 
             if(status===200){
                 setNotification(data.message)
             }
+            setLoading(false)
         } catch (error) {
 
+            setLoading(false)
             console.log(error)
             
         }
@@ -78,7 +83,9 @@ const Notifications = () => {
                 </div>
                 <div className="notificationWrapper">
                     {
-                        notification && notification?.map(notification=> <NotificationItem  key={notification?._id} notification={notification} />  )
+                        loading ?<UserSkeleton/>:
+                         notification?.map(notification=> <NotificationItem  key={notification?._id} notification={notification} />  )
+                         
                     }
                 </div>
         </div>

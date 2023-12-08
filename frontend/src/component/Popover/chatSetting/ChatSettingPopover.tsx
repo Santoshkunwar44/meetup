@@ -6,7 +6,6 @@ import {
 } from '@chakra-ui/react'
 import React from 'react'
 import { ChatSettingPopoverWrapper } from './ChatSettingPopover.styles'
-import { MdBlock } from "react-icons/md";
 import { MdOutlineDelete } from "react-icons/md";
 import { FaRegUser } from "react-icons/fa";
 import ConfirmModal from '../../Modal/confirm/ConfirmModal';
@@ -57,11 +56,11 @@ const ChatSettingPopover:React.FC<ChatSettingPopoverType>=({children ,user}) => 
                 <p>Visit profile</p>
                 
             </Link>
-            <div className="settingItem">
+            {/* <div className="settingItem">
                 <MdBlock/>
                 <p>Block user</p>
                 
-            </div>
+            </div> */}
             <ConfirmModal text='Are you sure you want to delete the chat ?' cb={handleDeleteChat}>
 
             <div className="settingItem">
