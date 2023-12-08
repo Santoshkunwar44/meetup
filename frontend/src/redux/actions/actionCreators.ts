@@ -65,12 +65,21 @@ export const AddNotificationsAction=(payload:NotificationType) => (dispatch: Dis
         payload
     })
 }
+
 export const AddUserStatsAction=(payload:{
-        unseenChatCount:number,
-        unseenNotificationCount:number
+        unseenChatCount:number|null,
+        unseenNotificationCount:number|null
     }) => (dispatch: Dispatch) => {
+
     return dispatch({
         type: ActionTypes.ADD_USER_STATS,
+        payload
+    })
+
+}
+export const AddNewChatAction=(payload:ChatType[]) => (dispatch: Dispatch) => {
+    return dispatch({
+        type: ActionTypes.ADD_NEW_CHAT,
         payload
     })
 }

@@ -21,7 +21,7 @@ export type ChatType={
 }
 export type MessageType={
     senderId:UserType,
-    chat:ChatType,
+    chatId:ChatType,
     text:string,
     createdAt:string,
     updatedAt:string,
@@ -39,7 +39,7 @@ export type PostType={
     createdAt:string,
     updatedAt:string,
 }
-export  type NotificationType={
+export type NotificationType={
     _id:string,
     text:string;
     createdAt:string,

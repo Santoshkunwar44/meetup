@@ -6,7 +6,7 @@ type MessageItemWrapperPropsType={
 
 export const MessageItemWrapper = styled.div<MessageItemWrapperPropsType>`
 width: fit-content;
-display: flex;
+display: ${props=>props.own===null ? "none":"flex"};;
 flex-direction: column;
 gap: 0.5rem;
 align-self: ${props=>props.own===true ? "flex-end":"flex-start"};

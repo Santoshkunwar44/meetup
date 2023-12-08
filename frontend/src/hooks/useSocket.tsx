@@ -6,6 +6,8 @@ import { useDispatch, useSelector } from "react-redux";
 import { State } from "../redux/reducers";
 import { Enums } from "../utils/Enums";
 import { MessageType, NotificationType, onlineUsersType } from "../utils/Types";
+import { useLocation } from "react-router-dom";
+import { AddNewChatAction } from "../redux/actions/actionCreators";
 
 
 const useSocket = () => {
@@ -13,10 +15,11 @@ const useSocket = () => {
 
 
  const dispatch = useDispatch()
- const {AddSocketAction,AddOnlineUsersAction ,AddNewMessageAction ,refreshAction, AddNotificationsAction ,AddUserStatsAction} = bindActionCreators(actionCreators,dispatch );
-
+ const {AddSocketAction,AddOnlineUsersAction ,AddNewMessageAction , AddNotificationsAction ,AddUserStatsAction} = bindActionCreators(actionCreators,dispatch );
  const {user} = useSelector((state:State)=>state.user)
- const {chat,unseenChatCount,unseenNotificationCount} = useSelector((state:State)=>state.app)
+ const location =useLocation()
+
+ const {chat,unseenChatCount,unseenNotificationCount,allChats} = useSelector((state:State)=>state.app)
 
  const socketRef= useRef<Socket|null>(null)
 
@@ -45,17 +48,22 @@ const useSocket = () => {
             AddOnlineUsersAction(onlineUsers)
          })
          socketRef.current.on(Enums.SEND_MESSAGE,(message:MessageType)=>{
-             refreshAction();
+            console.log(chat?._id , message.chatId._id)
             if(chat?._id  === message.chatId?._id ){
                 AddNewMessageAction(message)
             }else{
-                AddUserStatsAction({unseenChatCount :unseenChatCount ? unseenChatCount + 1 : 1, unseenNotificationCount})
+                AddUserStatsAction({ unseenChatCount :unseenChatCount ? unseenChatCount + 1 : 1, unseenNotificationCount})
+            }
+            if(location.pathname.split("/")[1]==="chat"){
+                if(!allChats?.some(c=>c._id === message.chatId._id)){
+                    AddNewChatAction([message.chatId , ...allChats])
+                }
             }
 
          })
          socketRef.current.on(Enums.SEND_NOTIFICATION,(notification:NotificationType)=>{
          if(notification.type==="FOLLOW" || notification.type==="FOLLOW_BACK"){
-             AddUserStatsAction({unseenChatCount , unseenNotificationCount: unseenNotificationCount ? unseenNotificationCount+1 :1})
+             AddUserStatsAction({  unseenChatCount , unseenNotificationCount: unseenNotificationCount ? unseenNotificationCount+1 :1})
              AddNotificationsAction(notification);
             }
          })

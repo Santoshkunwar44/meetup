@@ -30,15 +30,16 @@ import useSocket from './hooks/useSocket'
 import Notifications from './component/Notification/Notifications'
 
 function App() {
-  const {fetchUser ,fetchUnseenChatsAndNotifications} = useUpdateApp()
+  const {setup,fetchUser} = useUpdateApp()
   const {refresh} = useSelector((state:State)=>state.other)
   const {user} = useSelector((state:State)=>state.user)
+  const {chat} = useSelector((state:State)=>state.app)
   useSocket()
   useEffect(()=>{
     fetchUser()
   },[refresh])
   useEffect(()=>{
-    fetchUnseenChatsAndNotifications()
+    setup()
   },[user,refresh])
  
 

@@ -58,7 +58,7 @@ const ChatUser:React.FC<ChatUserPropsType> = ({chat}) => {
       </div>
             <div className="chatUser">
                 <h3 className="username">{`${nextuser?.firstName} ${nextuser?.lastName}`}</h3>
-                <p className="message"> {chat.latestMessage?.text}</p>
+                <p className="message"> {chat?.latestMessage?.text}</p>
         </div>
     </ChatUserWrapper>
   )

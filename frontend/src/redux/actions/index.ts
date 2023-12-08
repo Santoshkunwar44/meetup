@@ -1,5 +1,5 @@
 import { Socket } from "socket.io-client";
-import { ChatType, MessageType, UserType, onlineUsersType } from "../../utils/Types";
+import { ChatType, MessageType, NotificationType, UserType, onlineUsersType } from "../../utils/Types";
 import { ActionTypes } from "./actionTypes";
 
 
@@ -41,14 +41,19 @@ interface AddOnlineUsersAction {
 }
 interface AddNotificationsAction {
     type:ActionTypes.ADD_NOTIFICATIONS,
-    payload:onlineUsersType[]
+    payload:NotificationType
 }
 interface AddBasicsAction {
     type:ActionTypes.ADD_USER_STATS,
     payload:{
-        unseenChatCount:number,
-        unseenNotificationCount:number
+        unseenChatCount:number|null,
+        unseenNotificationCount:number|null
     }
 }
 
-export type Action = AddUserAction | AddBasicsAction  | AddNotificationsAction| AddOnlineUsersAction | RemoveUserAction | RefreshAction | AddSocketAction | AddChatAction | AddMessageAction| AddNextUser |AddNewMessage;
+interface addNewChat{
+    type:ActionTypes.ADD_NEW_CHAT,
+    payload:ChatType[]
+}
+
+export type Action = addNewChat | AddUserAction | AddBasicsAction  | AddNotificationsAction| AddOnlineUsersAction | RemoveUserAction | RefreshAction | AddSocketAction | AddChatAction | AddMessageAction| AddNextUser |AddNewMessage;

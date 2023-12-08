@@ -15,7 +15,6 @@ class MessageController {
 
 
             // add latest message to the chat
-
             await ChatModel.findByIdAndUpdate(req.body.chatId, {
                 latestMessage: message._doc._id
             })

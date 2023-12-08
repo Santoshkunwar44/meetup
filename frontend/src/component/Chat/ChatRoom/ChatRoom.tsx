@@ -16,13 +16,20 @@ const ChatRoom = () => {
   const {user} =useSelector((state:State)=>state.user);
   const {chat} = useSelector((state:State)=>state.app)
   const dispatch = useDispatch()
-  const {AddMessageAction,AddNextUserAction,AddChatAction,refreshAction} = bindActionCreators(actionCreators,dispatch)
+  const {AddMessageAction,AddNextUserAction,AddChatAction} = bindActionCreators(actionCreators,dispatch)
   const [loading,setLoading] =useState(false)
 
 
+  useEffect(()=>{
+    return ()=>{
+      AddChatAction(null)
+    }
+  },[])
 useEffect(()=>{
+  
   markChatAsSeen()
 },[chat,user])
+
 
 
   
