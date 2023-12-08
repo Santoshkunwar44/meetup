@@ -12,9 +12,9 @@ export const SearchUserWrapper = styled.div`
     gap: 0.2rem;
     height: 80px;
     border-radius: 1rem;
-    padding: 0 1rem;
+    padding: 0 1rem !important;
     svg{
-        font-size: 1.5rem;
+        font-size: 1.3rem;
         fill: var(--fade_text);
         color: var(--fade_text);
     }

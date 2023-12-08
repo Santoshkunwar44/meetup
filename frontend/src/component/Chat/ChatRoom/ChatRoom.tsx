@@ -5,7 +5,7 @@ import ChatInput from '../ChatInput/ChatInput'
 import MessagePlayGround from '../MessagePlayground/MessagePlayGround'
 import { ChatRoomWrapper } from './ChatRoom.styles'
 import { fetchChatsOfBothUsersApi, fetchMessagesFromChatApi, fetchUserByIdApi, markChatAsSeenApi } from '../../../utils/Api'
-import { useEffect } from 'react'
+import { useEffect, useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import { State } from '../../../redux/reducers'
 import { bindActionCreators } from 'redux'
@@ -17,9 +17,12 @@ const ChatRoom = () => {
   const {chat} = useSelector((state:State)=>state.app)
   const dispatch = useDispatch()
   const {AddMessageAction,AddNextUserAction,AddChatAction,refreshAction} = bindActionCreators(actionCreators,dispatch)
+  const [loading,setLoading] =useState(false)
 
 
-
+useEffect(()=>{
+  markChatAsSeen()
+},[chat,user])
 
 
   
@@ -27,7 +30,6 @@ const ChatRoom = () => {
   useEffect(()=>{
     getUserById()
     getChatsOfBothusers()
-    markChatAsSeen()
   },[id,user])
 
   useEffect(()=>{
@@ -44,7 +46,7 @@ const ChatRoom = () => {
     
 
     if(status===200){
-      refreshAction()
+      // refreshAction()
     }
     } catch (error) {
       console.log(error)
@@ -59,8 +61,9 @@ const ChatRoom = () => {
     }
    }
    const getChatsOfBothusers=async()=>{
-    if(!id || !user?._id)return;
 
+    if(!id || !user?._id)return;
+    setLoading(true)
     try {
      const {data,status} =  await fetchChatsOfBothUsersApi(id,user._id)
      if(status===200){
@@ -69,10 +72,12 @@ const ChatRoom = () => {
       }else{
         AddChatAction(null)
         AddMessageAction([])
+        setLoading(false)
       }
      }
 
     } catch (error) {
+      setLoading(false)
       console.log(error)
     }
 
@@ -85,14 +90,16 @@ const ChatRoom = () => {
      if(status===200){
       AddMessageAction(data.message)
      }
+     setLoading(false)
     } catch (error) {
       console.log(error)
+      setLoading(false)
     }
    }
   return (
     <ChatRoomWrapper>
         <ChatHeader />
-        <MessagePlayGround />
+        <MessagePlayGround loading={loading}/>
         <ChatInput />
     </ChatRoomWrapper>
   )

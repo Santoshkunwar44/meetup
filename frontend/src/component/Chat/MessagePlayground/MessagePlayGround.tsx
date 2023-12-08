@@ -3,8 +3,12 @@ import MessageItem from '../../message/MessageItem'
 import StartChat from '../StartChat/StartChat'
 import { MessagePlayGroundWrapper } from './MessagePlayGround.styles'
 import { State } from '../../../redux/reducers'
-
-const MessagePlayGround = () => {
+import MessageSkeleton from '../../skeleton/MessageSkeleton/MessageSkeleton'
+import { FC } from 'react'
+type messagePlayGroundPropsType={
+  loading:boolean
+}
+const MessagePlayGround:FC<messagePlayGroundPropsType> = ({loading}) => {
 
   const {messages} = useSelector((state:State)=>state.app)
   
@@ -12,12 +16,14 @@ const MessagePlayGround = () => {
   return (
     <MessagePlayGroundWrapper>
       {
-       messages &&  messages?.length >0 ? messages?.map(msg=><MessageItem data={msg} key={msg?._id}/>):<StartChat/>
+       !loading ?  messages?.length >0 ? messages?.map(msg=><MessageItem data={msg} key={msg?._id}/>):<StartChat/> :<MessageSkeleton/>
       }
       
+ 
      
     </MessagePlayGroundWrapper>
   )
 }
 
 export default MessagePlayGround
+
