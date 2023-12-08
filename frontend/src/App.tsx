@@ -33,8 +33,17 @@ function App() {
   const {setup,fetchUser} = useUpdateApp()
   const {refresh} = useSelector((state:State)=>state.other)
   const {user} = useSelector((state:State)=>state.user)
-  const {chat} = useSelector((state:State)=>state.app)
-  useSocket()
+  const {chat} = useSelector((state:State)=>state.app);
+
+  
+
+   useSocket();
+
+
+
+
+
+
   useEffect(()=>{
     fetchUser()
   },[refresh])

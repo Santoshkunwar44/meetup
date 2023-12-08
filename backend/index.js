@@ -7,7 +7,6 @@ const cookieParser = require("cookie-parser");
 
 
 
-
 require("dotenv").config();
 
 const server = require("http").createServer(app)

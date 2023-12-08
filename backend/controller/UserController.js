@@ -9,11 +9,16 @@ class UserController {
     async getLoggedInUser(req, res) {
 
         const sessionUser = req.session?.user;
-        if (sessionUser) {
+        try {
+          if (sessionUser) {
             let updatedUser = await isUserUpdated(sessionUser)
             return res.status(200).json({ message: updatedUser, success: true })
-        } else {
-            res.status(403).json({ message: "You are not logged ", success: false });
+          } else {
+            throw Error("You are not logged in")
+          }
+        } catch (error) {
+          res.status(500).json({ message: error.message, success: false });
+          
         }
 
     }
@@ -121,22 +126,42 @@ class UserController {
     }
 
     async suggestionUser(req,res){
-        const {userId}   = req.params;
-        try {
+       const { userId } = req.params;
 
-            const suggestionUser  = await UserModal.find({
-                _id:{
-                    $ne:userId
-                }
-            }).populate(["followings","followers"])
+try {
+    // Get user's followers and followings
+    const user = await UserModal.findById(userId).populate(["followers followings"]);
 
-            res.status(200).send({message:suggestionUser,success:true});
-            
-        } catch (error) {
-            console.log(error)
-            res.status(500).json({message:error.message,success:false});
-        }
+    let suggestedIds = [];
+
+    // Add user's followings to suggestedIds
+    
+
+    // Add followers of user's followers to suggestedIds
+    for (const follower of user.followers) {
+        const followerUser = await UserModal.findById(follower._id).populate(["followers","followings"]);
+        suggestedIds.push(...followerUser.followers.map((follower) => follower._id));
+        suggestedIds.push(...followerUser.followings.map((follower) => follower._id));
     }
+    for (const following of user.followings) {
+        const followerUser = await UserModal.findById(following._id).populate("followers");
+        suggestedIds.push(...followerUser.followers.map((follower) => follower._id));
+    }
+
+    // Remove duplicates and exclude the user
+    suggestedIds = Array.from(new Set(suggestedIds));
+    suggestedIds = suggestedIds.filter((id) => id !== userId);
+
+    // Get suggested users
+    const suggestedUsers = await UserModal.find({ _id: { $in: suggestedIds } })
+        .limit(5) // Limit the number of suggestions
+        .select("firstName lastName image bio");
+
+    res.json({ suggestions: suggestedUsers });
+} catch (error) {
+    console.error(error);
+    res.status(500).json({ message: "Internal Server Error", success: false });
+}
 
 }
 module.exports = new UserController()

@@ -25,8 +25,8 @@ const ChatRoom = () => {
       AddChatAction(null)
     }
   },[])
+
 useEffect(()=>{
-  
   markChatAsSeen()
 },[chat,user])
 
@@ -48,10 +48,7 @@ useEffect(()=>{
     if(!chat?._id || !user?._id)return;
 
     try {
-
     const {status}  =  await markChatAsSeenApi(chat?._id,user?._id);
-    
-
     if(status===200){
       // refreshAction()
     }
@@ -73,8 +70,10 @@ useEffect(()=>{
     setLoading(true)
     try {
      const {data,status} =  await fetchChatsOfBothUsersApi(id,user._id)
+     console.log("problem solvedz")
      if(status===200){
       if(data.message){
+        console.log("problem solved")
         AddChatAction(data.message)
       }else{
         AddChatAction(null)

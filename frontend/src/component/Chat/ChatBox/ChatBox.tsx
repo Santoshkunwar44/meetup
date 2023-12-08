@@ -1,4 +1,4 @@
-import {  useEffect, useState } from "react";
+import {  MutableRefObject, useEffect, useRef, useState } from "react";
 import ChatUser from "../ChatUser/ChatUser"
 import { ChatBoxWrapper } from "./ChatBox.styles"
 import { HiSearch } from "react-icons/hi";
@@ -19,7 +19,8 @@ const ChatBox = () => {
   const [searchInput,setSearchInput] =useState("")
   const [searchedFriends , setSearchedFriends] = useState<UserType[]>([])
   const [loading,setLoading] = useState(false)
-  
+
+
 
 
 
@@ -59,7 +60,7 @@ const ChatBox = () => {
         let users:UserType[] = data.message;
        const filteredUsers = users.filter(u => u._id !== user._id && !allChats?.some(chat =>{
          let nextUser = getAnotherUserMethod(chat.users,user._id)
-         console.log(nextUser?._id==user._id)
+        
         return  nextUser?._id === user._id
        })
 )       

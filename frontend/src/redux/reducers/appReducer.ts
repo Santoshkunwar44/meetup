@@ -4,7 +4,7 @@ import { Action } from "../actions"
 import { ActionTypes } from "../actions/actionTypes";
 
 interface InitialStateInterface {
-    chat:ChatType| null,
+    chat:ChatType|null,
     nextUser:UserType|null,
     messages:MessageType[] ,
     allChats:ChatType[],

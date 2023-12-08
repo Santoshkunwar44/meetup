@@ -18,12 +18,18 @@ const useSocket = () => {
  const {AddSocketAction,AddOnlineUsersAction ,AddNewMessageAction , AddNotificationsAction ,AddUserStatsAction} = bindActionCreators(actionCreators,dispatch );
  const {user} = useSelector((state:State)=>state.user)
  const location =useLocation()
-
  const {chat,unseenChatCount,unseenNotificationCount,allChats} = useSelector((state:State)=>state.app)
+
+
+
 
  const socketRef= useRef<Socket|null>(null)
 
+    
 
+     
+
+ 
 
     useEffect(() => {
         const socket = io("ws://localhost:8000");
@@ -42,36 +48,55 @@ const useSocket = () => {
     }, [user,socketRef.current])
 
     useEffect(()=>{
-      if(!socketRef.current)return;
-       socketRef.current.on(Enums.SEND_ONLINE_USERS,(onlineUsers:onlineUsersType[])=>{
-            console.log("socket online users",onlineUsers)
-            AddOnlineUsersAction(onlineUsers)
-         })
-         socketRef.current.on(Enums.SEND_MESSAGE,(message:MessageType)=>{
-            console.log(chat?._id , message.chatId._id)
+
+        if(!socketRef.current)return;
+
+
+        socketRef.current.on(Enums.SEND_ONLINE_USERS,handleOnlineUsersEvent)
+        socketRef.current.on(Enums.SEND_MESSAGE,handleMessageEvent)
+        socketRef.current.on(Enums.SEND_NOTIFICATION,handleNotificationEvent)
+
+
+             return () => {
+        // Clean up previous socket listener
+        socketRef.current?.off(Enums.SEND_MESSAGE,handleMessageEvent );
+        socketRef.current?.off(Enums.SEND_ONLINE_USERS,handleMessageEvent );
+        socketRef.current?.off(Enums.SEND_NOTIFICATION,handleMessageEvent );
+        };
+
+    },[chat]);
+
+    const handleMessageEvent=(message:MessageType)=>{
+        console.log("current chat id ",chat?._id)
             if(chat?._id  === message.chatId?._id ){
+                console.log("adding message")
                 AddNewMessageAction(message)
             }else{
+                console.log("adding notification")
                 AddUserStatsAction({ unseenChatCount :unseenChatCount ? unseenChatCount + 1 : 1, unseenNotificationCount})
             }
+
             if(location.pathname.split("/")[1]==="chat"){
                 if(!allChats?.some(c=>c._id === message.chatId._id)){
                     AddNewChatAction([message.chatId , ...allChats])
                 }
             }
 
-         })
-         socketRef.current.on(Enums.SEND_NOTIFICATION,(notification:NotificationType)=>{
+    }
+
+    const handleNotificationEvent=(notification:NotificationType)=>{
          if(notification.type==="FOLLOW" || notification.type==="FOLLOW_BACK"){
              AddUserStatsAction({  unseenChatCount , unseenNotificationCount: unseenNotificationCount ? unseenNotificationCount+1 :1})
              AddNotificationsAction(notification);
             }
-         })
-    },[])
+    }
+
+    const handleOnlineUsersEvent=(onlineUsers:onlineUsersType[])=>{
+            AddOnlineUsersAction(onlineUsers)
+    }
 
 
 
-    return {}
 }
 
 export default useSocket
