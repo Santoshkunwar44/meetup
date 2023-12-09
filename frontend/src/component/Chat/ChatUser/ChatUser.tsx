@@ -20,6 +20,9 @@ const ChatUser:React.FC<ChatUserPropsType> = ({chat}) => {
   const [currentChat,setCurrentChat] = useState(false)
   const [ isOnline,setIsOnline] = useState<boolean>(false);
   const {id} = useParams()
+  const [hasSeen,setHasSeen] = useState<boolean|null>(null)
+
+
 
 
   useEffect(()=>{
@@ -35,6 +38,10 @@ const ChatUser:React.FC<ChatUserPropsType> = ({chat}) => {
     
   },[onlineUsers , nextuser])
 
+  useEffect(()=>{
+    if(!user?._id)return;
+    setHasSeen(chat.seen.includes(user._id));
+  },[user,chat])
 
 
   useEffect(()=>{
@@ -51,7 +58,7 @@ const ChatUser:React.FC<ChatUserPropsType> = ({chat}) => {
 
 
   return (
-    <ChatUserWrapper onClick={handleGotoChat} currentChat={currentChat}>
+    <ChatUserWrapper onClick={handleGotoChat} currentChat={currentChat} seen={hasSeen} >
       <div className="imageWrapper">
         <img src={nextuser?.image} alt="chatUserImage" />
        { isOnline && <div className="activeDot"></div>}

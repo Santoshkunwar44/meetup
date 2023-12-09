@@ -1,6 +1,7 @@
 import {styled} from "styled-components"
 type ChatUserPropsType={
-    currentChat:boolean
+    currentChat:boolean,
+    seen:boolean|null
 }
 export const ChatUserWrapper = styled.div<ChatUserPropsType>`
 
@@ -24,6 +25,9 @@ export const ChatUserWrapper = styled.div<ChatUserPropsType>`
             height: 100%;
             border-radius: 50%;
             object-fit: cover;
+            border:3px solid ${props=>props.seen ? "var(--dark_color)":"var(--primary_color)"} ;
+
+            padding: 3px;
         }
         .activeDot{
             width: 8px;
@@ -41,15 +45,17 @@ export const ChatUserWrapper = styled.div<ChatUserPropsType>`
     gap: 0.2rem;
     .username{
 
-        color: ${props=>props.currentChat ?"white":"#ffffff91;"};
+               color: ${props=>props.seen !== null ?  props.currentChat ? "white" : props.seen ? "#ffffff90":"var(--primary_color)"  :"var(--fade_text)"};
+
         font-size: 14px;
         letter-spacing: 0.9px;
     }
     .message{
         font-size: 11px;
         letter-spacing: 1px;
-        color: 
-        ${props=>props.currentChat ?"white":"var(--fade_text);"};
+        color:  ${props=>(props.currentChat ?"white":"var(--fade_text)")}
+        /* color: ${props=>props.seen !== null ?  props.currentChat ? "white" : props.seen ? "var(--fade_text)":"var(--primary_color)"  :"var(--fade_text)"}; */
+
     }
 }
 

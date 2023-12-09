@@ -18,6 +18,7 @@ export type ChatType={
     latestMessage:MessageType,
     createdAt:string,
     updatedAt:string,
+    seen:string[]
 }
 export type MessageType={
     senderId:UserType,
