@@ -47,5 +47,6 @@ export type NotificationType={
     to:string,
     from:UserType,
     type:"FOLLOW"|"COMMENT"|"LIKE"|"FOLLOW_BACK"
-    post:PostType
+    post:PostType,
+    seen:boolean
 }

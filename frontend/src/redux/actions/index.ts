@@ -55,5 +55,9 @@ interface addNewChat{
     type:ActionTypes.ADD_NEW_CHAT,
     payload:ChatType[]
 }
+interface addAllNotificationsAction{
+    type:ActionTypes.ADD_ALL_NOTIFICATIONS,
+    payload:NotificationType[]
+}
 
-export type Action = addNewChat | AddUserAction | AddBasicsAction  | AddNotificationsAction| AddOnlineUsersAction | RemoveUserAction | RefreshAction | AddSocketAction | AddChatAction | AddMessageAction| AddNextUser |AddNewMessage;
+export type Action = addNewChat | addAllNotificationsAction | AddUserAction | AddBasicsAction  | AddNotificationsAction| AddOnlineUsersAction | RemoveUserAction | RefreshAction | AddSocketAction | AddChatAction | AddMessageAction| AddNextUser |AddNewMessage;

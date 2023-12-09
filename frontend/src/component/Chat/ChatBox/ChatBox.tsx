@@ -23,7 +23,7 @@ const ChatBox = () => {
 
 
 
-
+  console.log("all chats",allChats)
 
 
   

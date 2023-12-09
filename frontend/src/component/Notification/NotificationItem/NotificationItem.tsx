@@ -16,9 +16,9 @@ const NotificationItem:FC<NotificationItemPropsType> = ({notification}) => {
             navigate(`/profile/${notification.from._id}`)
         }
     }   
-
+console.log(notification.seen)
   return (
-    <NotificationItemWrapper onClick={handleClick}>
+    <NotificationItemWrapper onClick={handleClick} seen={notification.seen}>
 
         <div className="imageWrapper">
             <img src={notification?.from?.image} alt={"userProfile"} />

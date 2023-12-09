@@ -1,13 +1,15 @@
 import {styled} from "styled-components"
-
-export const NotificationItemWrapper = styled.div`
+type NotificationItemPropsType={
+    seen:boolean
+}
+export const NotificationItemWrapper = styled.div<NotificationItemPropsType>`
 
 display: flex;
 width: 100%;
 padding: 1rem;
 align-items: center;
-border-bottom: 1px solid #4f597b24;
-    background-color: #3e439b1a;
+border: 1px solid ${props=>props.seen ? "#4f597b24":"var(--primary_color)"};
+background-color: #3e439b1a;
     height: 80px;
     gap: 1rem;
     border-radius: 10px;
@@ -30,11 +32,12 @@ border-bottom: 1px solid #4f597b24;
     font-size: 15px;
     letter-spacing: 0.9px;
     
-    color: #ffffffb4;
+    color:  ${props=>props.seen ? "#fffffb4":"var(--primary_color)"};
 }
 .time{
     font-size: 11px;
     color: var(--fade_text);
+    letter-spacing: 1px;
     font-weight: bold;
 
 }

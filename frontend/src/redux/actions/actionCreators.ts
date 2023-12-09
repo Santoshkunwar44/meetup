@@ -78,8 +78,16 @@ export const AddUserStatsAction=(payload:{
 
 }
 export const AddNewChatAction=(payload:ChatType[]) => (dispatch: Dispatch) => {
+    console.log("adding chatn ")
     return dispatch({
         type: ActionTypes.ADD_NEW_CHAT,
         payload
     })
+}
+export const AddAllNotificationsAction=(payload:NotificationType[]) => (dispatch: Dispatch) => {
+  return dispatch({
+        type: ActionTypes.ADD_ALL_NOTIFICATIONS,
+        payload
+    })
+
 }

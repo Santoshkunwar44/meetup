@@ -47,11 +47,11 @@ gap: 2rem;
         /* .markAsSeenP */
     }
     .notificationWrapper{
-        border-radius: 10px;
         overflow: hidden;
         display: flex;
         gap: 10px;
         flex-direction: column;
+        padding: 10px;
         
     }
 

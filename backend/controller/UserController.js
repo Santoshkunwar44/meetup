@@ -135,6 +135,9 @@ class UserController {
 try {
     // Get user's followers and followings
     const user = await UserModal.findById(userId).populate(["followers followings"]);
+    // let myFollowers= user.followers.map(followers=>followers._id.toString())
+    let myFollowings= user.followings.map(following=>following._id.toString())
+
 
     let suggestedIds = [];
 
@@ -144,20 +147,23 @@ try {
     // Add followers of user's followers to suggestedIds
     for (const follower of user.followers) {
         const followerUser = await UserModal.findById(follower._id).populate(["followers","followings"]);
-        suggestedIds.push(...followerUser.followers.map((follower) => follower._id));
-        suggestedIds.push(...followerUser.followings.map((following) => following._id));
+        suggestedIds.push(...followerUser.followers.map((follower) => follower._id.toString()));
+        suggestedIds.push(...followerUser.followings.map((following) => following._id.toString()));
     }
     for (const following of user.followings) {
         const followerUser = await UserModal.findById(following._id).populate(["followers","followings"]);
-        suggestedIds.push(...followerUser.followers.map((follower) => follower._id));
-        suggestedIds.push(...followerUser.followings.map((following) => following._id));
+        suggestedIds.push(...followerUser.followers.map((follower) => follower._id.toString()));
+        suggestedIds.push(...followerUser.followings.map((following) => following._id.toString()));
     }
 
     // Remove duplicates and exclude the user
     suggestedIds = Array.from(new Set(suggestedIds));
     suggestedIds = suggestedIds.filter((id) => id.toString() !== userId.toString());
+    suggestedIds = suggestedIds.filter(suggested=>!myFollowings.some(following=>following === suggested));
+    // console.log(myFollowings,suggestedIds)
 
-    console.log("suggestedIds: " + suggestedIds)
+    
+
 
     // Get suggested users
   const suggestedUsersMutual = await UserModal.aggregate([
@@ -178,12 +184,6 @@ try {
         }
     },
     { 
-        $match: { _id: { $in: suggestedIds } } 
-    },
-    { 
-        $sample: { size: 10 } 
-    },
-    { 
         $project: { 
             _id: { $toString: "$_id" }, 
             firstName: 1, 
@@ -193,11 +193,14 @@ try {
             followers: "$followerDetails"
         } 
     },
+    { $match: { _id: { $in: suggestedIds } } },
+    { $sample: { size: 10 } },
 ]);
 
 
-const excludedIds  = [userId,...suggestedIds]
+const excludedIds  = [userId,...suggestedIds , ...myFollowings]
 
+console.log("excludedIds: ", suggestedIds ,suggestedUsersMutual)
 
 
 const suggestedUsersRandom = await UserModal.aggregate([
@@ -230,7 +233,6 @@ const suggestedUsersRandom = await UserModal.aggregate([
     { $match: { _id: { $nin: excludedIds } } },
     { $sample: { size: 10 } },
 ]);
-
     res.status(200).json({ message: [...suggestedUsersRandom,...suggestedUsersMutual] ,success:true });
 
 } catch (error) {

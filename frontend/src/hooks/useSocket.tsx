@@ -15,10 +15,10 @@ const useSocket = () => {
 
 
  const dispatch = useDispatch()
- const {AddSocketAction,AddOnlineUsersAction ,AddNewMessageAction , AddNotificationsAction ,AddUserStatsAction} = bindActionCreators(actionCreators,dispatch );
+ const {AddSocketAction,AddOnlineUsersAction ,AddNewMessageAction , AddAllNotificationsAction ,AddUserStatsAction} = bindActionCreators(actionCreators,dispatch );
  const {user} = useSelector((state:State)=>state.user)
  const location =useLocation()
- const {chat,unseenChatCount,unseenNotificationCount,allChats} = useSelector((state:State)=>state.app)
+ const {chat,unseenChatCount ,allNotifications,unseenNotificationCount,allChats} = useSelector((state:State)=>state.app)
 
 
 
@@ -60,8 +60,8 @@ const useSocket = () => {
              return () => {
         // Clean up previous socket listener
         socketRef.current?.off(Enums.SEND_MESSAGE,handleMessageEvent );
-        socketRef.current?.off(Enums.SEND_ONLINE_USERS,handleMessageEvent );
-        socketRef.current?.off(Enums.SEND_NOTIFICATION,handleMessageEvent );
+        socketRef.current?.off(Enums.SEND_ONLINE_USERS,handleOnlineUsersEvent );
+        socketRef.current?.off(Enums.SEND_NOTIFICATION, handleNotificationEvent );
         };
 
     },[chat]);
@@ -86,8 +86,8 @@ const useSocket = () => {
 
     const handleNotificationEvent=(notification:NotificationType)=>{
          if(notification.type==="FOLLOW" || notification.type==="FOLLOW_BACK"){
-             AddUserStatsAction({  unseenChatCount , unseenNotificationCount: unseenNotificationCount ? unseenNotificationCount+1 :1})
-             AddNotificationsAction(notification);
+            AddAllNotificationsAction([notification,...allNotifications])
+           
             }
     }
 

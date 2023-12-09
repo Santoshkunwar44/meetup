@@ -1,27 +1,23 @@
-import { fetchChatsOfUserApi, fetchUserByIdApi, getUserStatsApi } from '../utils/Api'
+import { fetchChatsOfUserApi, fetchUserByIdApi, getNotificationOfUserApi, getUserStatsApi } from '../utils/Api'
 import { useDispatch, useSelector } from 'react-redux'
 import { State } from '../redux/reducers'
 import { bindActionCreators } from 'redux'
 import { actionCreators } from '../redux'
-import { useEffect } from 'react'
 
 const useUpdateApp = () => {
     const {user} =useSelector((state:State)=>state.user);
     const dispatch = useDispatch()
-    const {AddUserAction,AddUserStatsAction,AddNewChatAction} = bindActionCreators(actionCreators,dispatch);
+    const {AddUserAction,AddUserStatsAction ,AddAllNotificationsAction ,AddNewChatAction} = bindActionCreators(actionCreators,dispatch);
 
 
-    
     
     const setup=()=>{
         
         if(!user?._id)return;
         getAllMyChats()
+        fetchAllMyNotifications()
         fetchUnseenChatsAndNotifications()
     }
-
-
-
     const fetchUser=async()=>{
         if(!user?._id)return;
         try {   
@@ -58,11 +54,20 @@ const useUpdateApp = () => {
     } catch (error) {
       console.log(error)
     }
-
-
   }
 
-    return { setup ,fetchUser}
+  const fetchAllMyNotifications=async()=>{
+    if(!user?._id)return;
+    try {
+        const {status,data} = await getNotificationOfUserApi(user?._id)
+        if(status === 200){
+            AddAllNotificationsAction(data.message)
+        }
+    } catch (error) {
+        console.log(error)
+    }
+  }
+ return { setup ,fetchUser}
 }
 
 export default useUpdateApp

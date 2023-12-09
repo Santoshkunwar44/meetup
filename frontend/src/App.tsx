@@ -33,20 +33,14 @@ function App() {
   const {setup,fetchUser} = useUpdateApp()
   const {refresh} = useSelector((state:State)=>state.other)
   const {user} = useSelector((state:State)=>state.user)
-  const {chat} = useSelector((state:State)=>state.app);
 
-  
-
-   useSocket();
-
-
-
-
-
+  useSocket();
 
   useEffect(()=>{
-    fetchUser()
+    fetchUser();
   },[refresh])
+
+
   useEffect(()=>{
     setup()
   },[user,refresh])
@@ -106,13 +100,12 @@ const ProtectedRoutes =()=>{
     try {
       const {data,status} = await getSessionUserApi()
       if(status===200){
-        await  AddUserAction(data.message)
+        AddUserAction(data.message)
       }
 
     } catch (error) {
       console.log(error)
     }
-    console.log("loading 2 ")
     setLoaded(true)
   }
 
@@ -123,4 +116,3 @@ const ProtectedRoutes =()=>{
   return user ? <Outlet/> :<Navigate to={"/auth/login"}/>
 
 }
-

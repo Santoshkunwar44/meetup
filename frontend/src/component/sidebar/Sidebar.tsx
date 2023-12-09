@@ -1,13 +1,15 @@
 import { SidebarWrapper } from './Sidebar.styles'
 import { TbBrandMessenger } from "react-icons/tb";
 import { IoSearch } from "react-icons/io5";
-import { useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { State } from '../../redux/reducers';
 import { TbLogout2 } from "react-icons/tb";
 import { LuUsers2 } from "react-icons/lu";
 import { Link, useLocation, useNavigate } from 'react-router-dom';
 import { useEffect, useState } from 'react';
 import { FaRegHeart } from "react-icons/fa";
+import { bindActionCreators } from 'redux';
+import { actionCreators } from '../../redux';
 
 
 
@@ -21,8 +23,16 @@ const Sidebar:React.FC<SidebarPropsType> = ({small}) => {
   const {user} = useSelector((state:State)=>state.user)
   const navigate =useNavigate()
   const location = useLocation()
-  const {unseenChatCount,unseenNotificationCount} = useSelector((state:State)=>state.app)
+  const dispatch = useDispatch()
+  const {unseenChatCount,unseenNotificationCount,allNotifications} = useSelector((state:State)=>state.app);
+  const {AddUserStatsAction} = bindActionCreators(actionCreators,dispatch)
   const [currentpath,setCurrentPath] = useState<pagePathType>("profile");
+
+  useEffect(()=>{
+    let unSennNotificationsCount = allNotifications.filter(notification=> !notification.seen).length;
+      AddUserStatsAction({unseenChatCount,unseenNotificationCount:unSennNotificationsCount})
+  },[allNotifications])
+
 
 
   useEffect(()=>{
@@ -32,9 +42,8 @@ const Sidebar:React.FC<SidebarPropsType> = ({small}) => {
       setCurrentPath("search")
     }else{
       if(path){
-        setCurrentPath(path)
+        setCurrentPath(path as pagePathType)
       }
-
     }
     
 
