@@ -22,6 +22,39 @@ class UserController {
         }
 
     }
+    async getUsersFollowersAndFollowings(req,res){
+
+        const {followers:followersRequired,followings:followingsRequired} = req.query;
+
+        try {
+           const user = await  UserModal.findById(req.params.userId);
+
+           if(followingsRequired){
+
+               const followers =   await UserModal.find({
+                   _id: { $in: user.followings }
+                }).populate(["followings","followers"]);
+                
+
+                res.status(200).json({message:followers,success:true})
+
+
+            }else if(followersRequired){
+
+                const followers =  await UserModal.find({
+                     _id: { $in: user.followers }
+                 }).populate(["followings","followers"])
+
+                  res.status(200).json({message:followers,success:true})
+            }
+
+
+
+
+        } catch (error) {
+            res.status(500).json({message:error.message,success:false});
+        }
+    }
     async searchUser(req, res) {
         const { userId } = req.query
         let keyword = {}

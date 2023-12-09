@@ -12,11 +12,11 @@ const NotificationItem:FC<NotificationItemPropsType> = ({notification}) => {
 
 
     const handleClick=()=>{
-        if(notification.type==="FOLLOW"){
+        if(notification.type==="FOLLOW"|| notification.type==="FOLLOW_BACK"){
             navigate(`/profile/${notification.from._id}`)
         }
     }   
-console.log(notification.seen)
+
   return (
     <NotificationItemWrapper onClick={handleClick} seen={notification.seen}>
 

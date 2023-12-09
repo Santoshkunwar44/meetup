@@ -31,6 +31,11 @@ export const followUserApi=(userId:string,nextUserId:string,payload:followNotifi
 export const unFollowUserApi=(userId:string,nextUserId:string)=>AxiosInstance.post(`/user/unfollow?userId=${userId}&nextUserId=${nextUserId}`)
 export const getSuggestedPeopleApi=(userId:string)=>AxiosInstance.get(`/user/suggestion/${userId}`);
 export const getSessionUserApi=()=>AxiosInstance.get('/user/loggedInUser')
+export const getFollowersOfFollowingsApi=(userId:string,followings:string|undefined,followers:string|undefined)=>AxiosInstance.get(`/user/friend/${userId}?followers=${followers}&followings=${followings}`)
+export const getFollowersApi = (userId:string)=>AxiosInstance.get(`/user/friend/${userId}?followers=true`)
+export const getFollowingsApi = (userId:string)=>AxiosInstance.get(`/user/friend/${userId}?followings=true`)
+
+
 
 // chats endpoints 
 export const fetchChatsOfUserApi =(userId:string)=>AxiosInstance.get(`/chat/${userId}`)

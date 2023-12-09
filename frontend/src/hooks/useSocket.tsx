@@ -73,13 +73,6 @@ const useSocket = () => {
                 AddNewMessageAction(message)
             }
             refreshAction()
-
-            // if(location.pathname.split("/")[1]==="chat"){
-            //     if(!allChats?.some(c=>c._id === message.chatId._id)){
-            //         AddNewChatAction([message.chatId , ...allChats])
-            //     }
-            // }
-
     }
 
     const handleNotificationEvent=(notification:NotificationType)=>{

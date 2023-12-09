@@ -14,11 +14,8 @@ const Notifications = () => {
     const { allNotifications} = useSelector((state:State)=>state.app)
     const dispatch = useDispatch();
     const {refreshAction} = bindActionCreators(actionCreators,dispatch)
-
-
-
-
-  
+    
+    
 
    
 
@@ -40,7 +37,7 @@ const Notifications = () => {
     
   
   return (
-    <NotificationWrapper>
+    <NotificationWrapper >
         <Sidebar />
         <div className="notificationContainer">
                 <div className="header">
