@@ -1,4 +1,4 @@
-import {  MutableRefObject, useEffect, useRef, useState } from "react";
+import {   useEffect, useState } from "react";
 import ChatUser from "../ChatUser/ChatUser"
 import { ChatBoxWrapper } from "./ChatBox.styles"
 import { HiSearch } from "react-icons/hi";

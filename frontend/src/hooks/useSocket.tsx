@@ -15,10 +15,10 @@ const useSocket = () => {
 
 
  const dispatch = useDispatch()
- const {AddSocketAction,AddOnlineUsersAction ,AddNewMessageAction , AddAllNotificationsAction ,AddUserStatsAction} = bindActionCreators(actionCreators,dispatch );
+ const {AddSocketAction,AddOnlineUsersAction ,AddNewMessageAction , AddAllNotificationsAction ,refreshAction} = bindActionCreators(actionCreators,dispatch );
  const {user} = useSelector((state:State)=>state.user)
  const location =useLocation()
- const {chat,unseenChatCount ,allNotifications,unseenNotificationCount,allChats} = useSelector((state:State)=>state.app)
+ const {chat, allNotifications,allChats} = useSelector((state:State)=>state.app)
 
 
 
@@ -67,20 +67,18 @@ const useSocket = () => {
     },[chat]);
 
     const handleMessageEvent=(message:MessageType)=>{
-        console.log("current chat id ",chat?._id)
+   
             if(chat?._id  === message.chatId?._id ){
                 console.log("adding message")
                 AddNewMessageAction(message)
-            }else{
-                console.log("adding notification")
-                AddUserStatsAction({ unseenChatCount :unseenChatCount ? unseenChatCount + 1 : 1, unseenNotificationCount})
             }
+            refreshAction()
 
-            if(location.pathname.split("/")[1]==="chat"){
-                if(!allChats?.some(c=>c._id === message.chatId._id)){
-                    AddNewChatAction([message.chatId , ...allChats])
-                }
-            }
+            // if(location.pathname.split("/")[1]==="chat"){
+            //     if(!allChats?.some(c=>c._id === message.chatId._id)){
+            //         AddNewChatAction([message.chatId , ...allChats])
+            //     }
+            // }
 
     }
 

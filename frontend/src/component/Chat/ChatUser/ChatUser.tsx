@@ -26,7 +26,7 @@ const ChatUser:React.FC<ChatUserPropsType> = ({chat}) => {
 
 
   useEffect(()=>{
-    if(nextuser?._id&&id){
+    if(nextuser?._id){
       setCurrentChat(nextuser?._id===id)
     }
   },[ nextuser , id])

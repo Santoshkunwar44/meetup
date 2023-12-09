@@ -16,7 +16,7 @@ const ChatRoom = () => {
   const {user} =useSelector((state:State)=>state.user);
   const {chat} = useSelector((state:State)=>state.app)
   const dispatch = useDispatch()
-  const {AddMessageAction,AddNextUserAction,AddChatAction} = bindActionCreators(actionCreators,dispatch)
+  const {AddMessageAction,AddNextUserAction,AddChatAction ,refreshAction} = bindActionCreators(actionCreators,dispatch)
   const [loading,setLoading] =useState(false)
 
 
@@ -50,7 +50,7 @@ useEffect(()=>{
     try {
     const {status}  =  await markChatAsSeenApi(chat?._id,user?._id);
     if(status===200){
-      // refreshAction()
+      refreshAction()
     }
     } catch (error) {
       console.log(error)
