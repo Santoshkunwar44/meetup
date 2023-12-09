@@ -35,15 +35,16 @@ const ProfileCard:React.FC<ProfileCardPropsType> = ({user}) => {
     const handleFollow = async (type:"FOLLOW"|"FOLLOW_BACK") => {
 
       if(!loggedInUser?._id || !user?._id)return;
+
         let payload = {
         type,
         from:loggedInUser?._id,
         to:user._id
       }
       try {
-       const {status,data}  = await followUserApi(loggedInUser?._id,user._id,payload)
+       const {status,data}  = await followUserApi(loggedInUser?._id ,user._id ,payload)
        if(status===200){
-         socket.emit(Enums.NOTIFICATION,{...data.message,nextUser:user._id})
+         socket?.emit(Enums.NOTIFICATION,{...data.message,nextUser:user._id})
         setHasIFollowed(true)
         refreshAction()
        }

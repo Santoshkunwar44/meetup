@@ -7,25 +7,18 @@ import { useDispatch, useSelector } from 'react-redux'
 import { State } from '../../../redux/reducers'
 import { bindActionCreators } from 'redux'
 import { actionCreators } from '../../../redux'
+import { Enums } from '../../../utils/Enums'
 type suggestedPropsType={
     user:UserType
 }
 const SuggestedItem:React.FC<suggestedPropsType> = ({user}) => {
   const {user:loggedInUser} = useSelector((state:State)=>state.user)
-
-
-
-
-
-  const navigate = useNavigate()
-
-
-
-
+  const {socket} = useSelector((state:State)=>state.app)
   const [hasIFollowed, setHasIFollowed] = useState<boolean | null>(null);
   const [hasTheyFollowed, setHasTheyFollowed] = useState<boolean | null>(null);
   const dispatch =useDispatch()
   const {refreshAction} = bindActionCreators(actionCreators,dispatch)
+  const navigate = useNavigate()
 
 
   
@@ -37,11 +30,17 @@ const SuggestedItem:React.FC<suggestedPropsType> = ({user}) => {
     setHasTheyFollowed(user.followings?.some(u=>u._id===loggedInUser._id))
   }, [loggedInUser, user]);
 
-    const handleFollow = async () => {
+    const handleFollow = async (type:"FOLLOW"|"FOLLOW_BACK") => {
       if(!loggedInUser?._id || !user?._id)return;
+       let payload = {
+        type,
+        from:loggedInUser?._id,
+        to:user._id
+      }
       try {
-       const {status}  = await followUserApi(loggedInUser?._id,user._id)
+       const {status,data}  = await followUserApi(loggedInUser?._id,user._id,payload)
        if(status===200){
+         socket?.emit(Enums.NOTIFICATION,{...data.message,nextUser:user._id})
         setHasIFollowed(true)
         refreshAction()
        }
@@ -60,14 +59,14 @@ const SuggestedItem:React.FC<suggestedPropsType> = ({user}) => {
 
     if (!hasIFollowed && !hasTheyFollowed) {
       // Neither follows each other
-      return <button onClick={handleFollow}>Follow</button>;
+      return <button onClick={()=>handleFollow("FOLLOW")}>Follow</button>;
     } else if (hasIFollowed && !hasTheyFollowed) {
       
       // Logged-in user follows, but displayed user doesn't follow back
       return <button disabled>Following</button>; // You can handle an unfollow logic here
     } else if (!hasIFollowed && hasTheyFollowed) {
       // Displayed user follows, but logged-in user doesn't follow back
-      return <button onClick={handleFollow}>Follow Back</button>;
+      return <button onClick={()=>handleFollow("FOLLOW_BACK")}>Follow Back</button>;
     } else {
       // Both follow each other
       return <button disabled>Friends</button>;

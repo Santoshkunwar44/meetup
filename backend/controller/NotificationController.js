@@ -4,6 +4,8 @@ const { createNotificationText } = require("../services/NotificationService")
 class NotificationController{
     async createNotification(req,res){
 
+        console.log(req.body)
+        
         try {  
             req.body.text = await createNotificationText(req.body)
             let  notification = await Notification.create(req.body)

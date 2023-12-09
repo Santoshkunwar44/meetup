@@ -70,6 +70,10 @@ class UserController {
     }
      async followerUser(req, res,next) {
   //check is the current user and the next user is not same | the user cannot follow thyself
+      console.log("follow",req.body)
+
+
+  
     const {userId,nextUserId} = req.query;
         if (userId !==nextUserId) {
     try {
@@ -141,27 +145,99 @@ try {
     for (const follower of user.followers) {
         const followerUser = await UserModal.findById(follower._id).populate(["followers","followings"]);
         suggestedIds.push(...followerUser.followers.map((follower) => follower._id));
-        suggestedIds.push(...followerUser.followings.map((follower) => follower._id));
+        suggestedIds.push(...followerUser.followings.map((following) => following._id));
     }
     for (const following of user.followings) {
-        const followerUser = await UserModal.findById(following._id).populate("followers");
+        const followerUser = await UserModal.findById(following._id).populate(["followers","followings"]);
         suggestedIds.push(...followerUser.followers.map((follower) => follower._id));
+        suggestedIds.push(...followerUser.followings.map((following) => following._id));
     }
 
     // Remove duplicates and exclude the user
     suggestedIds = Array.from(new Set(suggestedIds));
-    suggestedIds = suggestedIds.filter((id) => id !== userId);
+    suggestedIds = suggestedIds.filter((id) => id.toString() !== userId.toString());
+
+    console.log("suggestedIds: " + suggestedIds)
 
     // Get suggested users
-    const suggestedUsers = await UserModal.find({ _id: { $in: suggestedIds } })
-        .limit(5) // Limit the number of suggestions
-        .select("firstName lastName image bio");
+  const suggestedUsersMutual = await UserModal.aggregate([
+    {
+        $lookup: {
+            from: "users",  // Replace "UserModal" with the actual name of your collection
+            localField: "followings",
+            foreignField: "_id",
+            as: "followingDetails"
+        }
+    },
+    {
+        $lookup: {
+            from: "users",  // Replace "UserModal" with the actual name of your collection
+            localField: "followers",
+            foreignField: "_id",
+            as: "followerDetails"
+        }
+    },
+    { 
+        $match: { _id: { $in: suggestedIds } } 
+    },
+    { 
+        $sample: { size: 10 } 
+    },
+    { 
+        $project: { 
+            _id: { $toString: "$_id" }, 
+            firstName: 1, 
+            lastName: 1, 
+            image: 1, 
+            followings: "$followingDetails",
+            followers: "$followerDetails"
+        } 
+    },
+]);
 
-    res.json({ suggestions: suggestedUsers });
+
+const excludedIds  = [userId,...suggestedIds]
+
+
+
+const suggestedUsersRandom = await UserModal.aggregate([
+    {
+        $lookup: {
+            from: "users",  // Replace "UserModal" with the actual name of your collection
+            localField: "followings",
+            foreignField: "_id",
+            as: "followingDetails"
+        }
+    },
+    {
+        $lookup: {
+            from: "users",  // Replace "UserModal" with the actual name of your collection
+            localField: "followers",
+            foreignField: "_id",
+            as: "followerDetails"
+        }
+    },
+    { 
+        $project: { 
+            _id: { $toString: "$_id" }, 
+            firstName: 1, 
+            lastName: 1, 
+            image: 1, 
+            followings: "$followingDetails",
+            followers: "$followerDetails"
+        } 
+    },
+    { $match: { _id: { $nin: excludedIds } } },
+    { $sample: { size: 10 } },
+]);
+
+    res.status(200).json({ message: [...suggestedUsersRandom,...suggestedUsersMutual] ,success:true });
+
 } catch (error) {
     console.error(error);
     res.status(500).json({ message: "Internal Server Error", success: false });
 }
 
+}
 }
 module.exports = new UserController()

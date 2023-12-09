@@ -20,7 +20,7 @@ type NewMessagePayloadType={
 type followNotificationPayloadType={
     to:string,
     from:string,
-    type:string
+    type:"FOLLOW"|"FOLLOW_BACK"
 }
 
 
