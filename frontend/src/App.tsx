@@ -28,6 +28,7 @@ import { actionCreators } from './redux'
 import SearchUser from './component/Friends/SearchUser/SearchUser'
 import useSocket from './hooks/useSocket'
 import Notifications from './component/Notification/Notifications'
+import ForgotPassword from './pages/Auth/ForgotPassword/ForgotPassword'
 
 function App() {
   const {setup,fetchUser} = useUpdateApp()
@@ -71,6 +72,7 @@ function App() {
       </Route>
           <Route path='/auth' element={<AuthOutlet/>}>
             <Route path='login' element={<Login/>}/>
+            <Route path='forgot_password' element={<ForgotPassword/>}/>
             <Route path='register' element={<Register/>}/>
             <Route path='verify_email' element={<VerifyEmail/>}/>
             <Route path='reset_password' element={<ResetPassword/>}/>
